@@ -15,6 +15,11 @@ git config --global user.email "1303490776@qq.com"
 git config core.ignorecase false
 ```
 
+> - `git config`配置不影响远程仓库，其他成员拉取后也需要重新配置
+> - 开启此配置，在仅大小写重命名文件或者目录之后直接提交会出现远程仓库出现两份文件，分别为重命名前和重命名
+>   - 先使用`git rm -r --cached <file>`从暂存区中移除指定的文件或目录
+>   - 再使用`git add .`去添加所有未被追踪的文件和目录，包括那些改变了大小写命名的文件
+
 ## 不允许换行符处理
 
 ```

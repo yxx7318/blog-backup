@@ -30,6 +30,9 @@
 
 - 对于只想要撤回工作区修改
   - `git checkout .`：不会影响暂存区或提交历史
+  - `git checkout <commit-hash>`：切换版本到特定提交或者分支，在回归最新工作目录时，有两种方式
+    - `git checkout master`会切换分支，并更新工作目录
+    - `git checkout HEAD`不会切换分支，只是更新工作目录
 - 对于已经使用`git add`，想要撤回
   - `git reset HEAD <file>`：单个文件
   - `git reset HEAD`：所有文件
