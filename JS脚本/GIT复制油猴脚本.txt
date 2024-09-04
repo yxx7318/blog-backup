@@ -1,0 +1,80 @@
+// ==UserScript==
+// @name         GIT复制
+// @namespace    http://192.168.254.8:1008/summary/*
+// @version      2023-12-13
+// @description  try to take over the world!
+// @author       XIAOYU
+// @match        http://192.168.254.8:1008/summary/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=254.8
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Your code here...
+    var obj = document.getElementsByClassName("url")[1];
+    var btn = obj.children[0].children[1];
+    btn.innerHTML = "<span id='copybtn'>复制</span>";
+    var bt = document.getElementById("copybtn");
+    bt.onclick = function(){
+        var url = obj.children[0].childNodes[2].data;
+        copyContent(url);
+    }
+})();
+
+ // 复制文本内容方法一
+  function copyContent (content) {
+    // 复制结果
+    let copyResult = true;
+    // 设置想要复制的文本内容
+    var text = content || '无内容';
+    // 判断是否支持clipboard方式
+    if (!!window.navigator.clipboard) {
+      // 利用clipboard将文本写入剪贴板（这是一个异步promise）
+      window.navigator.clipboard.writeText(text).then((res) => {
+        console.log('复制成功');
+        // 返回复制操作的最终结果
+        return copyResult;
+      }).catch((err) => {
+        console.log('复制失败--采取第二种复制方案', err);
+        // clipboard方式复制失败 则采用document.execCommand()方式进行尝试
+        copyContent2(text)
+      })
+    } else {
+      // 不支持clipboard方式 则采用document.execCommand()方式
+      copyContent2(text)
+    }
+  }
+  // 复制文本内容方法二
+  function copyContent2 (content) {
+      // 复制结果
+      let copyResult = true;
+      // 设置想要复制的文本内容
+      var text = content || '无内容';
+      // 创建一个input元素
+      let inputDom = document.createElement('textarea');
+      // 设置为只读 防止移动端手机上弹出软键盘
+      inputDom.setAttribute('readonly', 'readonly');
+      // 给input元素赋值
+      inputDom.value = text;
+      // 将创建的input添加到body
+      document.body.appendChild(inputDom);
+      // 选中input元素的内容
+      inputDom.select();
+      // 执行浏览器复制命令
+      // 复制命令会将当前选中的内容复制到剪切板中（这里就是创建的input标签中的内容）
+      // Input要在正常的编辑状态下原生复制方法才会生效
+      const result = document.execCommand('copy')
+      // 判断是否复制成功
+      if (result) {
+        console.log('复制成功');
+      } else {
+        console.log('复制失败');
+        copyResult = false
+      }
+      // 复制操作后再将构造的标签 移除
+      document.body.removeChild(inputDom);
+      // 返回复制操作的最终结果
+      return copyResult;
+  }
