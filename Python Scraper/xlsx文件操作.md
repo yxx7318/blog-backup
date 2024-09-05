@@ -9,7 +9,7 @@
 安装openpyxl库
 
 ```
-pip install openpyxl -i https://pypi.douban.com/simple
+pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 导入包
