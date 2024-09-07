@@ -28,13 +28,23 @@ git clone https://gitcode.com/THUDM/ChatGLM3.git
 # 安装依赖
 cd $current_dir/$path/ChatGLM3
 
-# 默认依赖只会下载cpu版本，去再下载一个GPU版本的pytorch，英伟达显卡更新驱动后，CUDA版本一般在12.1以上
+# 默认依赖只会下载cpu版本，需要下载一个GPU版本的pytorch
+# 英伟达显卡更新驱动后，CUDA版本一般在12.1以上
 # 118版本
 # linux：pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 # windows：pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# conda：conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 # 121版本
 # linux：pip3 install torch torchvision torchaudio
 # windows：pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# 官方下载地址：https://download.pytorch.org/whl/torch/
+# pytorch版本 -> cuda版本 -> python版本 -> 平台
+# torch-2.0.1+cu117-cp39-cp39-win_amd64.whl
+# 安装命令：pip install torch-2.0.1+cu117-cp39-cp39-win_amd64.whl
+
+# 默认优先pytorch的最新版，如果有需要指定到低版本的cuda，需要对pytorch指定版本
+# conda：conda install pytorch=2.0.1 torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 下载模型

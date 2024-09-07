@@ -45,7 +45,7 @@ max_heap_table_size = 64M  # 最大堆表大小
   - 禁止自动提交：`SET AUTOCOMMIT=0;`
   - 恢复自动提交：`SET AUTOCOMMIT=1;`
 - 禁止时时同步日志到磁盘：设置`innodb_flush_log_at_trx_commit`为2，以禁止事务提交时实时同步日志到磁盘`SET global innodb_flush_log_at_trx_commit=2;`
-- 配置`max_allowed_packet`为1G：将max_allowed_packet配置为1G，以允许更大的数据包大小，适用于大事务或批量插入操作`max_allowed_packet=1073741824;`
+- 配置`max_allowed_packet`为1G：将`max_allowed_packet`配置为1G，以允许更大的数据包大小，适用于大事务或批量插入操作`max_allowed_packet=1073741824;`
 - 调整InnoDB存储引擎的I/O和日志设置：
   - `innodb_io_capacity`：设置为2000
   - `innodb_io_capacity_max`：设置为20000

@@ -18,13 +18,15 @@
 conda install ffmpeg
 ```
 
-> 在conda虚拟环境下可以使用，但Linux环境下不污染
+> 这么安装可以直接在conda虚拟环境下可以使用，不污染Linux环境
 >
 > ```
 > ffmpeg -version
 > ```
 
 ## ImageMagick
+
+下载地址：[ImageMagick – Download](https://imagemagick.org/script/download.php)
 
 ### Windows安装
 
@@ -34,7 +36,9 @@ conda install ffmpeg
 
 ### Linux安装
 
-下载地址：[ImageMagick – Download](https://imagemagick.org/script/download.php)
+![image-20240905165139898](img/ffmpeg和ImageMagick/image-20240905165139898.png)
+
+直接yum命令安装
 
 ```
 sudo yum install ImageMagick
@@ -46,11 +50,13 @@ sudo yum install ImageMagick
 > magick -version
 > ```
 >
-> 如果没有则创建软连接，因为centos可能不支持最新版本，老版本是`convert`命令
+> 如果没有则创建软连接，因为Centos的yum安装的可能不是最新版本，所以是`convert`命令，通过软连接更新命令为`magick`
 >
 > ```
 > sudo ln -s /usr/bin/convert /usr/bin/magick
 > ```
+>
+> ![image-20240905165436444](img/ffmpeg和ImageMagick/image-20240905165436444.png)
 
 ### 环境判断
 
@@ -63,4 +69,5 @@ if os.name == 'nt':
 elif os.name == 'posix':
     change_settings({"IMAGEMAGICK_BINARY": r"/usr/bin/convert"})
     print("当前操作系统是类Unix系统，比如Linux或Mac OS X")
+
 ```

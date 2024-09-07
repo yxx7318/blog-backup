@@ -21,6 +21,12 @@
 > 下载官网：[Download | Graphviz](https://graphviz.org/download/)
 >
 > ![image-20240905112837979](img/diagrams/image-20240905112837979.png)
+>
+> 版本信息
+>
+> ```
+> dot -v
+> ```
 
 允许添加环境变量
 

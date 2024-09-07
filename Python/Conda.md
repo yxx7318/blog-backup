@@ -360,7 +360,7 @@ conda env create -f environment.yml
 
 ## 常用命令
 
-<img src="img/Conda/image-20240211213909121.png" alt="image-20240211213909121" style="zoom:67%;" />
+<img src="img/Conda/image-20240211213909121.png" alt="image-20240211213909121" style="zoom: 80%;" />
 
 > 使用`conda install`命令时，所安装的包将仅限于该环境，不会影响其他环境或全局Python安装。这是conda环境管理的一个重要特性，有助于避免不同项目间的依赖冲突 
 >
@@ -384,11 +384,11 @@ conda env create -f environment.yml
 
 ## 安装优先级
 
-> 通常在使用Conda管理的 Python 环境时，推荐使用`conda install`而不是`pip install`来安装那些可能依赖于系统环境变量的软件包
+> 通常在使用Conda管理的Python环境时，推荐使用`conda install`而不是`pip install`来安装那些可能依赖于系统环境变量的软件包
 >
 > - **环境隔离**：Conda设计用来创建独立的、可复现的环境。使用`conda install`确保了包的依赖关系在Conda环境中得到了妥善管理，而不是依赖于外部系统环境
 > - **二进制兼容性**：Conda提供了许多预编译的二进制包，这些包是为特定平台和体系结构编译的，确保了与Conda环境的兼容性
-> - **系统依赖性**：有些包需要系统级的依赖，例如编译器和库文件。Conda可以管理这些依赖，而 `pip` 则可能无法处理
+> - **系统依赖性**：有些包需要系统级的依赖，例如编译器和库文件。Conda可以管理这些依赖，而`pip`则可能无法处理
 > - **环境变量**：Conda可以设置和管理环境变量，确保软件包能够在 Conda环境中正确运行。如果使用`pip`安装，可能需要手动设置环境变量，这可能会导致与系统其他部分的冲突
 > - **更新和回滚**：Conda提供了更好的包版本管理和环境回滚功能，这在处理复杂依赖关系时特别有用
 >

@@ -7,16 +7,63 @@ IMG_PATH = 'img'
 
 # 获取md路径和图片路径
 def get_path(target_path):
+    md_count = 0
+    img_count = 0
+    result_root_set = set()
+    current_root = ""
+    current_md_count = 0
+    current_img_count = 0
+    count_dict = {}
     md_path_list = []
     img_path_list = []
+
+    # 保存数据方法
+    def save_count():
+        nonlocal md_count
+        nonlocal img_count
+        nonlocal current_root
+        nonlocal current_md_count
+        nonlocal current_img_count
+        nonlocal root
+        count_dict[current_root] = f'\t\t当前目录md数量为{current_md_count},img数量为{current_img_count}'
+        md_count = md_count + current_md_count
+        img_count = img_count + current_img_count
+        current_md_count = 0
+        current_img_count = 0
+        current_root = root
+
     for root, dirs, files in os.walk(target_path):
+        # 排除.git目录，dirs = [d for d in dirs if d != '.git']只会创建一个变量，而对变量进行全切片操作一定需要引用循环中的变量
+        dirs[:] = [d for d in dirs if d != '.git']
+        if current_root == "":
+            # 记录最初始的dirs，也就是根目录
+            result_root_set = set([os.path.join(root, d) for d in dirs])
+            current_root = root
+
+        # 只有最大的根目录发生变化才更换当前root节点，因为存储前一个的方式，无法顾及到最后一个
+        if root in result_root_set:
+            save_count()
+
+        # 循环当前目录下的文件
         for file in files:
-            if file.endswith('.md'):
+            if file.endswith(".md"):
                 md_path: str = os.path.join(root, file)
                 md_path_list.append(md_path)
                 md_name = md_path.split('\\')[-1].split('.md')[0]
                 img_path = os.path.join(os.path.join(root, IMG_PATH), md_name)
                 img_path_list.append(img_path)
+                current_md_count = current_md_count + 1
+            elif file.endswith(".png") or file.endswith(".jpg"):
+                current_img_count = current_img_count + 1
+
+    # 对于最后一个进行存储
+    save_count()
+
+    for key, value in count_dict.items():
+        print(key, value)
+    print("md文件数量为：", md_count)
+    print("img文件数量为：", img_count)
+
     return md_path_list, img_path_list
 
 
@@ -79,15 +126,18 @@ def print_queue(result_queue: queue.Queue):
         print(item)
 
 
-def start(target_path):
+def start(target_path, is_statistics=False):
     # 获取文件目录，文件名称即为img目录下的文件目录
     md_path_list, img_path_list = get_path(target_path)
-    # 线程池任务
-    result_queue = pool_executor(md_path_list, img_path_list)
-    # 打印结果
-    print_queue(result_queue)
+
+    if not is_statistics:
+        # 线程池任务
+        result_queue = pool_executor(md_path_list, img_path_list)
+        # 打印结果
+        print_queue(result_queue)
 
 
 if __name__ == '__main__':
     target_path = r'D:\博客\blog-backup'
     start(target_path)
+    # start(target_path, True)

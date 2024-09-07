@@ -24,43 +24,43 @@
 
 <img src="img/CUDA/image-20240403224513522.png" alt="image-20240403224513522" style="zoom: 50%;" />
 
-设置CUDA 安装时临时缓存位置，可以不用改，但得与原先安装的 CUDA 的安装缓存位置不同：
+设置CUDA安装时临时缓存位置，可以不用改，但得与原先安装的CUDA的安装缓存位置不同：
 
-<img src="img/CUDA/image-20240403231132301.png" alt="image-20240403231132301" style="zoom:80%;" />
+<img src="img/CUDA/image-20240403231132301.png" alt="image-20240403231132301"  />
 
 自定义安装：
 
-<img src="img/CUDA/image-20240403231534254.png" alt="image-20240403231534254" style="zoom: 80%;" />
+<img src="img/CUDA/image-20240403231534254.png" alt="image-20240403231534254"  />
 
 只需要选择CUDA即可：
 
-<img src="img/CUDA/image-20240403231625295.png" alt="image-20240403231625295" style="zoom: 80%;" />
+<img src="img/CUDA/image-20240403231625295.png" alt="image-20240403231625295"  />
 
 选择安装目录，需要记住安装位置：
 
-<img src="img/CUDA/image-20240403232154000.png" alt="image-20240403232154000" style="zoom: 80%;" />
+<img src="img/CUDA/image-20240403232154000.png" alt="image-20240403232154000"  />
 
 修改为：
 
-<img src="img/CUDA/image-20240403232310230.png" alt="image-20240403232310230" style="zoom: 80%;" />
+<img src="img/CUDA/image-20240403232310230.png" alt="image-20240403232310230"  />
 
 勾选后继续：
 
-<img src="img/CUDA/image-20240403232358137.png" alt="image-20240403232358137" style="zoom: 80%;" />
+<img src="img/CUDA/image-20240403232358137.png" alt="image-20240403232358137"  />
 
 完成安装：
 
-<img src="img/CUDA/image-20240403232700122.png" alt="image-20240403232700122" style="zoom: 80%;" />
+<img src="img/CUDA/image-20240403232700122.png" alt="image-20240403232700122"  />
 
 ### 环境变量
 
 安装完成后会自动配置环境变量`nvcc --version`：
 
-<img src="img/CUDA/image-20240403232900580.png" alt="image-20240403232900580" style="zoom:80%;" />
+<img src="img/CUDA/image-20240403232900580.png" alt="image-20240403232900580"  />
 
 多了两个环境变量，系统变量中的`CUDA_PATH`发生了改变，增加`NVCUDASAMPLES_ROOT`：
 
-<img src="img/CUDA/image-20240403233227807.png" alt="image-20240403233227807" style="zoom:80%;" />
+<img src="img/CUDA/image-20240403233227807.png" alt="image-20240403233227807"  />
 
 <img src="img/CUDA/image-20240403233723752.png" alt="image-20240403233723752" style="zoom: 80%;" />
 
@@ -71,23 +71,27 @@ D:\CUDA\v11.7\bin
 D:\CUDA\v11.7\libnvvp
 ```
 
-> <img src="img/CUDA/image-20240403233957741.png" alt="image-20240403233957741" style="zoom:80%;" />
+> <img src="img/CUDA/image-20240403233957741.png" alt="image-20240403233957741"  />
 
 ### 安装对应cudnn
 
 下载cudnn：[cuDNN Archive | NVIDIA Developer](https://developer.nvidia.com/rdp/cudnn-archive)
 
+<img src="img/CUDA/image-20240905163801241.png" alt="image-20240905163801241" style="zoom:80%;" />
+
+> 登录后才能下载
+
 解压放到对应目录：
 
-<img src="img/CUDA/image-20240403234306520.png" alt="image-20240403234306520" style="zoom:67%;" />
+<img src="img/CUDA/image-20240403234306520.png" alt="image-20240403234306520" style="zoom: 80%;" />
 
-<img src="img/CUDA/image-20240403234400559.png" alt="image-20240403234400559" style="zoom:80%;" />
+<img src="img/CUDA/image-20240403234400559.png" alt="image-20240403234400559"  />
 
 在`extras`目录下的`demo_suite`目录运行cmd，执行`bandwidthTest.exe`和`deviceQuery.exe`
 
-<img src="img/CUDA/image-20240403234638138.png" alt="image-20240403234638138" style="zoom:80%;" />
+<img src="img/CUDA/image-20240403234638138.png" alt="image-20240403234638138"  />
 
-<img src="img/CUDA/image-20240403234717407.png" alt="image-20240403234717407" style="zoom:67%;" />
+<img src="img/CUDA/image-20240403234717407.png" alt="image-20240403234717407"  />
 
 至此， 新版本的CUDA与cudnn安装成功，可以使用该版本的CUDA进行GPU加速了
 
@@ -108,9 +112,20 @@ D:\CUDA\v12.1\libnvvp
 D:\CUDA\v12.1
 ```
 
+> ![image-20240905173837169](img/CUDA/image-20240905173837169.png)
+
 修改`NVCUDASAMPLES_ROOT`的值：
 
 ```
 D:\CUDA\v12.1
 ```
 
+> ![image-20240905173943448](img/CUDA/image-20240905173943448.png)
+
+检验版本：
+
+```
+nvcc --version
+```
+
+> ![image-20240905174231966](img/CUDA/image-20240905174231966.png)
