@@ -2,6 +2,8 @@
 
 Mybatis-Plus是在Mybatis的基础上进行扩展，只做增强不做改变，可以兼容Mybatis原生的特性。同时支持通用CRUD操作、多种主键策略、分页、性能分析、全局拦截等。极大帮助我们简化开发工作
 
+官方教程：[插件集成 | RuoYi](https://doc.ruoyi.vip/ruoyi/document/cjjc.html#集成mybatis-plus实现mybatis增强)
+
 ## 整合依赖
 
 `ruoyi-common`下的`pom.xml`模块添加整合依赖
@@ -269,6 +271,31 @@ public class MybatisPlusConfig
 
 如果多`configLocation`配置会报错，而`mybatis-config.xml`无法添加枚举处理器，只能在`applicatio.yml`中集成所有配置
 
+mybatis-config.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 全局参数 -->
+    <settings>
+        <!-- 使全局的映射器启用或禁用缓存 -->
+        <setting name="cacheEnabled"             value="true"   />
+        <!-- 允许JDBC 支持自动生成主键 -->
+        <setting name="useGeneratedKeys"         value="true"   />
+        <!-- 配置默认的执行器.SIMPLE就是普通执行器;REUSE执行器会重用预处理语句(prepared statements);BATCH执行器将重用语句并执行批量更新 -->
+        <setting name="defaultExecutorType"      value="SIMPLE" />
+		<!-- 指定 MyBatis 所用日志的具体实现 -->
+        <setting name="logImpl"                  value="SLF4J"  />
+        <!-- 使用驼峰命名法转换字段 -->
+		<!-- <setting name="mapUnderscoreToCamelCase" value="true"/> -->
+	</settings>
+	
+</configuration>
+```
+
 application.yml
 
 ```yaml
@@ -297,3 +324,22 @@ mybatis-plus:
 #  configLocation: classpath:mybatis/mybatis-config.xml
 ```
 
+> 执行器（Executor）是MyBatis的核心接口之一，负责SQL语句的执行和映射
+>
+> **SimpleExecutor**：
+>
+> - 每次执行update或select操作时，即时创建并关闭Statement对象，实现简易，但频繁操作数据库资源
+> - 适用于简单SQL场景，如开发或测试环境，便于调试
+> - 注意：高并发情况下，SimpleExecutor可能会因为频繁创建和关闭Statement而降低性能
+>
+> **ReuseExecutor**：
+>
+> - 通过复用Statement对象提升性能，相同SQL复用，减少资源开销
+> - 需注意SQL正确性和内存管理，避免数据不一致性和内存泄漏
+> - 适用：执行相似SQL且对性能有要求的场景
+>
+> **BatchExecutor**：
+>
+> - 支持批量操作，提高数据插入或更新效率，减少网络交互
+> - 注意批量操作异常处理和事务回滚，以及内存使用
+> - 适用：大量数据批量操作，如数据库迁移或数据同步

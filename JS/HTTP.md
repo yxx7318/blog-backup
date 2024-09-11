@@ -150,6 +150,13 @@ Content-Disposition: form-data; name="age"
 >
 > - `[文件内容]`是实际的文件二进制数据，浏览器不会展示，这里手动添加用于占位
 > - 类似`&#25105;`的字符为HTML编码(使用以`&`开始并以`;`结束的特殊字符序列来表示)
+>
+> SpringBoot接收方式
+>
+> ```java
+>     public String handleFileUpload(@RequestParam("image") MultipartFile file,
+>                                    @RequestParam("myText") String myText)
+> ```
 
 ## 请求头
 
