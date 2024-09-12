@@ -108,18 +108,23 @@ Content-Disposition: form-data; name="age"
 --123--
 ```
 
-> - `boundary=123`用来定义分隔符，后续分隔会在分隔符号的基础上增强`--`，例如对于`boundary=----WebKitFormBoundaryNY6Gi8RUqawjHsJL`分隔时为`------WebKitFormBoundaryNY6Gi8RUqawjHsJL`
-> - 起始分隔符是`--分隔符`
-> - 结束分隔符是`--分隔符--`
+> - `Content-Type`告诉服务器整个请求体的格式是`multipart/form-data`，并且定义了一个边界字符串，用于分隔请求中的不同部分
+> - `boundary`：用来定义分隔符
+>   - 分隔时会在分隔符号的基础上再增强`--`，对于`boundary=----WebKitFormBoundaryNY6Gi8RUqawjHsJL`时分割符为`------WebKitFormBoundaryNY6Gi8RUqawjHsJL`
+>   - 每个部分之间分隔符是`--分隔符`
+>   - 请求体结束分隔符是`--分隔符--`
 >
-> 注意：
+> - `Content-Disposition`：在每个部分中用于指示这部分数据是一个表单字段还是文件上传，如果是文件上传，它还会提供`filename`文件名
+>   - 被分隔部分都是一个独立的实体，有自己的`Content-Disposition`（指示如何处理该部分的数据）和`Content-Type`（指示该部分的数据类型，简单的表单字段（例如文本），通常可以省略`Content-Type`头部）
+>   - 通过这种方式，服务器可以解析`multipart`请求，正确地识别每个表单字段和上传的文件
 >
-> - 用js计算请求体长度为116，而在HTTP对请求体进行ASCII编码时，为了保证兼容性(`Windows`和`Linux`平台的区别)，`\r`和`\n`加起来才构成一个换行(也可用于表示空行)，所以结果为125
-> - 请求标头的`Content-Type`会附带分隔符，类似于`Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryNY6Gi8RUqawjHsJL`
+>
+> 注意：用js计算请求体长度为116，而在HTTP对请求体进行ASCII编码时，为了保证兼容性(`Windows`和`Linux`平台的区别)，`\r`和`\n`加起来才构成一个换行(也可用于表示空行)，所以结果为125
+>
 
 **混合multipart请求**
 
-```
+```html
 <form action="" method="post" enctype="multipart/form-data">
   <input type="file" name="image" />
   <input type="text" name="myText" />
@@ -146,12 +151,23 @@ Content-Disposition: form-data; name="age"
 > ------WebKitFormBoundaryHSH1AFbeGogPHASo--
 > ```
 >
+> > 对于单上传文件表单
+> >
+> > ```
+> > ------WebKitFormBoundaryNBb7Pq1yYC1Kt3Mm
+> > Content-Disposition: form-data; name="image"; filename="&#40857;&#24180;&#36154;&#22270;.png"
+> > Content-Type: image/png
+> > 
+> > 
+> > ------WebKitFormBoundaryNBb7Pq1yYC1Kt3Mm--
+> > ```
+>
 > 注意：
 >
 > - `[文件内容]`是实际的文件二进制数据，浏览器不会展示，这里手动添加用于占位
 > - 类似`&#25105;`的字符为HTML编码(使用以`&`开始并以`;`结束的特殊字符序列来表示)
 >
-> SpringBoot接收方式
+> SpringBoot接收方式：
 >
 > ```java
 >     public String handleFileUpload(@RequestParam("image") MultipartFile file,
@@ -394,8 +410,12 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 **Content-Disposition**
 - 作用：指示响应的内容应该如何展示，通常用于文件下载，可以指定文件名
 - 示例：`Content-Disposition: attachment; filename="example.txt"`
+  - `Content-Disposition`：这个头部字段的目的是告诉用户代理（通常是浏览器）如何显示接收到的内容，`inline`(用户代理会尝试在浏览器窗口中直接显示内容，而不是提示用户保存文件)和`attachment`(用户代理会提示用户保存内容为一个文件，而不是尝试在浏览器中打开它)
+  - `filename="example.txt"`：这个参数指定了下载时建议使用的文件名。在示例中，浏览器会建议将下载的文件保存为`“example.txt”`。这只是一个建议，用户可以更改文件名
+
 
 **Access-Control-Allow-Origin**
+
 - 作用：在CORS（跨源资源共享）请求中指定哪些网站可以访问资源，对于开发跨域应用非常重要
 - 示例：`Access-Control-Allow-Origin: *`（允许任何来源）
 

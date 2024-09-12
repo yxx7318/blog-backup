@@ -2,6 +2,51 @@
 
 使用`nvcc --version`或者`nvidia-smi`查看cuda版本
 
+## 查看CUDA版本
+
+### torch
+
+```python
+import platform
+import torch
+
+print("python.version:", platform.python_version())
+print("torch.version:", torch.__version__)
+print("CUDA.version:", torch.version.cuda)
+print("cuDNN.version:", torch.backends.cudnn.version())
+
+```
+
+> ```
+> python.version: 3.9.19
+> torch.version: 2.4.1
+> CUDA.version: 12.1
+> cuDNN.version: 90100
+> ```
+
+### paddle
+
+```python
+import platform
+import paddle
+import paddleocr
+
+print("python.version:", platform.python_version())
+print("PaddleOCR version:", paddleocr.__version__)
+print("Paddle version:", paddle.__version__)
+print("CUDA version:", paddle.version.cuda())
+print("cuDNN version:", paddle.version.cudnn())
+
+```
+
+> ```
+> python.version: 3.10.14
+> PaddleOCR version: 2.7.0.3
+> Paddle version: 2.6.1
+> CUDA version: 11.7
+> cuDNN version: 8.4.1
+> ```
+
 ## 升级cuda
 
 官方驱动地址：[NVIDIA GeForce 驱动程序 - N 卡驱动 | NVIDIA](https://www.nvidia.cn/geforce/drivers/)
@@ -10,7 +55,7 @@
 
 <img src="img/CUDA/image-20240403225001807.png" alt="image-20240403225001807" style="zoom:50%;" />
 
-## 多版本cuda切换
+## cuda安装
 
 ### 安装对应cuda
 
@@ -73,13 +118,13 @@ D:\CUDA\v11.7\libnvvp
 
 > <img src="img/CUDA/image-20240403233957741.png" alt="image-20240403233957741"  />
 
-### 安装对应cudnn
+### 安装对应cuDNN
 
-下载cudnn：[cuDNN Archive | NVIDIA Developer](https://developer.nvidia.com/rdp/cudnn-archive)
+下载历史cudNN：[cuDNN Archive | NVIDIA Developer](https://developer.nvidia.com/rdp/cudnn-archive)
 
-<img src="img/CUDA/image-20240905163801241.png" alt="image-20240905163801241" style="zoom:80%;" />
+<img src="img/CUDA/image-20240905163801241.png" alt="image-20240905163801241"  />
 
-> 登录后才能下载
+> 登录后才能下载，cuDNN对应的版本号也需要依据实际情况进行下载，这里是`v8.9.6`
 
 解压放到对应目录：
 
@@ -95,16 +140,52 @@ D:\CUDA\v11.7\libnvvp
 
 至此， 新版本的CUDA与cudnn安装成功，可以使用该版本的CUDA进行GPU加速了
 
-### 切换cuda
+### 新版本的cuDNN
+
+> 所有cuDNN：[cuDNN Archive | NVIDIA Developer](https://developer.nvidia.com/cudnn-archive)
+
+![image-20240912145727397](img/CUDA/image-20240912145727397.png)
+
+> 支持下载压缩包的方式使用
+
+![image-20240912152146627](img/CUDA/image-20240912152146627.png)
+
+> 更推荐直接使用exe文件方式使用（windows下直接兼容CUDA11和CUDA12）
+
+![image-20240912152410293](img/CUDA/image-20240912152410293.png)
+
+自定义安装：
+
+![image-20240912152855588](img/CUDA/image-20240912152855588.png)
+
+执行清理安装：
+
+![image-20240912152920679](img/CUDA/image-20240912152920679.png)
+
+修改安装后的位置：
+
+![image-20240912153334713](img/CUDA/image-20240912153334713.png)
+
+安装完成：
+
+![image-20240912154731869](img/CUDA/image-20240912154731869.png)
+
+## 切换cuda
 
 > 当需要切换为其它版本，只需要对环境变量进行修改即可
 
-在系统变量Path中，上移需要切换的版本，像是上移：
+在系统变量`Path`中，上移需要切换的版本：
 
 ```
 D:\CUDA\v12.1\bin
 D:\CUDA\v12.1\libnvvp
 ```
+
+> ![image-20240912120234616](img/CUDA/image-20240912120234616.png)
+>
+> 系统变量的`Path`比用户变量`Path`优先级更高，为了防止隐藏的问题，两个都改
+>
+> ![image-20240912120408825](img/CUDA/image-20240912120408825.png)
 
 修改`CUDA_PATH`的值：
 
@@ -112,7 +193,7 @@ D:\CUDA\v12.1\libnvvp
 D:\CUDA\v12.1
 ```
 
-> ![image-20240905173837169](img/CUDA/image-20240905173837169.png)
+> ![image-20240912115946774](img/CUDA/image-20240912115946774.png)
 
 修改`NVCUDASAMPLES_ROOT`的值：
 
@@ -129,3 +210,13 @@ nvcc --version
 ```
 
 > ![image-20240905174231966](img/CUDA/image-20240905174231966.png)
+
+### 切换cuDNN
+
+> 有些库对cuDNN版本有要求
+>
+> ![image-20240912155532217](img/CUDA/image-20240912155532217.png)
+
+直接替换：
+
+![image-20240912120949705](img/CUDA/image-20240912120949705.png)
