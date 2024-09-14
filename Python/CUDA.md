@@ -14,6 +14,7 @@ print("python.version:", platform.python_version())
 print("torch.version:", torch.__version__)
 print("CUDA.version:", torch.version.cuda)
 print("cuDNN.version:", torch.backends.cudnn.version())
+print("CUDA.state:", torch.cuda.is_available())
 
 ```
 
@@ -22,7 +23,35 @@ print("cuDNN.version:", torch.backends.cudnn.version())
 > torch.version: 2.4.1
 > CUDA.version: 12.1
 > cuDNN.version: 90100
+> CUDA.state: True
 > ```
+
+### tensorflow
+
+```python
+import platform
+import tensorflow
+
+print("python.version:", platform.python_version())
+print("torch.version:", tensorflow.__version__)
+print("CUDA.version:", tensorflow.sysconfig.get_build_info()['cuda_version'])
+print("cuDNN.version:", tensorflow.sysconfig.get_build_info()['cudnn_version'])
+print("CUDA.state:", tensorflow.config.list_physical_devices('GPU'))
+
+```
+
+> ```
+> python.version: 3.8.19
+> torch.version: 2.9.3
+> CUDA.version: 64_112
+> cuDNN.version: 64_8
+> CUDA.state: [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+> ```
+>
+> 官方文档：[GPU 支持  | TensorFlow (google.cn)](https://tensorflow.google.cn/install/gpu?hl=zh-cn)
+>
+> - 使用`pip install tensorflow`时，1.15以上的版本会默认包含对 CPU 的支持，与 PyTorch 不同，TensorFlow在安装时不需要指定GPU版本，因为TensorFlow的pip包默认就包含了CPU和GPU的支持代码，打印CUDA和cuDNN版本时，TensorFlow显示的是它编译时使用的版本
+> - NVIDIA的GPU驱动程序通常也与旧版本的CUDA Toolkit兼容。只要GPU驱动程序支持TensorFlow所需的CUDA Toolkit版本，即使系统上安装了更高版本的CUDA Toolkit，TensorFlow也应该能够正常运行
 
 ### paddle
 
@@ -36,6 +65,7 @@ print("PaddleOCR version:", paddleocr.__version__)
 print("Paddle version:", paddle.__version__)
 print("CUDA version:", paddle.version.cuda())
 print("cuDNN version:", paddle.version.cudnn())
+print("CUDA.state:", paddle.is_compiled_with_cuda())
 
 ```
 
@@ -45,6 +75,7 @@ print("cuDNN version:", paddle.version.cudnn())
 > Paddle version: 2.6.1
 > CUDA version: 11.7
 > cuDNN version: 8.4.1
+> CUDA.state: True
 > ```
 
 ## 升级cuda
