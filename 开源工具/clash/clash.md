@@ -33,6 +33,12 @@ wget -O config.yaml [订阅地址]
 
 ![image-20240810121259914](img/clash/image-20240810121259914.png)
 
+> 自动下载可能无法下载：
+>
+> ![image-20240916123319880](img/clash/image-20240916123319880.png)
+>
+> 下载地址：https://cdn.jsdelivr.net/gh/Dreamacro/maxmind-geoip@release/Country.mmdb
+
 增加执行权限：
 
 ```
@@ -88,8 +94,6 @@ curl https://www.google.com.hk/
 
 > <img src="img/clash/image-20240810122442717.png" alt="image-20240810122442717" style="zoom:80%;" />
 
-
-
 ### 关闭clash
 
 查找进程：
@@ -126,3 +130,13 @@ curl https://www.google.com.hk/
 > [root@host clash]# curl https://www.google.com.hk/
 > curl: (7) Failed connect to 127.0.0.1:7890; 拒绝连接
 > ```
+
+## 切换脚本
+
+```
+source /usr/local/clash/switchClash.sh
+```
+
+> 切换clash的开关状态：
+>
+> ![image-20240916124100250](img/clash/image-20240916124100250.png)
