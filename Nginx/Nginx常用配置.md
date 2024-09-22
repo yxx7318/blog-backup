@@ -8,7 +8,7 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 
 ```nginx
     gzip on;
-    gzip_disable "msie6"; # 禁用对旧版IE的压缩
+    gzip_disable "MSIE [1-6]\."; #对IE6以下的版本都不进行压缩
     gzip_vary on;
     gzip_proxied any;
     gzip_comp_level 6;
@@ -25,9 +25,19 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 ```
 
 - `gzip on`：启用gzip压缩
-- `gzip_disable "msie6";`：禁用了对旧版IE（Internet Explorer 6）的Gzip压缩
-- `gzip_vary on`：在响应头中添加`Vary: Accept-Encoding`，以便缓存服务器根据不同的压缩方式缓存不同的响应。如果不使用`gzip_vary on;`配置，代理服务器可能会缓存不同的压缩和非压缩版本，这样会导致缓存效率低下，浪费存储空间，同时也增加了响应时的计算成本
-- `gzip_proxied any`：指定压缩是否适用于所有代理请求
+- `gzip_disable "MSIE [1-6]\.";`：禁用了对旧版IE6（Internet Explorer 6）以下版本的Gzip压缩
+- `gzip_vary on`：在响应头中添加`Vary: Accept-Encoding`，以便缓存服务器根据不同的压缩方式缓存不同的响应。如果不使用此配置，代理服务器可能会缓存不同的压缩和非压缩版本，这样会导致缓存效率低下，浪费存储空间，同时也增加了响应时的计算成本
+- `gzip_proxied any`：指定压缩是否将后端服务器接收到的数据进行压缩
+  - `off`：关闭所有的代理结果数据压缩
+  - `expired`：如果header中包含`Expires`头信息，启用压缩
+  - `no-cache`：如果header中包含`Cache-Control:no-cache`头信息，启用压缩
+  - `no-store`：如果header中包含`Cache-Control:no-store`头信息，启用压缩
+  - `private`：如果header中包含`Cache-Control:private`头信息，启用压缩
+  - `no_last_modified`：启用压缩，如果header中包含`Last_Modified`头信息，启用压缩
+  - `no_etag`：启用压缩，如果header中包含`ETag`头信息，启用压缩
+  - `auth`：启用压缩，如果header中包含`Authorization`头信息，启用压缩
+  - `any`：无条件压缩所有结果数据
+
 - `gzip_comp_level 6`：指定压缩级别，范围是1-9，数字越大压缩越多，但也会增加CPU负载
 - `gzip_buffers 16 8k;`：设置了用于存储压缩数据的缓冲区大小，`16`是指缓冲区的数量，而`8k`是指每个缓冲区的大小（8KB）
 - `gzip_http_version 1.1;`：指定了Nginx在与客户端通信时使用的HTTP版本，HTTP/1.0协议不支持Gzip压缩，如果客户端请求的版本低于`1.1`，则Nginx不会发送Gzip压缩的响应，默认值是`1.1`
@@ -46,7 +56,7 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 
 ### gzip_static
 
-> 在提供静态文件服务时，如果存在与原始文件同名的`.gz`文件，则直接发送这个预先压缩好的文件，而不是动态压缩
+> 在提供静态文件服务时，如果存在与原始文件同名的`.gz`文件，则直接发送这个预先压缩好的文件，而不是动态压缩，这样可以解决`gzip on`和`sendfile on`时不经过用户进程将静态文件通过网络设备发送出去导致无法进行压缩
 >
 > `gzip on;`和`gzip_static on;`可以同时启用，相互独立
 

@@ -70,7 +70,7 @@ http {
 
 ```nginx
     gzip on;
-    gzip_disable "msie6"; # 禁用对旧版IE的压缩
+    gzip_disable "MSIE [1-6]\."; #对IE6以下的版本都不进行压缩
     gzip_vary on;
     gzip_proxied any;
     gzip_comp_level 6;
