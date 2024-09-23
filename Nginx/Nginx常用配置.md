@@ -8,7 +8,7 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 
 ```nginx
     gzip on;
-    gzip_disable "MSIE [1-6]\."; #对IE6以下的版本都不进行压缩
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)"; #对IE6以下的版本都不进行压缩
     gzip_vary on;
     gzip_proxied any;
     gzip_comp_level 6;
@@ -25,7 +25,7 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 ```
 
 - `gzip on`：启用gzip压缩
-- `gzip_disable "MSIE [1-6]\.";`：禁用了对旧版IE6（Internet Explorer 6）以下版本的Gzip压缩
+- `gzip_disable "MSIE [1-6]\.(?!.*SV1)";`：禁用了对旧版IE6（Internet Explorer 6）以下版本的Gzip压缩
 - `gzip_vary on`：在响应头中添加`Vary: Accept-Encoding`，以便缓存服务器根据不同的压缩方式缓存不同的响应。如果不使用此配置，代理服务器可能会缓存不同的压缩和非压缩版本，这样会导致缓存效率低下，浪费存储空间，同时也增加了响应时的计算成本
 - `gzip_proxied any`：指定压缩是否将后端服务器接收到的数据进行压缩
   - `off`：关闭所有的代理结果数据压缩
@@ -56,12 +56,20 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 
 ### gzip_static
 
-> 在提供静态文件服务时，如果存在与原始文件同名的`.gz`文件，则直接发送这个预先压缩好的文件，而不是动态压缩，这样可以解决`gzip on`和`sendfile on`时不经过用户进程将静态文件通过网络设备发送出去导致无法进行压缩
+> 在提供静态文件服务时，如果存在与原始文件同名的`.gz`文件，则直接发送这个预先压缩好的文件，而不是动态压缩，这样可以解决`gzip on`和`sendfile on`时不经过用户进程将静态文件通过网络设备发送出去导致无法进行压缩的问题
 >
 > `gzip on;`和`gzip_static on;`可以同时启用，相互独立
 
+开启命令
+
 ```nginx
 gzip_static on;
+```
+
+手动压缩文件命令
+
+```
+gzip jquery.min.js
 ```
 
 配置`vue.config.js`
