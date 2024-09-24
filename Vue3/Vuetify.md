@@ -47,6 +47,8 @@ npm install vite-plugin-vuetify --save
 修改`main.js`
 
 ```js
+// Vuetify
+import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 // import * as components from 'vuetify/components'
 // import * as directives from 'vuetify/directives'
