@@ -103,13 +103,12 @@ gzip jquery.min.js
 ## 允许跨域
 
 ```nginx
-		# 为特定的URL匹配请求设置根目录
+		# 为特定的URL匹配
 		location / {
 			# 允许跨域的配置
-			add_header 'Access-Control-Allow-Origin' '*';
+			add_header 'Access-Control-Allow-Origin' '*' always;
 			add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
 			add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
-			# 此判断只能用于location块，客户端在执行实际请求之前，会发送一个OPTIONS请求来询问服务器是否允许跨源请求，直接返回204可以减少服务器的负担
 			if ($request_method = 'OPTIONS') {
 				return 204;
 			}
@@ -198,6 +197,34 @@ server {
 >
 > - 默认情况下，`curl` 不会跟随重定向，除非指定了`-L`这个参数(自动进行重定向到新的位置)，`-I`只获取HTTP头部信息
 > - 很多第三方库发送请求会自动遵循重定向，就像浏览器一样，所以在请求后会发送一个新的请求到重定向的URL
+>
+> > 其它写法：
+> >
+> > - SSL检测
+> >
+> >   - ```nginx
+> >     if ($ssl_protocol = "") { return 301 https://$host$request_uri; }
+> >     ```
+> >
+> >   - 通过请求的Host头去进行重定向，而非Nginx设置的`server_name`
+> >
+> > - 协议检测
+> >
+> >   - ```nginx
+> >         server {
+> >             listen 80;
+> >             server_name _; # 使用通配符匹配所有请求
+> >     
+> >             location / {
+> >                 if ($scheme = http) {
+> >                     return 301 https://$host$request_uri;
+> >                 }
+> >                 # 其他配置...
+> >             }
+> >         }
+> >     ```
+> >
+> >   - 通过检测协议是否为HTTPS来进行重定向
 
 ## 防盗链
 
@@ -211,32 +238,13 @@ server {
         }
 ```
 
-> - `valid_referers`指令用于设置合法的referer白名单
-> - `none`允许没有referer头的请求
-> - `blocked` 允许referer头存在但被阻止或修改的请求，代表referer信息存在，但是由于某些原因（如用户代理设置或隐私设置）被阻止或修改了。例如，当用户的浏览器设置为不发送referer信息，或者referer信息被代理服务器修改为一个空字符串时，这种情况就会被归类为`blocked`
-> - `example.com`允许来自`example.com`域的请求
-> - `$invalid_referer`是一个内置变量，当`valid_referers`指令检查发现referer不合法时，它的值为真
-> - `return 301 https://yourdomain.com/forbidden.jpg;`是另一种处理方式，即如果referer不合法，则将请求重定向到一个错误图片
+> - `valid_referers`：指令用于设置合法的referer白名单
+> - `none`：允许没有referer头的请求
+> - `blocked`：允许referer头存在但被阻止或修改的请求，代表referer信息存在，但是由于某些原因（如用户代理设置或隐私设置）被阻止或修改了。例如，当用户的浏览器设置为不发送referer信息，或者referer信息被代理服务器修改为一个空字符串时，这种情况就会被归类为`blocked`
+> - `example.com`：允许来自`example.com`域的请求
+> - `$invalid_referer`：是一个内置变量，当`valid_referers`指令检查发现referer不合法时，它的值为真
+> - `return 301 https://yourdomain.com/forbidden.jpg;`：是另一种处理方式，即如果referer不合法，则将请求重定向到一个错误图片
 >
-> 防盗链效果
->
-> ![image-20240902145020402](img/Nginx常用配置/image-20240902145020402.png)
->
-> 实际返回信息
->
-> ```html
-> <html>
-> <head><title>403 Forbidden</title></head>
-> <body>
-> <center><h1>403 Forbidden</h1></center>
-> <hr><center>nginx/1.20.2</center>
-> </body>
-> </html>
-> ```
->
-> 重定向图片效果
->
-> ![image-20240902145828885](img/Nginx常用配置/image-20240902145828885.png)
 
 ## IPV6支持
 

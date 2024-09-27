@@ -388,7 +388,7 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 - 示例：`Cache-Control: max-age=3600`（资源在客户端可缓存1小时）
 
 **Expires**
-- 作用：指定缓存资源的过期时间，GMT格式，与Cache-Control配合使用，如果`Cache-Control`存在，则Expires会被忽略
+- 作用：指定缓存资源的过期时间，GMT格式，与`Cache-Control`配合使用，如果`Cache-Control`存在，则`Expires`会被忽略
 - 示例：`Expires: Thu, 01 Jan 1970 00:00:00 GMT`（资源已经过期）
 
 **Last-Modified**
@@ -396,7 +396,7 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 - 示例：`Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT`
 
 **ETag**
-- 作用：资源的唯一标识符，用于缓存验证，与Last-Modified类似，用于协商缓存
+- 作用：资源的唯一标识符，用于缓存验证，与`Last-Modified`类似，用于协商缓存
 - 示例：`ETag: "33a64df551425fcc55e4d42a148795d9f25f89d4"`
 
 **Location**
