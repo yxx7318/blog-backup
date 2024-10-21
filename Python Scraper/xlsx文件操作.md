@@ -82,6 +82,101 @@ import openpyxl
 
 - `yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')`：颜色填充对象，修改`fill`属性填充单元格为黄色`ws.cell(row=n_row_book, column=n_col_book).fill = yellow_fill`
 
+## 对象类
+
+```python
+# 获取学号和姓名信息
+import openpyxl
+from datetime import datetime
+from typing import List
+
+
+class ExcelObject:
+    def __init__(self, xlsx_path, ws_number: int = 0):
+        self.xlsx_path = xlsx_path
+        try:
+            self.wb = openpyxl.load_workbook(self.xlsx_path)
+        except Exception:
+            raise Exception(f"读取xlsx文件出错，请检查文件路径：{self.xlsx_path}")
+        self.ws = self.get_ws(ws_number)
+
+    def get_wb(self):
+        return self.wb
+
+    def get_ws(self, number: int = 0):
+        wb = self.get_wb()
+        if number == 0:
+            return wb.active
+        return wb.worksheets[number - 1]
+
+    # 保存文档
+    def save_xlsx(self, new_path: str = None) -> str:
+        if new_path is None:
+            obj_path = self.xlsx_path
+        else:
+            obj_path = new_path
+        # 尝试保存
+        try:
+            self.get_wb().save(obj_path)
+        except Exception:
+            now = datetime.now()
+            formatted_time = now.strftime("%Y-%m-%d %H-%M-%S")
+            # 重命名保证保存成功
+            obj_path = obj_path.replace(".xlsx", f"-副本{formatted_time}.xlsx")
+            self.get_wb().save(obj_path)
+            raise Exception(f"保存出错，可能由于你没有关闭文档导致出错\n已将文件保存为副本：{obj_path}")
+        return obj_path
+
+    # 获取某一列的值，指定列和行
+    def get_column(self, col: int, start_row: int = 1, end_row: int = 1) -> List[str]:
+        result_list = []
+        # 如果没有指定结尾，或者指定出错了，直接返回所有的
+        if end_row <= start_row:
+            ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.ws.max_row, min_col=col, max_col=col)
+        else:
+            ws_range = self.ws.iter_rows(min_row=start_row, max_row=end_row, min_col=col, max_col=col)
+        for row in ws_range:
+            for col in row:
+                # print(col.value)
+                result_list.append(str(col.value).strip())
+
+        return result_list
+
+    # 获取某一行的值
+    def get_row(self, row: int, start_col: int = 1, end_col: int = 1) -> List[str]:
+        result_list = []
+        # 如果没有指定结尾，或者指定出错了，直接返回所有的
+        if start_col <= end_col:
+            ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=self.ws.max_column)
+        else:
+            ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=end_col)
+        for row in ws_range:
+            for col in row:
+                # print(col.value)
+                result_list.append(str(col.value).strip())
+
+        return result_list
+
+    # 获取一个范围的数据
+    def get_range(self, start_row: int = 1, end_row: int = 1, start_col: int = 1, end_col: int = 1) -> List[List[str]]:
+        result_list = []
+        # 如果不指定结尾，则默认读到最后
+        if start_row <= end_row:
+            ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.ws.max_row, min_col=start_col,
+                                         max_col=self.ws.max_column)
+        else:
+            ws_range = self.ws.iter_rows(min_row=start_row, max_row=end_row, min_col=start_col,
+                                         max_col=end_col)
+        for row in ws_range:
+            current_list = []
+            for col in row:
+                # print(col.value)
+                current_list.append(str(col.value).strip())
+            result_list.append(current_list)
+        return result_list
+
+```
+
 ## 示例代码
 
 ```python
