@@ -59,7 +59,7 @@ import openpyxl
                 print(ws.cell(row=row, column=col).value)
     ```
 
-- `sheet.delete_rows(index)`：删除指定的行，下面的行**会立即往前移**，所以如果要删除多行不能边读边删，应该保存需要删除的行，然后结束从底往前删
+- `ws.delete_rows(index)`：删除指定的行，下面的行**会立即往前移**，所以如果要删除多行不能边读边删，应该保存需要删除的行，然后结束从底往前删
 
   - ```py
     def deal_xlsx(sheet):
@@ -85,19 +85,23 @@ import openpyxl
 ## 对象类
 
 ```python
-# 获取学号和姓名信息
 import openpyxl
 from datetime import datetime
 from typing import List
+import os
 
 
 class ExcelObject:
     def __init__(self, xlsx_path, ws_number: int = 0):
         self.xlsx_path = xlsx_path
-        try:
-            self.wb = openpyxl.load_workbook(self.xlsx_path)
-        except Exception:
-            raise Exception(f"读取xlsx文件出错，请检查文件路径：{self.xlsx_path}")
+        # 如果没有此文档，则新建文档
+        if not os.path.exists(xlsx_path):
+            self.wb = openpyxl.Workbook()
+        else:
+            try:
+                self.wb = openpyxl.load_workbook(self.xlsx_path)
+            except Exception:
+                raise Exception(f"读取xlsx文件出错，请检查文件路径：{self.xlsx_path}")
         self.ws = self.get_ws(ws_number)
 
     def get_wb(self):
@@ -174,6 +178,29 @@ class ExcelObject:
                 current_list.append(str(col.value).strip())
             result_list.append(current_list)
         return result_list
+
+    # 删除此行的数据
+    def clean_row(self, row):
+        self.ws.delete_rows(row)
+
+    # 删除所有行的数据
+    def clean_all_row(self):
+        for i in range(self.ws.max_row, 0, -1):
+            self.clean_row(i)
+
+    # 将List写入表格中，可以进行List嵌套
+    def write_append_list(self, current_list: List, is_clean_ws=False):
+        if is_clean_ws:
+            self.clean_all_row()
+        if current_list != [] and isinstance(current_list[0], str):
+            self.get_ws().append(current_list)
+        if current_list != [] and isinstance(current_list[0], list):
+            for i in current_list:
+                self.write_append_list(i)
+
+    # 写入到第i行，第j列的单元格数据
+    def write_cell(self, new_value, row, col):
+        self.ws.cell(row=row, column=col).value = str(new_value).strip()
 
 ```
 
