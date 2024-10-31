@@ -59,7 +59,7 @@ mybatis-plus:
 
 添加`Mybatis Plus`配置`MybatisPlusConfig.java`。 **PS：原来的`MyBatisConfig.java`需要删除掉或者注释掉`@Configuration`注解**
 
-MyBatisConfig.java
+`com.ruoyi.framework.config`目录下`MyBatisConfig.java`
 
 ```java
 package com.ruoyi.framework.config;

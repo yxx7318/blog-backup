@@ -34,6 +34,8 @@ import openpyxl
 
 - `ws.insert_rows(1)`：在第一行插入空白行，原本第一行的列会向下移变成第二行，以此类推
 
+- `wb.create_sheet(index=0, title="新工作表")`：新的工作表会被插入到工作簿的最前面，也就是索引位置0，并命名为"新工作表"
+
 - `ws = wb.worksheets[1]`：加载第二张表
 
 - `ws['A1'] = "province_name"`：设置单元格"A1"的值为"province_name"
@@ -87,38 +89,62 @@ import openpyxl
 ```python
 import openpyxl
 from datetime import datetime
-from typing import List
 import os
+
+MAX_LENGTH = 100000
 
 
 class ExcelObject:
-    def __init__(self, xlsx_path, ws_number: int = 0):
-        self.xlsx_path = xlsx_path
+    def __init__(self, xlsx_path: str, ws_number: int = 1):
+        # 判断字符串是否结尾为格式
+        if xlsx_path.endswith(".xlsx"):
+            self.xlsx_path = xlsx_path
+        else:
+            self.xlsx_path = xlsx_path + ".xlsx"
+
         # 如果没有此文档，则新建文档
-        if not os.path.exists(xlsx_path):
+        if not os.path.exists(self.xlsx_path):
             self.wb = openpyxl.Workbook()
         else:
             try:
                 self.wb = openpyxl.load_workbook(self.xlsx_path)
             except Exception:
                 raise Exception(f"读取xlsx文件出错，请检查文件路径：{self.xlsx_path}")
-        self.ws = self.get_ws(ws_number)
+
+        # 指定工作簿
+        self.ws = self.switch_ws(ws_number)
+
+        # 设置最大的行和列
+        if self.ws.max_row >= MAX_LENGTH:
+            self.max_row = MAX_LENGTH
+        else:
+            self.max_row = self.ws.max_row
+        if self.ws.max_column >= MAX_LENGTH:
+            self.max_col = MAX_LENGTH
+        else:
+            self.max_col = self.ws.max_column
 
     def get_wb(self):
         return self.wb
 
-    def get_ws(self, number: int = 0):
+    def switch_ws(self, number: int = 1):
         wb = self.get_wb()
-        if number == 0:
-            return wb.active
-        return wb.worksheets[number - 1]
+        if len(wb.worksheets) < number - 1:
+            count = number - len(wb.worksheets)
+            for i in range(count):
+                wb.create_sheet()
+        self.ws = wb.worksheets[number - 1]
+        return self.ws
 
     # 保存文档
     def save_xlsx(self, new_path: str = None) -> str:
         if new_path is None:
             obj_path = self.xlsx_path
         else:
-            obj_path = new_path
+            if new_path.endswith(".xlsx"):
+                obj_path = new_path
+            else:
+                obj_path = new_path + ".xlsx"
         # 尝试保存
         try:
             self.get_wb().save(obj_path)
@@ -132,51 +158,61 @@ class ExcelObject:
         return obj_path
 
     # 获取某一列的值，指定列和行
-    def get_column(self, col: int, start_row: int = 1, end_row: int = 1) -> List[str]:
+    def get_column(self, col: int, start_row: int = 1, end_row: int = 0) -> list[str]:
         result_list = []
         # 如果没有指定结尾，或者指定出错了，直接返回所有的
-        if end_row <= start_row:
-            ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.ws.max_row, min_col=col, max_col=col)
+        if end_row > start_row:
+            ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.max_row, min_col=col, max_col=col)
         else:
             ws_range = self.ws.iter_rows(min_row=start_row, max_row=end_row, min_col=col, max_col=col)
         for row in ws_range:
             for col in row:
-                # print(col.value)
-                result_list.append(str(col.value).strip())
-
+                if col.value is not None:
+                    # print(col.value)
+                    result_list.append(str(col.value).strip())
+                else:
+                    result_list.append('')
         return result_list
 
     # 获取某一行的值
-    def get_row(self, row: int, start_col: int = 1, end_col: int = 1) -> List[str]:
+    def get_row(self, row: int, start_col: int = 1, end_col: int = 0) -> list[str]:
         result_list = []
         # 如果没有指定结尾，或者指定出错了，直接返回所有的
-        if start_col <= end_col:
-            ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=self.ws.max_column)
+        if start_col > end_col:
+            ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=self.max_col)
         else:
             ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=end_col)
         for row in ws_range:
             for col in row:
-                # print(col.value)
-                result_list.append(str(col.value).strip())
-
+                if col.value is not None:
+                    # print(col.value)
+                    result_list.append(str(col.value).strip())
+                else:
+                    result_list.append('')
         return result_list
 
     # 获取一个范围的数据
-    def get_range(self, start_row: int = 1, end_row: int = 1, start_col: int = 1, end_col: int = 1) -> List[List[str]]:
+    def get_range_by_row(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0) -> list[
+        list[str]]:
         result_list = []
-        # 如果不指定结尾，则默认读到最后
-        if start_row <= end_row:
-            ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.ws.max_row, min_col=start_col,
-                                         max_col=self.ws.max_column)
+        if start_col > end_col:
+            for_end = self.max_row
         else:
-            ws_range = self.ws.iter_rows(min_row=start_row, max_row=end_row, min_col=start_col,
-                                         max_col=end_col)
-        for row in ws_range:
-            current_list = []
-            for col in row:
-                # print(col.value)
-                current_list.append(str(col.value).strip())
-            result_list.append(current_list)
+            for_end = end_row
+        for i in range(start_row, for_end):
+            result_list.append(self.get_row(i, start_col, end_col))
+        return result_list
+
+    # 获取一个范围的数据
+    def get_range_by_col(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0) -> list[
+        list[str]]:
+        result_list = []
+        if start_row > end_row:
+            for_end = self.max_row
+        else:
+            for_end = end_col
+        for i in range(start_col, for_end):
+            result_list.append(self.get_column(i, start_row, end_row))
         return result_list
 
     # 删除此行的数据
@@ -185,22 +221,78 @@ class ExcelObject:
 
     # 删除所有行的数据
     def clean_all_row(self):
-        for i in range(self.ws.max_row, 0, -1):
+        for i in range(self.max_row, 0, -1):
             self.clean_row(i)
 
-    # 将List写入表格中，可以进行List嵌套
-    def write_append_list(self, current_list: List, is_clean_ws=False):
-        if is_clean_ws:
-            self.clean_all_row()
-        if current_list != [] and isinstance(current_list[0], str):
-            self.get_ws().append(current_list)
-        if current_list != [] and isinstance(current_list[0], list):
-            for i in current_list:
-                self.write_append_list(i)
+    # 获取到第i行，第j列的单元格数据
+    def get_cell(self, row: int, col: int):
+        return self.ws.cell(row=row, column=col).value
 
     # 写入到第i行，第j列的单元格数据
-    def write_cell(self, new_value, row, col):
-        self.ws.cell(row=row, column=col).value = str(new_value).strip()
+    def write_cell(self, new_value, row: int, col: int):
+        self.ws.cell(row=row, column=col).value = str(new_value)
+
+    # 获取写入的行列表
+    def _get_list(self, result_list: list, current_list: list):
+        # 到了递归的尽头
+        if current_list != [] and all(isinstance(item, str) or isinstance(item, int) for item in current_list):
+            result_list.append(current_list)
+        # 如果存在一个为列表则继续递归
+        if current_list != [] and any(isinstance(item, list) for item in current_list):
+            str_list = []
+            for index, i in enumerate(current_list):
+                # 如果是字符串
+                if isinstance(i, str):
+                    str_list.append(i)
+                # 清空str_list并继续递归
+                elif isinstance(i, list):
+                    if str_list:
+                        result_list.append(str_list)
+                        str_list = []
+                    self._get_list(result_list, i)
+                if index + 1 == len(current_list):
+                    if str_list:
+                        result_list.append(str_list)
+
+    def write_append_list_by_row(self, current_list: list, start_row: int = 1, start_col: int = 1,
+                                 is_clean_ws: bool = False):
+        """
+        将List写入表格中，可以进行List嵌套，按行
+        :param current_list: 数据列表
+        :param start_row: 开始的行
+        :param start_col: 开始的列
+        :param is_clean_ws: 是否清空工作簿
+        :return:
+        """
+        if is_clean_ws:
+            self.clean_all_row()
+        # 构建出以行为开始的List嵌套列表
+        row_list_list = []
+        self._get_list(row_list_list, current_list)
+        for row_index, current_row_list in enumerate(row_list_list):
+            # 写入指定的列中
+            for col_index, cell_value in enumerate(current_row_list):
+                self.write_cell(cell_value, row_index + start_row, col_index + start_col)
+
+    def write_append_list_by_col(self, current_list: list, start_row: int = 1, start_col: int = 1,
+                                 is_clean_ws: bool = False):
+        """
+        将List写入表格中，可以进行List嵌套，按列
+        :param current_list: 数据列表
+        :param start_row: 开始的行
+        :param start_col: 开始的列
+        :param is_clean_ws: 是否清空工作簿
+        :return:
+        """
+        if is_clean_ws:
+            self.clean_all_row()
+        # 构建出以行为开始的List嵌套列表
+        col_list_list = []
+        self._get_list(col_list_list, current_list)
+        for col_index, current_col_list in enumerate(col_list_list):
+            # 写入指定的列中
+            for row_index, cell_value in enumerate(current_col_list):
+                self.write_cell(cell_value, row_index + start_row, col_index + start_col)
 
 ```
 
