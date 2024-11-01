@@ -53,7 +53,7 @@
     </build>
 ```
 
-> 如果 `dev` profile被激活，Maven将寻找 `application-dev.yml` 文件
+> 如果`profile`属性值为`dev`，Maven将寻找`application-dev.yml`文件
 
 ![image-20240608215728147](img/Maven多环境/image-20240608215728147.png)
 
@@ -163,6 +163,10 @@ mvn clean package -Pprod  # 构建生产环境
 
 ## 引入子模块
 
+新建模块
+
+![image-20241101111938202](img/Maven多环境/image-20241101111938202.png)
+
 子`pom.xml`文件
 
 ```xml
@@ -195,6 +199,8 @@ mvn clean package -Pprod  # 构建生产环境
 
 </project>
 ```
+
+> 无需在子模块中定义`<groupId>`，父模块中已定义
 
 父`pom.xml`的`<dependencies>`标签下引入，这里只引入了版本控制，暂时没有引入依赖
 
