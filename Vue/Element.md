@@ -76,8 +76,13 @@
         new Vue({
             el: '#app',
             data: function() {
-            return { visible: false }
-          }
+                return { visible: false }
+            },
+            methods: {
+                test: function() {
+                    
+                }
+            }
         })
 	</script>
 </html>

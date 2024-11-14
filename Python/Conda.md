@@ -82,7 +82,7 @@ source ~/.bashrc
 
 ### 禁用自动激活base环境
 
-通过查看conda的启动脚本可知，conda会在shell启动时自动激动base环境
+通过查看conda的启动脚本可知，conda会在shell启动时自动激动base环境：
 
 > <img src="img/Conda/image-20240322101048711.png" alt="image-20240322101048711" style="zoom:67%;" />
 
@@ -92,7 +92,7 @@ source ~/.bashrc
 conda config --set auto_activate_base false
 ```
 
-> 重新启动一个shell窗口
+> 重新启动一个shell窗口：
 >
 > <img src="img/Conda/image-20240322101336212.png" alt="image-20240322101336212" style="zoom:67%;" />
 >

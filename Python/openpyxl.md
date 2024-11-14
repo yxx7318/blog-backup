@@ -1,4 +1,4 @@
-# xlxs文件操作
+# openpyxl
 
 库的差异
 
@@ -91,7 +91,7 @@ import openpyxl
 from datetime import datetime
 import os
 
-MAX_LENGTH = 100000
+MAX_LENGTH = 1000000
 
 
 class ExcelObject:
@@ -161,7 +161,7 @@ class ExcelObject:
     def get_column(self, col: int, start_row: int = 1, end_row: int = 0) -> list[str]:
         result_list = []
         # 如果没有指定结尾，或者指定出错了，直接返回所有的
-        if end_row > start_row:
+        if end_row >= start_row:
             ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.max_row, min_col=col, max_col=col)
         else:
             ws_range = self.ws.iter_rows(min_row=start_row, max_row=end_row, min_col=col, max_col=col)
@@ -178,7 +178,7 @@ class ExcelObject:
     def get_row(self, row: int, start_col: int = 1, end_col: int = 0) -> list[str]:
         result_list = []
         # 如果没有指定结尾，或者指定出错了，直接返回所有的
-        if start_col > end_col:
+        if start_col >= end_col:
             ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=self.max_col)
         else:
             ws_range = self.ws.iter_rows(min_row=row, max_row=row, min_col=start_col, max_col=end_col)
@@ -342,7 +342,7 @@ else:
 > 好
 > ```
 >
-> <img src="img/xlsx文件操作/image-20240103100637017.png" alt="image-20240103100637017" style="zoom:80%;" />
+> <img src="img/openpyxl/image-20240103100637017.png" alt="image-20240103100637017" style="zoom:80%;" />
 
 ## 参考博客
 
