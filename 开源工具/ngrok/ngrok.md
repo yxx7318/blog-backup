@@ -240,8 +240,8 @@ GOOS=linux GOARCH=arm make release-server release-client
 ### ngrokd命令
 
 - `-domain string`：ngrok 隧道所托管的域名（默认为`"ngrok.com"`）
-- `-httpAddr string`：公共地址，用于HTTP连接，留空字符串以禁用（默认为`":80"`）
-- `-httpsAddr string`：公共地址，用于监听HTTPS连接，留空字符串以禁用（默认为`":443"`）
+- `-httpAddr string`：公共地址，用于HTTP连接，留空字符串使用默认值（默认为`":80"`）
+- `-httpsAddr string`：公共地址，用于监听HTTPS连接，留空字符串使用默认值（默认为`":443"`）
 - `-log string`：将日志消息写入此文件。"stdout"和"none"有特殊含义（默认为`"stdout"`）
 - `-log-level string`：要记录的消息级别。可选项包括：DEBUG、INFO、WARNING、ERROR（默认为`"DEBUG"`）
 - `-tlsCrt string`：TLS证书文件的路径
@@ -317,7 +317,7 @@ trust_host_root_certs: false
 
 tunnels:
   myHttpsTest:
-    # 指定域名，不指定默认为name.{ngrokd.domain}
+    # 指定域名，不指定默认为name.{ngrokd.domain}，后缀还可以指定到端口号
     hostname: www.meraki-x.com
     proto:
       # 使用https，本地程序端口8000(本地程序无需启用https)
