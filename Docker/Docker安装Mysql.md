@@ -1,4 +1,4 @@
-# 安装mysql
+# Docker安装mysql
 
 ## 拉取镜像
 
@@ -16,7 +16,7 @@ sudo docker pull mysql:latest
 sudo docker inspect mysql:latest
 ```
 
-> ![image-20241117134045146](img/安装Mysql/image-20241117134045146.png)
+> ![image-20241117134045146](img/Docker安装Mysql/image-20241117134045146.png)
 
 ## 启动容器
 
@@ -57,7 +57,7 @@ sudo docker run -p 3308:3306 --name mysql_8.0.27 \
 sodo docker logs mysql_8.0.27
 ```
 
-> ![image-20241117144921532](img/安装Mysql/image-20241117144921532.png)
+> ![image-20241117144921532](img/Docker安装Mysql/image-20241117144921532.png)
 
 ## 进入容器
 
@@ -159,7 +159,7 @@ chmod 660 /var/log/mysqld.log
 > docker restart mysql_8.0.27
 > ```
 >
-> ![image-20241117195021230](img/安装Mysql/image-20241117195021230.png)
+> ![image-20241117195021230](img/Docker安装Mysql/image-20241117195021230.png)
 
 ## 资源调控
 
