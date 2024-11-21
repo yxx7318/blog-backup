@@ -16,7 +16,17 @@ git config core.ignorecase false
 ```
 
 > - `git config`配置不影响远程仓库，其他成员拉取后也需要重新配置
-> - 开启此配置，在仅大小写重命名文件或者目录之后直接提交会出现远程仓库出现两份文件，分别为重命名前和重命名
+>
+> - 开启此配置，在仅大小写重命名文件或者目录(windows仅大小写命名不会真正命令，需要带额外字符命名后再删除字符命名到目标名称)之后直接提交会出现远程仓库出现两份文件，分别为重命名前和重命名后，在windows拉取文件会报错：
+>
+> - ```
+>   error: The following untracked working tree files would be overwritten by merge:
+>           xxx/xxx.md
+>   Please move or remove them before you merge.
+>   Aborting
+>   Updating 75a64b9..2104b57
+>   ```
+>   
 >   - 先使用`git rm -r --cached <file>`从暂存区中移除指定的文件或目录，修改之前的文件
 >   - 再使用`git add .`去添加所有未被追踪的文件和目录，修改之后的文件
 
