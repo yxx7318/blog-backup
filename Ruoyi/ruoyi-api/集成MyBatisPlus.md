@@ -306,7 +306,7 @@ mybatis-plus:
     use-generated-keys: true
     default-executor-type: SIMPLE
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-    # 如果需要，可以开启驼峰命名法转换字段
+    # 默认开启了驼峰命名法转换字段
 #    map-underscore-to-camel-case: true
     # 配置全局枚举处理器
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler

@@ -3,9 +3,11 @@
 ## 注解
 
 ```java
-@TableName(value = "tb_users", autoResultMap = true) // 设置映射的表名，开启自动创建结果映射
-@TableField(exist = false) // 告诉ORM框架在生成SQL语句时忽略这个字段
-@TableField(value = "createdate", updateStrategy = FieldStrategy.IGNORED) // 执行更新操作时，无论如何修改createDate属性的值，都不会被更新到数据库中
+@TableName(value = "tb_users", autoResultMap = true) // 设置映射的表名，开启自动创建结果映射，自动在mapper.xlm中注册骆驼峰映射名+"resultMap"，如果已有，则自定义的优先级更高
+
+
+    @TableField(exist = false) // 告诉ORM框架在生成SQL语句时忽略这个字段
+    @TableField(value = "createdate", updateStrategy = FieldStrategy.IGNORED) // 执行更新操作时，无论如何修改createDate属性的值，都不会被更新到数据库中
 
 
     @TableId(type = IdType.ASSIGN_ID) // 在执行insert操作时，id无需设置，会自动使用雪花算法生成并插入，不依赖配置项
