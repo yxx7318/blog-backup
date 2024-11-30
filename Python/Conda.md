@@ -419,3 +419,7 @@ conda env create -f environment.yml
 > 如果没有安装全局的Python环境，而是只安装了Conda，那么使用`conda activate`命令可以切换到不同的Conda环境，从而实现Python环境的全局切换。如果已经有了全局Python环境，使用`conda activate`命令只会临时激活此环境
 >
 > <img src="img/Conda/image-20240321203448276.png" alt="image-20240321203448276" style="zoom:67%;" />
+>
+> debug报错`python debug Process finished with exit code -1073741819 (0xC0000005)`问题，可以尝试关闭对PyQt的兼容：
+>
+> ![image-20241125212839547](img/Conda/image-20241125212839547.png)

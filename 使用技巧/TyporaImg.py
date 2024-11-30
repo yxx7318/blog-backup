@@ -138,6 +138,6 @@ def start(target_path, is_statistics=False):
 
 
 if __name__ == '__main__':
-    target_path = r'D:\博客\blog-backup'
+    target_path = r'F:\yxx\blog-backup'
     start(target_path)
     # start(target_path, True)
