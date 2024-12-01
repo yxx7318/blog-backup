@@ -239,7 +239,7 @@ GOOS=linux GOARCH=arm make release-server release-client
 
 ### ngrokd命令
 
-- `-domain string`：ngrok 隧道所托管的域名（默认为`"ngrok.com"`）
+- `-domain string`：ngrok隧道所托管的域名（默认为`"ngrok.com"`）
 - `-httpAddr string`：公共地址，用于HTTP连接，留空字符串使用默认值（默认为`":80"`）
 - `-httpsAddr string`：公共地址，用于监听HTTPS连接，留空字符串使用默认值（默认为`":443"`）
 - `-log string`：将日志消息写入此文件。"stdout"和"none"有特殊含义（默认为`"stdout"`）
@@ -402,6 +402,7 @@ tunnels:
     # 远程端口
     remote_port: 443
   myOtherTest:
+    # 这里不指定域名默认为myOtherTest.meraki-x.com
     proto:
       http: "8000"
     remote_port: 80
@@ -422,6 +423,58 @@ ngrok.exe -config=ngrok.yml start-all
 访问：`https://www.meraki-x.com/`
 
 > ![image-20240917141701661](img/ngrok/image-20240917141701661.png)
+
+## tcp穿透windows远程桌面
+
+配置文件`ngrok.yml`：
+
+```yaml
+# 指定域名和隧道通信端口号
+server_addr: dev.360gpt.net:72
+# 为false代表使用编译时证书通信，为true代表使用CA证书通信
+trust_host_root_certs: true
+# auth_token: test
+
+
+tunnels:
+  myRemoteDesktop:
+    # 指定域名，不指定默认为name.{ngrokd.domain}
+    hostname: dev.360gpt.net:70
+    proto:
+      tcp: 3389
+    # 远程端口
+    remote_port: 70
+```
+
+> 对于基于TCP的连接都可以进行穿透，像是Mysql
+
+连接配置：
+
+![image-20241130201956746](img/ngrok/image-20241130201956746.png)
+
+> ![image-20241130202523498](img/ngrok/image-20241130202523498.png)
+
+## 配置为系统服务
+
+```ini
+[Unit]
+Description=ngrok daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/usr/local/ngrok
+ExecStart=/usr/local/ngrok/ngrokd -domain="dev.360gpt.net" -tunnelAddr=":72" -httpAddr=":73" -httpsAddr=":74" -tlsCrt="dev.360gpt.net_public.crt" -tlsKey="dev.360gpt.net.key" -log="ngrokd.log"
+ExecStop=/bin/kill -TERM $MAINPID
+Restart=always
+RestartSec=1
+StandardOutput=file:/usr/local/ngrok/system-ngrokd.log
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
+```
 
 参考博客：
 

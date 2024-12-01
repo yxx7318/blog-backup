@@ -1,6 +1,6 @@
 # rustdesk-server
 
-> 如果用户现在通过公共服务器访问国内主机，将会收到被禁止的消息，需要自建服务器才能控制
+> 如果用户现在通过公共服务器访问国内手机，将会收到被禁止的消息，需要自建服务器才能控制
 >
 > ![image-20241008105708799](img/rustdesk-server/image-20241008105708799.png)
 >
@@ -89,7 +89,7 @@ chmod 777 hbbs
 vim /etc/systemd/system/RustDeskHbbs.service
 ```
 
-```
+```ini
 [Unit]
 Description=RustDesk Hbbs
 After=network.target
@@ -110,7 +110,7 @@ WantedBy=multi-user.target
 vim /etc/systemd/system/RustDeskHbbr.service
 ```
 
-```
+```ini
 [Unit]
 Description=RustDesk Hbbr
 After=network.target
