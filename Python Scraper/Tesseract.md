@@ -1,12 +1,12 @@
-# 识别图像文字
+# Tesseract
 
 Tesseract是一个由HP实验室开发，由Google维护的开源的**光学字符识别（OCR）引擎**
 
-> **训练的大致流程**：安装jTessBoxEditor -> 获取样本文件 -> Merge样本文件 –> 生成BOX文件 -> 定义字符配置文件 -> 字符矫正 -> 执行批处理文件 -> 将生成的 traineddata 放入tessdata 中
+> **训练的大致流程**：安装jTessBoxEditor -> 获取样本文件 -> Merge样本文件 –> 生成BOX文件 -> 定义字符配置文件 -> 字符矫正 -> 执行批处理文件 -> 将生成的 traineddata放入tessdata中
 
 下载地址：[Index of /tesseract (uni-mannheim.de)](https://digi.bib.uni-mannheim.de/tesseract/)(尽量不要下载dev(开发中的版本)，alpha(内部测试版,一般不向外部发布,会有很多Bug)，beta(公测版本，即针对所有用户公开的测试版本)等版本)
 
-<img src="img/识别图片文字/image-20230419183755035.png" alt="image-20230419183755035" style="zoom:50%;" />
+<img src="img/Tesseract/image-20230419183755035.png" alt="image-20230419183755035" style="zoom:50%;" />
 
 官方网站：https://github.com/UB-Mannheim/tesseract/wiki
 
@@ -20,29 +20,29 @@ Tesseract是一个由HP实验室开发，由Google维护的开源的**光学字�
 
 ## 安装Tesseract
 
-在组件安装时不选择下载，自己后面手动下载
+在组件安装时不选择下载，自己后面手动下载：
 
-<img src="img/识别图片文字/image-20230419185100887.png" alt="image-20230419185100887" style="zoom: 50%;" />
+<img src="img/Tesseract/image-20230419185100887.png" alt="image-20230419185100887" style="zoom: 50%;" />
 
-安装目录
+安装目录：
 
-<img src="img/识别图片文字/image-20230419185208265.png" alt="image-20230419185208265" style="zoom:50%;" />
+<img src="img/Tesseract/image-20230419185208265.png" alt="image-20230419185208265" style="zoom:50%;" />
 
-加入到用户环境变量Path
+加入到用户环境变量Path：
 
 ```
 D:\LenovoSoftstore\Tesseract
 ```
 
-测试是否安装成功
+测试是否安装成功：
 
 ```
 tesseract -v
 ```
 
-<img src="img/识别图片文字/image-20230419185803754.png" alt="image-20230419185803754" style="zoom:50%;" />
+<img src="img/Tesseract/image-20230419185803754.png" alt="image-20230419185803754" style="zoom:50%;" />
 
-查看已经安装的语言包
+查看已经安装的语言包：
 
 ```
 tesseract --list-langs
@@ -50,11 +50,11 @@ tesseract --list-langs
 
 
 
-<img src="img/识别图片文字/image-20230419185726245.png" alt="image-20230419185726245" style="zoom:50%;" />
+<img src="img/Tesseract/image-20230419185726245.png" alt="image-20230419185726245" style="zoom:50%;" />
 
 ## 安装语言包
 
-<img src="img/识别图片文字/image-20230527214443875.png" alt="image-20230527214443875" style="zoom:33%;" />
+<img src="img/Tesseract/image-20230527214443875.png" alt="image-20230527214443875" style="zoom:33%;" />
 
 > 该目录下有tessdata，tessdata_best，tessdata_fast等5种语言包，其中tessdata是检测速度和准确度居中的语言包，后缀best对应最慢和最准确的语言包（**实测准确率不高，推荐使用均衡**），后缀fast对应最快和准确度较差的语言包
 
@@ -62,27 +62,27 @@ tesseract --list-langs
 
 将中文相关的语言包移动到对应目录下
 
-<img src="img/识别图片文字/image-20230419190421107.png" alt="image-20230419190421107" style="zoom:50%;" />
+<img src="img/Tesseract/image-20230419190421107.png" alt="image-20230419190421107" style="zoom:50%;" />
 
 ## 安装python库
 
-tesseract驱动库
+tesseract驱动库：
 
 ```
-pip install pytesseract -i https://pypi.douban.com/simple
+pip install pytesseract -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-图像处理库
+图像处理库：
 
 ```
-pip install Pillow -i https://pypi.douban.com/simple
+pip install Pillow -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ## 测试使用
 
-测试图片
+测试图片：
 
-<img src="img/识别图片文字/image-20230419191700093.png" alt="image-20230419191700093" style="zoom: 50%;" />
+<img src="img/Tesseract/image-20230419191700093.png" alt="image-20230419191700093" style="zoom: 50%;" />
 
 ```python
 import pytesseract
@@ -106,19 +106,20 @@ if __name__ == '__main__':
 
 > 运行结果：(每个文字之间有空格，不同行文字之间会换行)
 >
-> <img src="img/识别图片文字/image-20230419191802510.png" alt="image-20230419191802510" style="zoom:67%;" />
+> <img src="img/Tesseract/image-20230419191802510.png" alt="image-20230419191802510" style="zoom:67%;" />
 
 ## 识别验证码
 
-原图
+原图：
 
-<img src="img/识别图片文字/image-20230420132335744.png" alt="image-20230420132335744" style="zoom:33%;" />
+<img src="img/Tesseract/image-20230420132335744.png" alt="image-20230420132335744" style="zoom:33%;" />
 
 ```python
 import os
 import pytesseract
 from PIL import Image
 from collections import defaultdict
+from io import BytesIO
 
 # tesseract.exe所在的文件路径
 pytesseract.pytesseract.tesseract_cmd = 'D:/LenovoSoftstore/Tesseract/tesseract.exe'
@@ -184,10 +185,8 @@ def cut_noise(image):
     return image  # 返回修改后的图片
 
 
-# 识别图片中的数字加字母
-# 传入参数为图片路径，返回结果为：识别结果
-def OCR_lmj(img_path):
-    image = Image.open(img_path)  # 打开图片文件
+# 处理图片白噪点
+def deal_with_noise(image):
     imgry = image.convert('L')  # 转化为灰度图
 
     # 获取图片中的出现次数最多的像素，即为该图片的背景
@@ -200,22 +199,49 @@ def OCR_lmj(img_path):
 
     # 去掉图片中的噪声（孤立点）
     out = cut_noise(out)
+    return out
 
-    # 保存图片
-    img_save_path = img_path.replace(img_path.split("/")[-1], "") + img_path.split("/")[-1].split(".")[0] + 'one.' + img_path.split("/")[-1].split(".")[1]
-    out.save(img_save_path)
 
+# 获取ocr结果
+def get_ocr_result(out, ocr_type="all"):
     # 仅识别图片中的数字
-    text = pytesseract.image_to_string(out, config='digits')
+    if ocr_type == "digits":
+        text = pytesseract.image_to_string(out, config='digits')
     # 识别图片中的数字和字母
-    # text = pytesseract.image_to_string(out)
+    else:
+        text = pytesseract.image_to_string(out)
 
     # 去掉识别结果中的特殊字符
     exclude_char_list = ' .:\\|\'\"?![],()~@#$%^&*_+-={};<>/¥'
     text = ''.join([x for x in text if x not in exclude_char_list])
     # print(text)
-
     return text
+
+
+# 传入参数为图片地址，返回结果为：识别结果
+def ocr_img_path(img_path: str, deal_with=True, ocr_type="all", is_save=False):
+    image = Image.open(img_path)
+    if deal_with:
+        out = deal_with_noise(image)
+    else:
+        out = image
+    # 保存图片
+    if is_save:
+        os.makedirs("temp", exist_ok=True)
+        out.save("temp/" + img_path.split("/")[-1].split("\\")[-1])
+
+    return get_ocr_result(out, ocr_type)
+
+
+# 传入参数为图片IO，，返回结果为：识别结果
+def ocr_img_io(img_io, deal_with=True, ocr_type="all"):
+    img_file = BytesIO(img_io)
+    image = Image.open(img_file)
+    if deal_with:
+        out = deal_with_noise(image)
+    else:
+        out = image
+    return get_ocr_result(out, ocr_type)
 
 
 def main():
@@ -233,7 +259,7 @@ def main():
             image_path = '%s/%s' % (dir, file)  # 图片路径
 
             answer = file.split('.')[0]  # 图片名称，即图片中的正确文字
-            recognizition = OCR_lmj(image_path)  # 图片识别的文字结果
+            recognizition = ocr_img_path(image_path)  # 图片识别的文字结果
 
             print((answer, recognizition))
             if recognizition == answer:  # 如果识别结果正确，则total_count加1
@@ -254,11 +280,13 @@ if __name__ == '__main__':
 
 ```
 
-处理后图片
+处理后图片：
 
-<img src="img/识别图片文字/image-20230420132356755.png" alt="image-20230420132356755" style="zoom:33%;" />
+<img src="img/Tesseract/image-20230420132356755.png" alt="image-20230420132356755" style="zoom:33%;" />
 
 运行结果：
 
+> ```
 > ('test2', '1367\n')
 > Total count: 1, correct: 0.
+> ```
