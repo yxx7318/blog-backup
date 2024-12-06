@@ -259,4 +259,9 @@ SET GLOBAL sql_slave_skip_counter = 1;
 START SLAVE SQL_THREAD;
 ```
 
-<img src="img/Mysql的主从复制/image-20240410182219273.png" alt="image-20240410182219273" style="zoom: 80%;" />
+> 注意，当执行`SET GLOBAL sql_slave_skip_counter = 1;`命令时：
+>
+> - 如果从服务器在尝试应用一个事务时遇到错误，这个命令会使得从服务器跳过当前的事务，并继续尝试应用下一个事务。这是跳过错误事务的情况
+> - 如果当前的事务没有错误，这个命令执行后，从服务器仍然会正常应用当前的事务，然后继续到下一个事务，它不会跳过正常的事务
+>
+> <img src="img/Mysql的主从复制/image-20240410182219273.png" alt="image-20240410182219273" style="zoom: 80%;" />
