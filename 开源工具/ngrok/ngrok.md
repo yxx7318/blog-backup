@@ -90,6 +90,8 @@ tar -zxvf gopkg.in.tar.gz
 
 ### 生成证书
 
+> 不能为ip，需要为域名
+
 生成证书：
 
 ```
