@@ -228,6 +228,8 @@ STOP SLAVE;
 在维护或升级完成后，使用之前记录的信息重新配置从库，并启动服务：
 
 ```sql
+STOP SLAVE;
+
 CHANGE MASTER TO 
 MASTER_LOG_FILE='mysql-bin.000130', -- 记录的二进制日志文件名
 MASTER_LOG_POS=1641; -- 记录的位置

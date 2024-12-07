@@ -120,7 +120,7 @@ cat_sql
 git checkout master
 
 # 执行删库操作
-# mysql -h "$recover_host" -u "$recover_username" -p"$recover_password" -e "DROP DATABASE $database;"
+# mysql -h "$recover_host" -u "$recover_username" -p"$recover_password" -e "DROP DATABASE IF EXISTS $database;"
 # echo "删除原有数据库：$database"
 
 # 执行恢复操作

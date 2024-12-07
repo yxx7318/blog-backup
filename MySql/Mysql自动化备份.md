@@ -2,7 +2,7 @@
 
 ## mysqldump备份
 
-`mysqldump` 是 MySQL 数据库的一个命令行工具，用于备份或导出数据库中的数据到一组 SQL 语句。`mysqldump` 提供了许多选项，用于定制备份过程。
+`mysqldump`是MySQL数据库的一个命令行工具，用于备份或导出数据库中的数据到一组SQL语句。`mysqldump`提供了许多选项，用于定制备份过程。
 
 以下是常用的选项：
 
@@ -15,7 +15,7 @@
 - `--master-data`：这个选项会在备份文件中包含二进制日志文件的位置和名称，这对于复制和灾难恢复非常有用
 
 ```
-# 备份所有数据库，包括建表语句，系统关键表无需备份mysql、sys、information_schema、performance_schema
+# 备份所有数据库，包括建表语句，系统关键表无需备份：mysql、sys、information_schema、performance_schema
 mysqldump -u root -pyuxingxuan --default-character-set=utf --create-options --all-databases > specific_database_backup.sql
 
 # 备份指定数据库，包含建库语句
@@ -24,7 +24,7 @@ mysqldump -u root -pyuxingxuan --default-character-set=utf8 --create-options --d
 
 ### 备份操作
 
-大数据量备份从表
+大数据量备份从表：
 
 ```
 mysqldump -h 127.0.0.1 \
@@ -34,7 +34,7 @@ mysqldump -h 127.0.0.1 \
  --result-file=database_backup.sql 
 ```
 
-切割文件，交给git管理
+切割文件，交给git管理：
 
 ```
 split -b 100m -a 12 database_backup.sql split_
@@ -50,7 +50,7 @@ cat split_* > database_new.sql
 
 > <img src="img/Mysql自动化备份/image-20240419210907570.png" alt="image-20240419210907570" style="zoom:80%;" />
 
-对比是否一致
+对比是否一致：
 
 ```
 md5sum database_backup.sql
@@ -62,33 +62,33 @@ md5sum database_new.sql
 
 ### 定时任务
 
-修改数据库连接
+修改数据库连接：
 
 > ![image-20240422122143398](img/Mysql自动化备份/image-20240422122143398.png)
 
-给予脚本执行权限
+给予脚本执行权限：
 
 ```
 chmod +x /usr/local/mysqlshell/BackupSql.sh
 ```
 
-> 如果脚本权限不够会报错，发送到邮箱
+> 如果脚本权限不够会报错，发送到邮箱：
 >
 > ![image-20240420112942991](img/Mysql自动化备份/image-20240420112942991.png)
 >
-> 报错原因为权限不够
+> 查看报错，原因为权限不够：
 >
 > <img src="img/Mysql自动化备份/image-20240420112744266.png" alt="image-20240420112744266"  />
 >
 > 
 
-编辑crontab文件
+编辑crontab文件：
 
 ```
 crontab -e
 ```
 
-添加定时器任务，一小时执行一次，注释即可停止
+添加定时器任务，一小时执行一次，注释即可停止：
 
 ```
 0 * * * * /usr/local/mysqlshell/BackupSql.sh >> /usr/local/mysqlshell/log.log 2>&1
@@ -100,7 +100,7 @@ crontab -e
 >
 > ![image-20240420202306950](img/Mysql自动化备份/image-20240420202306950.png)
 
-还原状态
+还原状态：
 
 ```
 sh RecoverSql.sh 2024-04-20 19
@@ -108,13 +108,13 @@ sh RecoverSql.sh 2024-04-20 19
 
 > ![image-20240422122520361](img/Mysql自动化备份/image-20240422122520361.png)
 
-整体目录结构
+整体目录结构：
 
 > ![image-20240422161647434](img/Mysql自动化备份/image-20240422161647434.png)
 
 ## mysqlbinlog备份
 
-`mysqlbinlog` 是 MySQL 数据库的一个命令行工具，用于查看和解析 MySQL 二进制日志文件。二进制日志是 MySQL 服务器用来记录所有修改数据库操作的日志文件，这些操作包括 DML (Data Manipulation Language) 语句（如 `INSERT`、`UPDATE`、`DELETE`）、DDL (Data Definition Language) 语句（如 `CREATE`、`ALTER`、`DROP`）以及事务操作
+`mysqlbinlog` 是MySQL数据库的一个命令行工具，用于查看和解析MySQL二进制日志文件。二进制日志是MySQL服务器用来记录所有修改数据库操作的日志文件，这些操作包括DML (Data Manipulation Language) 语句（如`INSERT`、`UPDATE`、`DELETE`）、DDL (Data Definition Language) 语句（如`CREATE`、`ALTER`、`DROP`）以及事务操作
 
 以下是常用的选项：
 
@@ -131,25 +131,25 @@ sh RecoverSql.sh 2024-04-20 19
 - `--socket=<socket>`：使用指定的套接字文件连接到服务器。
 - `--port=<port>`：使用指定的端口连接到服务器
 
-记录备份时的时间戳或二进制日志的位置
+记录备份时的时间戳或二进制日志的位置：
 
 ```
 mysql -u root -pyuxingxuan -e "SHOW MASTER STATUS\G" > binlog_position.txt
 ```
 
-使用`mysqlbinlog`工具备份从此次位置开始的变更
+使用`mysqlbinlog`工具备份从此次位置开始的变更：
 
 ```
 mysqlbinlog --start-position=[备份的位置] /var/lib/mysql/binlog.000001 > /backup/mysql/diff_backup.sql
 ```
 
-> 查看从位置 `12345` 开始的二进制日志内容
+> 查看从位置`12345`开始的二进制日志内容
 >
 > ```
 > mysqlbinlog --start-position=12345 mysql-bin.000001
 > ```
 
-使用 `mysqlbinlog` 解析的 SQL 语句来还原数据库，需要将这些语句应用到 MySQL 服务器上。这可以通过将 `mysqlbinlog` 的输出重定向到 `mysql` 命令来实现
+使用`mysqlbinlog`解析的SQL语句来还原数据库，需要将这些语句应用到MySQL服务器上。这可以通过将`mysqlbinlog`的输出重定向到`mysql`命令来实现
 
 ```
 mysqlbinlog --start-position=12345 mysql-bin.000001 | mysql -u root -pyuxingxuan test
