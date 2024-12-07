@@ -40,7 +40,7 @@ mysqldump -h 127.0.0.1 \
 split -b 100m -a 12 database_backup.sql split_
 ```
 
-> <img src="img/Mysql自动化备份/image-20240419210844262.png" alt="image-20240419210844262" style="zoom:80%;" />
+> <img src="img/MySql自动化备份/image-20240419210844262.png" alt="image-20240419210844262" style="zoom:80%;" />
 
 合并文件
 
@@ -48,7 +48,7 @@ split -b 100m -a 12 database_backup.sql split_
 cat split_* > database_new.sql
 ```
 
-> <img src="img/Mysql自动化备份/image-20240419210907570.png" alt="image-20240419210907570" style="zoom:80%;" />
+> <img src="img/MySql自动化备份/image-20240419210907570.png" alt="image-20240419210907570" style="zoom:80%;" />
 
 对比是否一致：
 
@@ -58,13 +58,13 @@ md5sum database_backup.sql
 md5sum database_new.sql
 ```
 
-> ![image-20240419211112652](img/Mysql自动化备份/image-20240419211112652.png)
+> ![image-20240419211112652](img/MySql自动化备份/image-20240419211112652.png)
 
 ### 定时任务
 
 修改数据库连接：
 
-> ![image-20240422122143398](img/Mysql自动化备份/image-20240422122143398.png)
+> ![image-20240422122143398](img/MySql自动化备份/image-20240422122143398.png)
 
 给予脚本执行权限：
 
@@ -74,11 +74,11 @@ chmod +x /usr/local/mysqlshell/BackupSql.sh
 
 > 如果脚本权限不够会报错，发送到邮箱：
 >
-> ![image-20240420112942991](img/Mysql自动化备份/image-20240420112942991.png)
+> ![image-20240420112942991](img/MySql自动化备份/image-20240420112942991.png)
 >
 > 查看报错，原因为权限不够：
 >
-> <img src="img/Mysql自动化备份/image-20240420112744266.png" alt="image-20240420112744266"  />
+> <img src="img/MySql自动化备份/image-20240420112744266.png" alt="image-20240420112744266"  />
 >
 > 
 
@@ -96,9 +96,9 @@ crontab -e
 0 * * * * /usr/local/mysqlshell/BackupSql.sh >> /usr/local/mysqlshell/nohup.log 2>> /usr/local/mysqlshell/error.log
 ```
 
-> ![image-20240420202223685](img/Mysql自动化备份/image-20240420202223685.png)
+> ![image-20240420202223685](img/MySql自动化备份/image-20240420202223685.png)
 >
-> ![image-20240420202306950](img/Mysql自动化备份/image-20240420202306950.png)
+> ![image-20240420202306950](img/MySql自动化备份/image-20240420202306950.png)
 
 还原状态：
 
@@ -106,11 +106,11 @@ crontab -e
 sh RecoverSql.sh 2024-04-20 19
 ```
 
-> ![image-20240422122520361](img/Mysql自动化备份/image-20240422122520361.png)
+> ![image-20240422122520361](img/MySql自动化备份/image-20240422122520361.png)
 
 整体目录结构：
 
-> ![image-20240422161647434](img/Mysql自动化备份/image-20240422161647434.png)
+> ![image-20240422161647434](img/MySql自动化备份/image-20240422161647434.png)
 
 ## mysqlbinlog备份
 

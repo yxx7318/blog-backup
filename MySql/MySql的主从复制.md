@@ -4,13 +4,13 @@
 
 在进行主从复制之前，需要提前准备两台虚拟机：
 
-<img src="img/Mysql的主从复制/image-20230619165251007.png" alt="image-20230619165251007" style="zoom: 80%;" />
+<img src="img/MySql的主从复制/image-20230619165251007.png" alt="image-20230619165251007" style="zoom: 80%;" />
 
 ## 配置主库Master
 
 ### 修改配置文件my.cnf
 
-<img src="img/Mysql的主从复制/image-20230619165520412.png" alt="image-20230619165520412" style="zoom: 80%;" />
+<img src="img/MySql的主从复制/image-20230619165520412.png" alt="image-20230619165520412" style="zoom: 80%;" />
 
 ```
 vim /etc/my.cnf
@@ -26,7 +26,7 @@ server-id=100
 > - `server-id`：是MySQL服务器的一个唯一标识符，用于在复制环境中区分不同的服务器实例
 > - `log-bin`：选项用于指定MySQL服务器记录二进制日志（binlog）的文件名
 >
-> <img src="img/Mysql的主从复制/image-20230619165856415.png" alt="image-20230619165856415" style="zoom:80%;" />
+> <img src="img/MySql的主从复制/image-20230619165856415.png" alt="image-20230619165856415" style="zoom:80%;" />
 >
 > 其它配置项：
 >
@@ -36,7 +36,7 @@ server-id=100
 
 ### 重启mysql服务
 
-<img src="img/Mysql的主从复制/image-20230619165952197.png" alt="image-20230619165952197" style="zoom:80%;" />
+<img src="img/MySql的主从复制/image-20230619165952197.png" alt="image-20230619165952197" style="zoom:80%;" />
 
 ```
 systemctl restart mysqld
@@ -44,7 +44,7 @@ systemctl restart mysqld
 
 ### 执行用户权限sql
 
-<img src="img/Mysql的主从复制/image-20230619170137958.png" alt="image-20230619170137958" style="zoom:80%;" />
+<img src="img/MySql的主从复制/image-20230619170137958.png" alt="image-20230619170137958" style="zoom:80%;" />
 
 ```
 mysql -uroot -proot
@@ -59,17 +59,17 @@ GRANT REPLICATION SLAVE ON *.* to 'xiaoming'@'%'identified by 'Root@123456';
 > - `'xiaoming'@'%'`：这是要授予权限的用户账户。`'xiaoming'`是用户名，`'%'`是一个通配符，表示任何主机都可以使用这个用户账户连接到MySQL服务器。如果你想要限制只有特定的主机可以连接，可以将`'%'`替换为具体的IP地址或主机名
 > - `identified by 'Root@123456'`：这个部分设置了用户`xiaoming`的密码，这里密码是`Root@123456`
 >
-> <img src="img/Mysql的主从复制/image-20230619170618930.png" alt="image-20230619170618930" style="zoom: 80%;" />
+> <img src="img/MySql的主从复制/image-20230619170618930.png" alt="image-20230619170618930" style="zoom: 80%;" />
 
 ### 查看Master状态
 
-<img src="img/Mysql的主从复制/image-20230619170730769.png" alt="image-20230619170730769" style="zoom: 80%;" />
+<img src="img/MySql的主从复制/image-20230619170730769.png" alt="image-20230619170730769" style="zoom: 80%;" />
 
 ```
 show master status;
 ```
 
-> <img src="img/Mysql的主从复制/image-20230619170843702.png" alt="image-20230619170843702" style="zoom: 80%;" />
+> <img src="img/MySql的主从复制/image-20230619170843702.png" alt="image-20230619170843702" style="zoom: 80%;" />
 
 ## 配置从库Slave
 
@@ -95,15 +95,15 @@ SELECT @@server_uuid; # mysql中查看自身的UUID
 > systemctl restart mysqld
 > ```
 >
-> <img src="img/Mysql的主从复制/image-20230619223438555.png" alt="image-20230619223438555" style="zoom:80%;" />
+> <img src="img/MySql的主从复制/image-20230619223438555.png" alt="image-20230619223438555" style="zoom:80%;" />
 >
 > 重启服务后查看：
 >
-> <img src="img/Mysql的主从复制/image-20230619223623694.png" alt="image-20230619223623694" style="zoom:80%;" />
+> <img src="img/MySql的主从复制/image-20230619223623694.png" alt="image-20230619223623694" style="zoom:80%;" />
 
 ### 修改配置文件my.cnf
 
-<img src="img/Mysql的主从复制/image-20230619170948574.png" alt="image-20230619170948574" style="zoom: 80%;" />
+<img src="img/MySql的主从复制/image-20230619170948574.png" alt="image-20230619170948574" style="zoom: 80%;" />
 
 ```
 vim /etc/my.cnf
@@ -115,11 +115,11 @@ vim /etc/my.cnf
 server-id=101
 ```
 
-> <img src="img/Mysql的主从复制/image-20230619171339666.png" alt="image-20230619171339666" style="zoom:80%;" />
+> <img src="img/MySql的主从复制/image-20230619171339666.png" alt="image-20230619171339666" style="zoom:80%;" />
 
 ### 重启mysql服务
 
-<img src="img/Mysql的主从复制/image-20230619171232937.png" alt="image-20230619171232937" style="zoom:80%;" />
+<img src="img/MySql的主从复制/image-20230619171232937.png" alt="image-20230619171232937" style="zoom:80%;" />
 
 ```
 systemctl restart mysqld
@@ -127,7 +127,7 @@ systemctl restart mysqld
 
 ### 执行关联sql
 
-<img src="img/Mysql的主从复制/image-20230619171430789.png" alt="image-20230619171430789" style="zoom:67%;" />
+<img src="img/MySql的主从复制/image-20230619171430789.png" alt="image-20230619171430789" style="zoom:67%;" />
 
 根据前面主库的信息来填写：
 
@@ -138,7 +138,7 @@ mysql -uroot -proot
 change master to master_host='192.168.138.100',master_user='xiaoming',master_password='Root@123456',master_log_file='mysql-bin.000001',master_log_pos=441;
 ```
 
-> <img src="img/Mysql的主从复制/image-20230619172908329.png" alt="image-20230619172908329" style="zoom:80%;" />
+> <img src="img/MySql的主从复制/image-20230619172908329.png" alt="image-20230619172908329" style="zoom:80%;" />
 >
 > 从0开始复制：
 >
@@ -167,7 +167,7 @@ start slave;
 
 ### 查看Slave状态
 
-<img src="img/Mysql的主从复制/image-20230619173211853.png" alt="image-20230619173211853" style="zoom: 80%;" />
+<img src="img/MySql的主从复制/image-20230619173211853.png" alt="image-20230619173211853" style="zoom: 80%;" />
 
 ```sql
 show slave status;
@@ -175,7 +175,7 @@ show slave status;
 
 > 输出的内容会比较乱，将输出的内容复制到文本编辑器中打开，查看其中的关键信息都为"Yes"即代表成功
 >
-> <img src="img/Mysql的主从复制/image-20230619223802486.png" alt="image-20230619223802486" style="zoom:80%;" />
+> <img src="img/MySql的主从复制/image-20230619223802486.png" alt="image-20230619223802486" style="zoom:80%;" />
 >
 > 此时从库会复制主库的操作，但是主库不会复制从库的操作
 
@@ -203,9 +203,9 @@ SHOW SLAVE STATUS;
 
 展示主从信息：
 
-<img src="img/Mysql的主从复制/image-20240325143903239.png" alt="image-20240325143903239" style="zoom:67%;" />
+<img src="img/MySql的主从复制/image-20240325143903239.png" alt="image-20240325143903239" style="zoom:67%;" />
 
-<img src="img/Mysql的主从复制/image-20240325143930097.png" alt="image-20240325143930097" style="zoom:67%;" />
+<img src="img/MySql的主从复制/image-20240325143930097.png" alt="image-20240325143930097" style="zoom:67%;" />
 
 关键参数：
 
@@ -239,17 +239,17 @@ START SLAVE;
 
 > 启动后自动同步：
 >
-> <img src="img/Mysql的主从复制/image-20240325150606850.png" alt="image-20240325150606850" style="zoom:67%;" />
+> <img src="img/MySql的主从复制/image-20240325150606850.png" alt="image-20240325150606850" style="zoom:67%;" />
 
 ## 异常中断
 
 有时会出现连接正常，但是无法同步的情况：
 
-<img src="img/Mysql的主从复制/image-20240410181234022.png" alt="image-20240410181234022" style="zoom: 80%;" />
+<img src="img/MySql的主从复制/image-20240410181234022.png" alt="image-20240410181234022" style="zoom: 80%;" />
 
 往后拖动可以查看报错原因：
 
-<img src="img/Mysql的主从复制/image-20240410181749845.png" alt="image-20240410181749845" style="zoom: 50%;" />
+<img src="img/MySql的主从复制/image-20240410181749845.png" alt="image-20240410181749845" style="zoom: 50%;" />
 
 > 错误信息`“Duplicate entry ‘223’ for key ‘PRIMARY’”`表示在尝试插入数据时，由于主键约束失败而导致插入操作失败，尝试插入一个已经存在于`ce_goods_tuilog`表中的主键值而导致的异常
 
@@ -266,4 +266,4 @@ START SLAVE SQL_THREAD;
 > - 如果从服务器在尝试应用一个事务时遇到错误，这个命令会使得从服务器跳过当前的事务，并继续尝试应用下一个事务。这是跳过错误事务的情况
 > - 如果当前的事务没有错误，这个命令执行后，从服务器仍然会正常应用当前的事务，然后继续到下一个事务，它不会跳过正常的事务
 >
-> <img src="img/Mysql的主从复制/image-20240410182219273.png" alt="image-20240410182219273" style="zoom: 80%;" />
+> <img src="img/MySql的主从复制/image-20240410182219273.png" alt="image-20240410182219273" style="zoom: 80%;" />
