@@ -4,6 +4,9 @@ import queue
 
 IMG_PATH = 'img'
 
+ALL_LINES = 0
+ALL_WORDS = 0
+
 
 # 获取md路径和图片路径
 def get_path(target_path):
@@ -70,14 +73,19 @@ def get_path(target_path):
 # 获取md文件的img标签的src的值
 def get_md_img_set(md_path: str) -> set:
     md_img_set = set()
+    global ALL_LINES
+    global ALL_WORDS
     with open(md_path, 'r', encoding='utf-8') as file:
-        for line in file.readlines():
+        lines = file.readlines()
+        ALL_LINES = ALL_LINES + len(lines)
+        for line in lines:
             if r'<img src="img/' in line:
                 md_img = line.split('<img src="')[1].split('" alt=')[0]
                 md_img_set.add(md_img)
             elif r'![' in line and r'](img/' in line:
                 md_img = line.split('](')[1].split(')')[0]
                 md_img_set.add(md_img)
+            ALL_WORDS = ALL_WORDS + len(line)
     return md_img_set
 
 
@@ -140,4 +148,6 @@ def start(target_path, is_statistics=False):
 if __name__ == '__main__':
     target_path = r'F:\yxx\blog-backup'
     start(target_path)
+    print(f"一共{str(ALL_LINES)}行")
+    print(f"一共{str(ALL_WORDS)}字")
     # start(target_path, True)
