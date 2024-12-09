@@ -10,6 +10,7 @@
 ```python
 import subprocess
 import os
+import traceback
 
 
 # 执行cmd命令
@@ -26,11 +27,15 @@ def run_command(command):
             print("cmd输出信息:", stdout)
         if stderr:
             print("cmd警告或错误信息:", stderr)
-            if "error" in stderr:
-                raise Exception(f"执行命令：{command}，发生错误", stderr)
+            if "error" in stderr or "ERROR" in stderr:
+                # 获取详细的异常信息，包括代码行数
+                error_msg = traceback.format_exc()
+                print(error_msg)
 
     except Exception as e:
-        raise Exception(f"执行命令：{command}，发生错误", e)
+        # 获取详细的异常信息，包括代码行数
+        error_msg = traceback.format_exc()
+        print(error_msg, e)
     finally:
         # 确保子进程已终止
         if process is not None:
@@ -94,12 +99,16 @@ if __name__ == '__main__':
 
     # 拉取读取库备份
     run_command(source_cmd)
+    print("-----拉取读取库备份完毕-----")
     # 保存目标库sql
     save_new_database_sql(output_sql_path, target_database, target_database_sql_path)
-    # 删除可以修改的库
+    print("-----保存目标库sql完毕-----")
+    # 删除目标库
     run_command(delete_cmd)
+    print("-----删除目标库完毕-----")
     # 通过从库备份恢复可以修改的库
     run_command(recover_cmd)
+    print("-----通过从库备份恢复可以修改的库完毕-----")
     # 删除sql文件
     os.remove(output_sql_path)
     os.remove(target_database_sql_path)
