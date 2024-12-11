@@ -335,22 +335,24 @@ curl -x http://admin:admin123@47.113.186.151:8080 http://httpbin.org/get?show_en
 
 > ```json
 > {
->     "args": {
->        "show_env": "1"
->     }, 
->     "headers": {
->        "Accept": "*/*",
->        "Host": "httpbin.org",
->        "User-Agent": "curl/7.29.0",
->        "X-Amzn-Trace-Id": "Root=1-66f169df-3fa8a2d3368b7e512d51c377",
->        "X-Forwarded-For": "47.113.186.151",
->        "X-Forwarded-Port": "80",
->        "X-Forwarded-Proto": "http"
->     }, 
->     "origin": "47.113.186.151", 
->     "url": "http://httpbin.org/get?show_env=1"
+>   "args": {
+>     "show_env": "1"
+>   }, 
+>   "headers": {
+>     "Accept": "*/*",
+>     "Host": "httpbin.org",
+>     "User-Agent": "curl/7.29.0",
+>     "X-Amzn-Trace-Id": "Root=1-66f169df-3fa8a2d3368b7e512d51c377",
+>     "X-Forwarded-For": "47.113.186.151",
+>     "X-Forwarded-Port": "80",
+>     "X-Forwarded-Proto": "http"
+>   }, 
+>   "origin": "47.113.186.151", 
+>   "url": "http://httpbin.org/get?show_env=1"
 > }
 > ```
+>
+> 也可以发送post请求`http://httpbin.org/post?show_env=1`
 
 HTTPS：
 
@@ -360,10 +362,10 @@ curl -x http://admin:admin123@47.113.186.151:8080 https://httpbin.org/get?show_e
 
 > ```json
 > {
->     "args": {
+>      "args": {
 >        "show_env": "1"
->     },
->     "headers": {
+>      },
+>      "headers": {
 >        "Accept": "*/*",
 >        "Host": "httpbin.org",
 >        "User-Agent": "curl/7.29.0",
@@ -371,9 +373,9 @@ curl -x http://admin:admin123@47.113.186.151:8080 https://httpbin.org/get?show_e
 >        "X-Forwarded-For": "47.113.186.151",
 >        "X-Forwarded-Port": "443", 
 >        "X-Forwarded-Proto": "https"
->     },
->     "origin": "47.113.186.151",
->     "url": "https://httpbin.org/get?show_env=1"
+>      },
+>      "origin": "47.113.186.151",
+>      "url": "https://httpbin.org/get?show_env=1"
 > }
 > ```
 
