@@ -104,6 +104,10 @@ flex是flexible Box的缩写，意为”弹性布局“，用来为盒状模型�
 不设置子元素的flex的值，设置子元素`width: 20%;height: 80px;`，再设置父元素`justify-content: center;`
 
 > <img src="img/Flex布局/image-20240310153755976.png" alt="image-20240310153755976" style="zoom:50%;" />
+>
+> 其取值为`start`、`center`、`end`、`space-between`、`space-around`或`space-evenly`：
+>
+> ![image-20241212142821455](img/Flex布局/image-20241212142821455.png)
 
 ### flex-wrap
 

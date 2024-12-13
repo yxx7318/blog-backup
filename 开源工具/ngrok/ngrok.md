@@ -458,6 +458,12 @@ tunnels:
 
 ## 配置为系统服务
 
+```
+vim /etc/systemd/system/ngrokd.service
+```
+
+服务配置内容：
+
 ```ini
 [Unit]
 Description=ngrok daemon

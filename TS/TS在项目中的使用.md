@@ -2,6 +2,12 @@
 
 > 在 Node.js 环境中运行 TypeScript (TS) 文件，你需要先将 TypeScript 代码编译成 JavaScript (JS) 代码，因为 Node.js 本身并不直接支持 TypeScript
 
+## VSCode插件
+
+![image-20241212094002120](img/TS在项目中的使用/image-20241212094002120.png)
+
+![image-20241212094041477](img/TS在项目中的使用/image-20241212094041477.png)
+
 ## node环境运行TS
 
 ### 安装TypeScript
@@ -88,16 +94,16 @@ vue create my-vue2-project
 
 ## Vue3项目中使用TS
 
-> Vue 3 本身就已经很好地支持 TypeScript，因此在创建 Vue 3 项目时，TypeScript 支持是开箱即用的
+> Vue 3本身就已经很好地支持TypeScript，因此在创建Vue 3项目时，TypeScript支持是开箱即用的
 
-- 创建项目： 使用 Vue CLI 创建一个 Vue 3 项目，并选择 TypeScript 作为选项
+- 创建项目： 使用Vue CLI创建一个Vue 3项目，并选择TypeScript作为选项
 
   - ```
     vue create my-vue3-project
     # 在交互式提示中选择 Vue 3 和 TypeScript
     ```
 
-- 更新`.vue`文件： 在 .vue 文件中，可以在`<script>`标签中使用 TypeScript 语法
+- 更新`.vue`文件： 在 .vue 文件中，可以在`<script>`标签中使用TypeScript语法
 
   - ```vue
     <script lang="ts">
