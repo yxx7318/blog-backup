@@ -1,4 +1,4 @@
-# ngrok
+# Ngrok
 
 > 官网：[ngrok | API Gateway, IoT Device Gateway, Secure Tunnels for Containers, Apps & APIs](https://ngrok.com/)
 
@@ -35,7 +35,7 @@ source /etc/profile
 go version
 ```
 
-> ![image-20240916162940275](img/ngrok/image-20240916162940275.png)
+> ![image-20240916162940275](img/Ngrok/image-20240916162940275.png)
 
 ### 安装go1.4版本
 
@@ -67,7 +67,7 @@ source /etc/profile
 ./src/make.bash
 ```
 
-> ![image-20240916170741977](img/ngrok/image-20240916170741977.png)
+> ![image-20240916170741977](img/Ngrok/image-20240916170741977.png)
 
 ### 拉取源代码
 
@@ -75,7 +75,7 @@ source /etc/profile
 git clone https://github.com/inconshreveable/ngrok.git
 ```
 
-> ![image-20240916163251336](img/ngrok/image-20240916163251336.png)
+> ![image-20240916163251336](img/Ngrok/image-20240916163251336.png)
 
 ### 放置运行依赖
 
@@ -86,7 +86,7 @@ tar -zxvf github.com.tar.gz
 tar -zxvf gopkg.in.tar.gz
 ```
 
-> ![image-20240916163642206](img/ngrok/image-20240916163642206.png)
+> ![image-20240916163642206](img/Ngrok/image-20240916163642206.png)
 
 ### 生成证书
 
@@ -107,7 +107,7 @@ openssl req -new -key server.key -subj "/CN=$NGROK_DOMAIN" -out server.csr
 openssl x509 -req -in server.csr -CA base.pem -CAkey base.key -CAcreateserial -days 10000 -out server.crt
 ```
 
-> ![image-20240916183439410](img/ngrok/image-20240916183439410.png)
+> ![image-20240916183439410](img/Ngrok/image-20240916183439410.png)
 
 替换源代码中的文件：
 
@@ -130,7 +130,7 @@ GOOS=linux GOARCH=amd64 CGO_ENABLED=0 ./make.bash
 
 > 安装结果：
 >
-> ![image-20240916171627857](img/ngrok/image-20240916171627857.png)
+> ![image-20240916171627857](img/Ngrok/image-20240916171627857.png)
 >
 > 需要1个G以上的内存，否则会报错：
 >
@@ -159,15 +159,15 @@ GOOS=linux GOARCH=amd64 make release-server release-client
 
 > 提示信息：
 >
-> ![image-20240916172150254](img/ngrok/image-20240916172150254.png)
+> ![image-20240916172150254](img/Ngrok/image-20240916172150254.png)
 >
 > 编译结果：
 >
-> ![image-20240916171748469](img/ngrok/image-20240916171748469.png)
+> ![image-20240916171748469](img/Ngrok/image-20240916171748469.png)
 >
 > 进入bin目录：
 >
-> ![image-20240916171829043](img/ngrok/image-20240916171829043.png)
+> ![image-20240916171829043](img/Ngrok/image-20240916171829043.png)
 
 **windows客户端编译**
 
@@ -178,7 +178,7 @@ cd /usr/local/go/src/
 GOOS=windows GOARCH=amd64 CGO_ENABLED=0 ./make.bash
 ```
 
-> ![image-20240916172248733](img/ngrok/image-20240916172248733.png)
+> ![image-20240916172248733](img/Ngrok/image-20240916172248733.png)
 
 进入ngrok目录，进行编译：
 
@@ -187,7 +187,7 @@ cd /usr/local/ngrok
 GOOS=windows GOARCH=amd64 make release-server release-client
 ```
 
-> ![image-20240916172421599](img/ngrok/image-20240916172421599.png)
+> ![image-20240916172421599](img/Ngrok/image-20240916172421599.png)
 
 **mac客户端编译**
 
@@ -198,7 +198,7 @@ cd /usr/local/go/src/
 GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 ./make.bash
 ```
 
-> ![image-20240916173218667](img/ngrok/image-20240916173218667.png)
+> ![image-20240916173218667](img/Ngrok/image-20240916173218667.png)
 
 进入ngrok目录，进行编译：
 
@@ -207,7 +207,7 @@ cd /usr/local/ngrok
 GOOS=darwin GOARCH=amd64 make release-server release-client
 ```
 
-> ![image-20240916173257922](img/ngrok/image-20240916173257922.png)
+> ![image-20240916173257922](img/Ngrok/image-20240916173257922.png)
 
 **arm客户端编译**
 
@@ -218,7 +218,7 @@ cd /usr/local/go/src/
 GOOS=linux GOARCH=arm CGO_ENABLED=0 ./make.bash
 ```
 
-> ![image-20240916173541341](img/ngrok/image-20240916173541341.png)
+> ![image-20240916173541341](img/Ngrok/image-20240916173541341.png)
 
 进入ngrok目录，进行编译：
 
@@ -227,17 +227,17 @@ cd /usr/local/ngrok
 GOOS=linux GOARCH=arm make release-server release-client
 ```
 
-> ![image-20240916174126213](img/ngrok/image-20240916174126213.png)
+> ![image-20240916174126213](img/Ngrok/image-20240916174126213.png)
 
 ### 编译结果
 
-![image-20240916174220739](img/ngrok/image-20240916174220739.png)
+![image-20240916174220739](img/Ngrok/image-20240916174220739.png)
 
 ## ngrok使用
 
 > 配置域名泛解析，ngrok可以通过hostname去判断代理的服务
 >
-> ![image-20240917003650306](img/ngrok/image-20240917003650306.png)
+> ![image-20240917003650306](img/Ngrok/image-20240917003650306.png)
 
 ### ngrokd命令
 
@@ -256,7 +256,7 @@ GOOS=linux GOARCH=arm make release-server release-client
 nohup ./ngrokd -domain="meraki-x.com" -log="ngrokd.log" > /dev/null 2>&1 &
 ```
 
-> ![image-20240917135419008](img/ngrok/image-20240917135419008.png)
+> ![image-20240917135419008](img/Ngrok/image-20240917135419008.png)
 >
 > 查找进程：
 >
@@ -266,7 +266,7 @@ nohup ./ngrokd -domain="meraki-x.com" -log="ngrokd.log" > /dev/null 2>&1 &
 > netstat -tulnp | grep 4443
 > ```
 >
-> > ![image-20240917135533760](img/ngrok/image-20240917135533760.png)
+> > ![image-20240917135533760](img/Ngrok/image-20240917135533760.png)
 
 ### ngrok命令
 
@@ -344,39 +344,39 @@ tunnels:
 ngrok.exe -config=ngrok.yml start-all
 ```
 
-> ![image-20240917135938492](img/ngrok/image-20240917135938492.png)
+> ![image-20240917135938492](img/Ngrok/image-20240917135938492.png)
 >
 > 访问：`127.0.0.1:4040`
 >
-> ![image-20240917140218776](img/ngrok/image-20240917140218776.png)
+> ![image-20240917140218776](img/Ngrok/image-20240917140218776.png)
 >
 > 测试请求：`http://myothertest.meraki-x.com/`
 >
-> ![image-20240917140022310](img/ngrok/image-20240917140022310.png)
+> ![image-20240917140022310](img/Ngrok/image-20240917140022310.png)
 >
-> ![image-20240917144158447](img/ngrok/image-20240917144158447.png)
+> ![image-20240917144158447](img/Ngrok/image-20240917144158447.png)
 >
 > web界面会记录所有请求：
 >
-> ![image-20240917140344897](img/ngrok/image-20240917140344897.png)
+> ![image-20240917140344897](img/Ngrok/image-20240917140344897.png)
 >
 > 访问未设置的域名：
 >
-> ![image-20240917144338643](img/ngrok/image-20240917144338643.png)
+> ![image-20240917144338643](img/Ngrok/image-20240917144338643.png)
 
 ### 安全HTTPS
 
 > 因为是使用的自签名证书，所以对于https的url，浏览器访问会直接报不安全
 
-![image-20240917140744529](img/ngrok/image-20240917140744529.png)
+![image-20240917140744529](img/Ngrok/image-20240917140744529.png)
 
 需要都使用CA签名的证书来进行加密通信
 
-![image-20240917141144778](img/ngrok/image-20240917141144778.png)
+![image-20240917141144778](img/Ngrok/image-20240917141144778.png)
 
 准备证书文件：
 
-![image-20240917141506854](img/ngrok/image-20240917141506854.png)
+![image-20240917141506854](img/Ngrok/image-20240917141506854.png)
 
 ngrokd启动命令：
 
@@ -424,7 +424,7 @@ ngrok.exe -config=ngrok.yml start-all
 
 访问：`https://www.meraki-x.com/`
 
-> ![image-20240917141701661](img/ngrok/image-20240917141701661.png)
+> ![image-20240917141701661](img/Ngrok/image-20240917141701661.png)
 
 ## tcp穿透windows远程桌面
 
@@ -452,9 +452,9 @@ tunnels:
 
 连接配置：
 
-![image-20241130201956746](img/ngrok/image-20241130201956746.png)
+![image-20241130201956746](img/Ngrok/image-20241130201956746.png)
 
-> ![image-20241130202523498](img/ngrok/image-20241130202523498.png)
+> ![image-20241130202523498](img/Ngrok/image-20241130202523498.png)
 
 ## 配置为系统服务
 

@@ -1,4 +1,4 @@
-# clash
+# Clash
 
 > Clash代理软件是一种开源的网络代理工具，用于帮助用户管理和配置网络代理服务
 
@@ -31,11 +31,11 @@ wget -O config.yaml [订阅地址]
 
 放入`Country.mmdb`文件：
 
-![image-20240810121259914](img/clash/image-20240810121259914.png)
+![image-20240810121259914](img/Clash/image-20240810121259914.png)
 
 > 自动下载可能无法下载：
 >
-> ![image-20240916123319880](img/clash/image-20240916123319880.png)
+> ![image-20240916123319880](img/Clash/image-20240916123319880.png)
 >
 > 下载地址：https://cdn.jsdelivr.net/gh/Dreamacro/maxmind-geoip@release/Country.mmdb
 
@@ -66,9 +66,9 @@ export https_proxy=http://127.0.0.1:7890
 source /etc/profile
 ```
 
-> ![image-20240813115349751](img/clash/image-20240813115349751.png)
+> ![image-20240813115349751](img/Clash/image-20240813115349751.png)
 >
-> ![image-20240813115001597](img/clash/image-20240813115001597.png)
+> ![image-20240813115001597](img/Clash/image-20240813115001597.png)
 
 ### 启动clash
 
@@ -84,7 +84,7 @@ nohup clash -d . > clash.log 2>&1 &
 >
 > 在现代的`bash shell`中，`&>`可以更为简洁和现代的方式来合并重定向操作
 >
-> ![image-20240810122242457](img/clash/image-20240810122242457.png)
+> ![image-20240810122242457](img/Clash/image-20240810122242457.png)
 
 测试请求：
 
@@ -92,7 +92,7 @@ nohup clash -d . > clash.log 2>&1 &
 curl https://www.google.com.hk/
 ```
 
-> <img src="img/clash/image-20240810122442717.png" alt="image-20240810122442717" style="zoom:80%;" />
+> <img src="img/Clash/image-20240810122442717.png" alt="image-20240810122442717" style="zoom:80%;" />
 
 ### 关闭clash
 
@@ -102,7 +102,7 @@ curl https://www.google.com.hk/
 netstat -tulnp | grep 7890
 ```
 
-> ![image-20240810123326569](img/clash/image-20240810123326569.png)
+> ![image-20240810123326569](img/Clash/image-20240810123326569.png)
 
 修改配置：
 
@@ -110,7 +110,7 @@ netstat -tulnp | grep 7890
 vim /etc/profile
 ```
 
-> ![image-20240810122705350](img/clash/image-20240810122705350.png)
+> ![image-20240810122705350](img/Clash/image-20240810122705350.png)
 
 配置生效：
 
@@ -139,4 +139,4 @@ source /usr/local/clash/switchClash.sh
 
 > 切换clash的开关状态：
 >
-> ![image-20240916124100250](img/clash/image-20240916124100250.png)
+> ![image-20240916124100250](img/Clash/image-20240916124100250.png)

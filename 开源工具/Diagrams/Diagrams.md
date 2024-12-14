@@ -1,4 +1,4 @@
-# diagrams
+# Diagrams
 
 > Diagrams允许在Python代码中绘制云系统架构
 >
@@ -20,7 +20,7 @@
 >
 > 下载官网：[Download | Graphviz](https://graphviz.org/download/)
 >
-> ![image-20240905112837979](img/diagrams/image-20240905112837979.png)
+> ![image-20240905112837979](img/Diagrams/image-20240905112837979.png)
 >
 > 版本信息
 >
@@ -30,7 +30,7 @@
 
 允许添加环境变量
 
-![image-20240905113047738](img/diagrams/image-20240905113047738.png)
+![image-20240905113047738](img/Diagrams/image-20240905113047738.png)
 
 ## 示例代码
 
@@ -153,4 +153,4 @@ with Diagram(name="Advanced Web Service with On-Premise (colored)", show=False):
 
 ```
 
-> ![image-20240905113922414](img/diagrams/image-20240905113922414.png)
+> ![image-20240905113922414](img/Diagrams/image-20240905113922414.png)

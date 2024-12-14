@@ -56,11 +56,11 @@ service tinyproxy status  # 状态
 
 电脑设置代理：
 
-![image-20240923211401807](img/tinyproxy/image-20240923211401807.png)
+![image-20240923211401807](img/TinyProxy/image-20240923211401807.png)
 
 手机设置代理：
 
-![image-20240923211435226](img/tinyproxy/image-20240923211435226.png)
+![image-20240923211435226](img/TinyProxy/image-20240923211435226.png)
 
 Linux设置代理：
 
@@ -73,11 +73,11 @@ export https_proxy=http://47.113.186.151:8080
 source /etc/profile
 ```
 
-![image-20241015185241133](img/tinyproxy/image-20241015185241133.png)
+![image-20241015185241133](img/TinyProxy/image-20241015185241133.png)
 
 ### 测试效果
 
-![image-20240923212009395](img/tinyproxy/image-20240923212009395.png)
+![image-20240923212009395](img/TinyProxy/image-20240923212009395.png)
 
 ## 编译安装
 
@@ -104,7 +104,7 @@ make install
 
 > 查看版本信息：`tinyproxy -v`
 >
-> ![image-20240923210110083](img/tinyproxy/image-20240923210110083.png)
+> ![image-20240923210110083](img/TinyProxy/image-20240923210110083.png)
 >
 > 执行后会产生可执行程序：`/usr/local/bin/tinyproxy`
 >
@@ -230,7 +230,7 @@ esac
 tail -f -n200 /var/log/tinyproxy/tinyproxy.log
 ```
 
-> ![image-20240923211908700](img/tinyproxy/image-20240923211908700.png)
+> ![image-20240923211908700](img/TinyProxy/image-20240923211908700.png)
 
 ### 密码验证
 
@@ -238,11 +238,11 @@ tail -f -n200 /var/log/tinyproxy/tinyproxy.log
 
 电脑：
 
-![image-20240923204120336](img/tinyproxy/image-20240923204120336.png)
+![image-20240923204120336](img/TinyProxy/image-20240923204120336.png)
 
 手机：
 
-![image-20240923210800621](img/tinyproxy/image-20240923210800621.png)
+![image-20240923210800621](img/TinyProxy/image-20240923210800621.png)
 
 ## 多级代理
 
@@ -317,7 +317,7 @@ tail -f -n200 /var/log/tinyproxy/tinyproxy.log
 Upstream http some.remote.proxy:port
 ```
 
-> ![image-20241015213715693](img/tinyproxy/image-20241015213715693.png)
+> ![image-20241015213715693](img/TinyProxy/image-20241015213715693.png)
 >
 > 对于密码认证：
 >

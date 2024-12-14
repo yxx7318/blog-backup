@@ -1,4 +1,4 @@
-# ffmpeg和ImageMagick
+# FFmpeg和ImageMagick
 
 ## ffmpeg
 
@@ -6,9 +6,9 @@
 
 下载地址：[Download FFmpeg](https://ffmpeg.org/download.html)
 
-![image-20240807181704562](img/ffmpeg和ImageMagick/image-20240807181704562.png)
+![image-20240807181704562](img/FFmpeg和ImageMagick/image-20240807181704562.png)
 
-![image-20240807181804860](img/ffmpeg和ImageMagick/image-20240807181804860.png)
+![image-20240807181804860](img/FFmpeg和ImageMagick/image-20240807181804860.png)
 
 解压文件，在path中配置环境变量`C:\ffmpeg\bin`
 
@@ -30,13 +30,13 @@ conda install ffmpeg
 
 ### Windows安装
 
-![image-20240807183816486](img/ffmpeg和ImageMagick/image-20240807183816486.png)
+![image-20240807183816486](img/FFmpeg和ImageMagick/image-20240807183816486.png)
 
-![image-20240807183816486](img/ffmpeg和ImageMagick/image-20240807184132106.png)
+![image-20240807183816486](img/FFmpeg和ImageMagick/image-20240807184132106.png)
 
 ### Linux安装
 
-![image-20240905165139898](img/ffmpeg和ImageMagick/image-20240905165139898.png)
+![image-20240905165139898](img/FFmpeg和ImageMagick/image-20240905165139898.png)
 
 直接yum命令安装
 
@@ -56,7 +56,7 @@ sudo yum install ImageMagick
 > sudo ln -s /usr/bin/convert /usr/bin/magick
 > ```
 >
-> ![image-20240905165436444](img/ffmpeg和ImageMagick/image-20240905165436444.png)
+> ![image-20240905165436444](img/FFmpeg和ImageMagick/image-20240905165436444.png)
 
 ### 环境判断
 
