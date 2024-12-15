@@ -24,10 +24,17 @@
 
 - `@PreDestroy`：用于**在bean被移除之前**执行某些销毁方法，这个注解标注的方法会在bean被移除之前被调用，例如在Spring容器关闭时。这个注解对应的方法没有参数，返回类型为void，且只能有一个这样的方法
 
+- 请求参数：
+
+  - 不使用注解：Spring MVC 可以自动将简单的请求参数（如 `String`, `int` 等）绑定到方法参数上，无需任何注解，对于复杂的对象，只要对象有默认的无参构造函数和`getter/setter`方法，Spring MVC也可以自动将请求参数绑定到对象的字段上，同样无需注解
+  - `@ModelAttribute`：用于将多个请求参数或表单数据绑定到一个复杂对象上，并可将该对象添加到模型中，适用于处理表单提交和分页等场景
+  - `@PathVariable`：用于从URL路径中提取变量并绑定到方法参数上，常用于RESTful风格的API设计，例如获取特定资源的详细信息
+  - `@RequestBody`：用于将HTTP请求体的内容解析并绑定到一个复杂对象上，通常用于处理POST、PUT等请求中的JSON或XML格式的数据
+
 - `@JsonFormat`：用于属性上，**用于指定日期、时间或数字等类型的格式化方式**的注解，通常用于在将Java对象转换为JSON字符串时，对日期、时间等格式进行定制化(`@JsonValue`指定值作为整个对象的JSON表示)
 
   - `pattern`：指定日期、时间的格式，例如`"yyyy-MM-dd HH:mm:ss"`
-  
+
     - ```java
           // 指定后端返回的格式，为"yyyy-MM-dd HH:mm:ss"，时区为GMT+8
           @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -37,25 +44,25 @@
   - `shape`：指定日期、时间的序列化形式，有以下几种取值：
 
     - `JsonFormat.Shape.STRING`：以字符串形式序列化
-  
+
       - 设置数字类型的格式化方式，转化为字符串，解决前端精度问题
-  
+
         - ```java
               // 指定MVC在序列化为JSON时将该字段转化为String类型
               @JsonFormat(shape = JsonFormat.Shape.STRING)
               private Long id;
           ```
-  
+
     - `JsonFormat.Shape.NUMBER`：以数字形式序列化
-  
+
     - `JsonFormat.Shape.ARRAY`：以数组形式序列化
-  
+
     - `JsonFormat.Shape.OBJECT`：以对象形式序列化
-  
+
   - `locale`：指定地区信息，用于格式化日期、时间
-  
+
   - `timezone`：指定时区信息，用于格式化日期、时间
-  
+
 - `@DateTimeFormat`：用于属性上，将**接收的字符串转换为日期**(只有**字符串符合指定格式**时才会进行转换)，有`pattern` 和 `iso` 属性，两者一起使用时，`pattern` 属性会覆盖 `iso` 属性。对于指定的情况不符合时会使用默认的SpringMVC字符串处理方式
 
   - `pattern`：指定日期、时间的格式(对于同时存在日期和时间的，**字符串中需要通过T来分隔**)有以下几种取值：

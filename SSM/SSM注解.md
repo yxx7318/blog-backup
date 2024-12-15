@@ -43,10 +43,15 @@ SpringMVC
 - `@RequestParam("key")`：用于形参内，**将发送参数的值与形参匹配**
 
 - `@RequestHeader`：用于形参内，获取请求头信息
+  - `@RequestHeader("User-Agent") String userAgent`
+  - `@RequestHeader Map<String, String> headers`
+  - `@RequestHeader HttpHeaders headers`
 - `@RequestBody`：用于形参内，**结合JSON解析器，接收前端传过来的JSON格式对象绑定到对象中**
 - `@ResponseBody`：用于方法和类上，标识在类上时，表示该类中所有的方法均应用，**可以将方法返回的数据转化为JSON格式(不会进行页面跳转)**
 - `@RestController`：用于类上，是`@ResponseBody`和`@Controller`的结合
 - `@CookieValue`：用于形参内，获取cookie数据
+  - `@CookieValue("JSESSIONID") String sessionCookie`
+  - `@CookieValue Map<String, String> cookies`
 - `@PathVariable`：用于形参内，**将形参名与REST风格数据相匹配**
 - `@ControllerAdvice`：用于类上，将当前类标识为异常处理的组件
 
