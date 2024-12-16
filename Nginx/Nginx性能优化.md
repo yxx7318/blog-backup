@@ -15,6 +15,7 @@
 events {
     worker_connections 1024;
     multi_accept on; # 允许一个工作进程同时接受多个新连接
+    accept_mutex on; # 防止惊群效应
     use epoll; # 在Linux上使用epoll事件模型，提高性能
 }
 ```
