@@ -1,9 +1,9 @@
 #!/bin/sh
 
 
-touch /lib/systemd/system/nginx.service
+touch /etc/systemd/system/nginx.service
 
-cat <<EOF > /lib/systemd/system/nginx.service
+cat <<EOF > /etc/systemd/system/nginx.service
 [Unit]
 Description=nginx service
 Documentation=http://nginx.org/en/docs/
