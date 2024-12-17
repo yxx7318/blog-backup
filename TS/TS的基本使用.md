@@ -116,6 +116,39 @@ let c = numberOrString as string
 c.length
 ```
 
+## 复杂对象
+
+### 枚举定义
+
+```tsx
+// 枚举成员会被赋值为递增的数字(enum Icon {circleCheck, warning})(从0开始)，通过"="显式地指定值
+enum Icon {
+  circleCheck = CircleCheck,
+  warning = Warning,
+  circleClose = CircleClose
+}
+
+enum Status {
+  wait = 'wait',
+  process = 'process',
+  finish = 'finish',
+  error = 'error',
+  success = 'success'
+}
+```
+
+### 对象定义
+
+```tsx
+interface Step {
+  title: string,
+  icon: Icon,
+  description: string,
+  date: string,
+  status: Status
+}
+```
+
 ## 泛型
 
 ```tsx
@@ -153,4 +186,3 @@ returnLength({length: 100})
 type UserId = number | string
 let id: UserId = 1
 ```
-
