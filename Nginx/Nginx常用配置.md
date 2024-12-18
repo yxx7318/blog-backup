@@ -4,7 +4,7 @@
 
 gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内容来减小文件的大小。算法采用了LZ77算法和哈夫曼编码，通过构建字典和替换重复的字符、字符串来实现压缩。gzip压缩可以将文件大小减小到原始大小的20%至80%之间，具体压缩率取决于文件的内容和结构。通常，文本文件、HTML、CSS、JavaScript等可压缩的文本格式具有更高的压缩率，而图片、音频和视频等二进制文件的压缩率较低
 
-> 在http段内添加以下配置来启用gzip压缩
+> 在http段内添加以下配置来启用gzip压缩：
 
 ```nginx
     gzip on;
@@ -44,11 +44,11 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 - `gzip_min_length 256`：指定文件大小超过多少字节才进行压缩
 - `gzip_types`：指定要进行压缩的文件类型
 
-> 未压缩前
+> 未压缩前：
 >
 > <img src="img/Nginx常用配置/image-20240116172304398.png" alt="image-20240116172304398" style="zoom:80%;" />
 >
-> `Ctrl + F5`无视缓存强制刷新，压缩后
+> `Ctrl + F5`无视缓存强制刷新，压缩后：
 >
 > <img src="img/Nginx常用配置/image-20240116172436798.png" alt="image-20240116172436798" style="zoom:80%;" />
 >
@@ -60,45 +60,17 @@ gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内
 >
 > `gzip on;`和`gzip_static on;`可以同时启用，相互独立
 
-开启命令
+开启命令：
 
 ```nginx
 gzip_static on;
 ```
 
-手动压缩文件命令
+手动压缩文件命令：
 
 ```
 gzip jquery.min.js
 ```
-
-配置`vue.config.js`
-
-```js
-  configureWebpack: {
-    name: name,
-    resolve: {
-      alias: {
-        '@': resolve('src')
-      }
-    },
-    plugins: [
-      // http://doc.ruoyi.vip/ruoyi-vue/other/faq.html#使用gzip解压缩静态文件
-      new CompressionPlugin({
-        cache: false,                                  // 不启用文件缓存
-        test: /\.(js|css|html|jpe?g|png|gif|svg)?$/i,  // 压缩文件格式
-        filename: '[path][base].gz[query]',            // 压缩后的文件名
-        algorithm: 'gzip',                             // 使用gzip压缩
-        minRatio: 0.8,                                 // 压缩比例，小于 80% 的文件不会被压缩
-        deleteOriginalAssets: false                    // 压缩后删除原文件
-      })
-    ],
-  },
-```
-
-> 打包效果
->
-> ![image-20240730120124318](img/Nginx常用配置/image-20240730120124318.png)
 
 ## 允许跨域
 
@@ -214,7 +186,7 @@ server {
 > >         server {
 > >             listen 80;
 > >             server_name _; # 使用通配符匹配所有请求
-> >     
+> >         
 > >             location / {
 > >                 if ($scheme = http) {
 > >                     return 301 https://$host$request_uri;

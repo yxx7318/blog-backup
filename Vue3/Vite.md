@@ -196,3 +196,79 @@ import HomeBottom from './components/Home/HomeBottom.vue'
 > 跳转到指定路由界面：
 >
 > ![image-20240924115806611](img/Vite/image-20240924115806611.png)
+
+## 分环境打包
+
+新建文件`.env.development`、`.env.production`和`.env.staging`文件，其中参考内容：
+
+```
+# 开发环境配置
+VITE_APP_ENV = 'development'
+
+# 管理系统/开发环境
+VITE_APP_BASE_API = '/dev-api'
+
+```
+
+引用变量：
+
+```
+import.meta.env.VITE_APP_BASE_API;
+```
+
+修改`package.json`，原本为：
+
+```js
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+```
+
+修改为：
+
+```js
+  "scripts": {
+    "dev": "vite",
+    "build:prod": "vite build",
+    "build:stage": "vite build --mode staging",
+    "preview": "vite preview"
+  },
+```
+
+> - `vite`默认激活`.env.development`
+> - `vite build`默认激活`.env.production`
+> - `vite build --mode staging`默认激活`.env.staging`
+
+## 打包压缩
+
+安装依赖：
+
+```
+npm install vite-plugin-compression --save-dev
+```
+
+配置`vite.config.js`：
+
+```js
+import { defineConfig } from 'vite';
+import compression from 'vite-plugin-compression';
+
+export default defineConfig({
+  plugins: [
+    // 其他插件...
+    compression({
+      verbose: true, // 控制台输出信息
+      disable: false, // 禁用压缩
+      threshold: 10240, // 超过此大小的文件将被压缩，单位为字节，默认是 10k
+      algorithm: 'gzip', // 使用的压缩算法，默认是 gzip
+      ext: '.gz', // 压缩后的文件扩展名
+    }),
+  ],
+});
+```
+
+> 打包效果：
+>
+> ![image-20241218120752035](img/Vite/image-20241218120752035.png)

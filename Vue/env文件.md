@@ -105,4 +105,3 @@ ENV = 'staging'
 VUE_APP_BASE_API = '/stage-api'
 
 ```
-
