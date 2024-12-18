@@ -155,3 +155,53 @@ mysqlbinlog --start-position=[备份的位置] /var/lib/mysql/binlog.000001 > /b
 mysqlbinlog --start-position=12345 mysql-bin.000001 | mysql -u root -pyuxingxuan test
 ```
 
+## 二进制日志清理
+
+> MySQL的二进制日志（binary log）默认不会自动删除，因此它们会一直保存直到管理员手动删除或配置了自动过期策略。二进制日志记录了所有对数据库进行的更改操作（如表结构和表数据的变更），用于数据库恢复、主从复制等场景
+>
+> 为了管理磁盘空间和维护日志文件的数量，通常建议设置二进制日志的过期时间。可以通过设置`expire_logs_days`系统变量来指定二进制日志文件保留的最大天数
+
+### 过期时间
+
+例如，如果希望二进制日志只保留7天，可以在MySQL配置文件（通常是`my.cnf`或`my.ini`）中的`[mysqld]`段落添加或修改如下行：
+
+```
+expire_logs_days = 7
+```
+
+也可以通过执行SQL命令动态地设置这个参数：
+
+```
+SET GLOBAL expire_logs_days = 7;
+```
+
+> 一旦设置了`expire_logs_days`，MySQL服务器会定期检查并删除超过指定天数的二进制日志文件
+>
+> 需要注意的是，该设置只影响将来创建的日志文件，并不会立即删除现有的旧日志文件，而会在下次检查时根据日志清理策略被清理
+
+### 手动清理
+
+如果需要立即清理过期的日志，可以使用`PURGE BINARY LOGS`语句手动清除不再需要的日志文件。例如，要删除所有早于某个特定日期的日志，可以执行：
+
+```
+PURGE BINARY LOGS BEFORE '2024-12-01 00:00:00';
+```
+
+或者，根据日志序列号来清除：
+
+```
+PURGE BINARY LOGS TO 'binlog.000005';
+```
+
+> 删除所有编号小于`binlog.000005`的日志文件
+
+### 日志查看
+
+列出当前服务器上所有的二进制日志文件及其大小：
+
+```
+SHOW BINARY LOGS;
+-- 或者
+SHOW MASTER LOGS;
+```
+
