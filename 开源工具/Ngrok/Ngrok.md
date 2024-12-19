@@ -473,7 +473,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/usr/local/ngrok
-ExecStart=/usr/local/ngrok/ngrokd -domain="dev.360gpt.net" -tunnelAddr=":72" -httpAddr=":73" -httpsAddr=":74" -tlsCrt="dev.360gpt.net_public.crt" -tlsKey="dev.360gpt.net.key" -log="ngrokd.log"
+ExecStart=/usr/local/ngrok/ngrokd -domain="dev.360gpt.net" -tunnelAddr=":72" -httpAddr=":70" -httpsAddr=":74" -tlsCrt="dev.360gpt.net_public.crt" -tlsKey="dev.360gpt.net.key" -log="ngrokd.log"
 ExecStop=/bin/kill -TERM $MAINPID
 Restart=always
 RestartSec=1
