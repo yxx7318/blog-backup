@@ -1,6 +1,8 @@
 # Ollama基本使用
 
 > 官网链接：[Ollama](https://ollama.com/)
+>
+> 中文链接：[Ollama - Ollama 框架](https://ollama.org.cn/)
 
 ## 安装使用
 
@@ -17,6 +19,12 @@
 ![image-20241219144232909](img/Ollama基本使用/image-20241219144232909.png)
 
 > 通过系统变量`OLLAMA_HOST`指定ip，默认只允许本地
+
+修改模型下载位置：
+
+![image-20241220164831621](img/Ollama基本使用/image-20241220164831621.png)
+
+> 默认目录：`C:\Users\Administrator\.ollama\models`，设置变量之后，退出应用，迁移文件后重启即可
 
 ## 基本命令
 
@@ -57,6 +65,10 @@ ollama list
 > C:\Users\Administrator>ollama list
 > NAME    ID    SIZE    MODIFIED
 > ```
+>
+> 模型下载：[library (ollama.com)](https://ollama.com/library)
+>
+> 中文地址：[模型库 - Ollama 框架](https://ollama.org.cn/library)
 
 **运行模型**：
 
@@ -142,12 +154,67 @@ python hello.py
 >>> /bye
 ````
 
+> - `/clear`：清楚会话记录
+> - `/bye`：退出会话
+
 **关闭模型**：
 
 ```
 ollama stop llama3.2
 ```
 
+## 量化模型
+
+```
+C:\Users\Administrator>ollama list
+NAME               ID              SIZE      MODIFIED
+qwen2.5:7b         845dbda0ea48    4.7 GB    25 hours ago
+llama3.2:latest    a80c4f17acd5    2.0 GB    2 days ago
+```
+
+`qwen2.5:7b`是支持量化的：
+
+```
+ollama run qwen2.5:7b-instruct
+```
+
+运行结果：
+
+```
+C:\Users\Administrator>ollama list
+NAME                   ID              SIZE      MODIFIED
+qwen2.5:7b-instruct    845dbda0ea48    4.7 GB    48 seconds ago
+qwen2.5:7b             845dbda0ea48    4.7 GB    25 hours ago
+llama3.2:latest        a80c4f17acd5    2.0 GB    2 days ago
+```
+
+## 图像模型
+
+安装模型：
+
+```
+ollama run llama3.2-vision
+```
+
+添加图片时直接拖拽即可：
+
+```
+>>> 请你描述一下这张图片，我给你提供基本信息，这是一张电池图片，电池形状分为，柱状、块状、纽扣和其它四大类，你应该推理告
+... 诉我这是哪一类，并给出自己预估的正确率。且如果存在报告编号，请你也给我报告编号，返回信息需要为json格式C:\Users\Admi
+... nistrator\Desktop\spmp202307119482374.jpg
+Added image 'C:\Users\Administrator\Desktop\spmp202307119482374.jpg'
+### 1. 电池形状
+
+根据电池图片显示，该电池是块状类型。
+
+### 2. 报告编号
+
+该图片为TCT测试中心的报告编号：TCT2305298114。
+```
+
+> ![image-20241220171356515](img/Ollama基本使用/image-20241220171356515.png)
+
 参考博客：
 
+- [Ollama完整教程：本地LLM管理、WebUI对话、Python/Java客户端API应用 - 老牛啊 - 博客园 (cnblogs.com)](https://www.cnblogs.com/obullxl/p/18295202/NTopic2024071001)
 - [【LLM】Ollama：本地大模型 WebAPI 调用_ollama api调用-CSDN博客](https://blog.csdn.net/2303_80346267/article/details/142437852)

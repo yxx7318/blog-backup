@@ -54,7 +54,7 @@ docker run ^
 
 > 注意：
 >
-> - Api域名需要可以访问的公网ip，ollama需要配置环境变量允许任意ip连接
+> - Ollama需要配置环境变量允许任意ip连接，Api域名需要服务可以访问的ip
 >
 > - 因为本地模型，所以Api Key随便填
 
@@ -62,9 +62,17 @@ docker run ^
 
 ![image-20241219152244979](img/MaxKB基本使用/image-20241219152244979.png)
 
-> 如果下载失败，可以在ollama中手动下载(这里是maxkb的qwen:2.5-instruct的暂时还没有支持到，暂时只能1.5)：
+> 如果下载失败，可以在ollama中手动下载，然后手动输入名称添加进去：
 >
 > ![image-20241219145854274](img/MaxKB基本使用/image-20241219145854274.png)
+>
+> 添加模型：
+>
+> ![image-20241220161421580](img/MaxKB基本使用/image-20241220161421580.png)
+>
+> 添加结果：
+>
+> ![image-20241220161509113](img/MaxKB基本使用/image-20241220161509113.png)
 >
 > 官网指示：[qwen2.5 (ollama.com)](https://ollama.com/library/qwen2.5)
 >
