@@ -30,7 +30,8 @@ sudo docker run -p 3308:3306 --name mysql_8.0.27 \
   -v /usr/local/docker/mysql_8.0.27/conf.d:/etc/mysql/conf.d \
   -v /usr/local/docker/mysql_8.0.27/mysql-files:/var/lib/mysql-files \
   -e MYSQL_ROOT_PASSWORD=root \
-  -d mysql:latest
+  --restart=unless-stopped \
+  -d mysql:8.0.27
 
 ```
 
@@ -40,8 +41,9 @@ sudo docker run -p 3308:3306 --name mysql_8.0.27 \
 > - `-v /usr/local/docker/mysql_8.0.27/data:/var/lib/mysql`：将宿主机的`/usr/local/docker/mysql_8.0.27/data`目录挂载到容器内的`/var/lib/mysql`目录。这样做是为了将 MySQL 的数据文件（如数据库文件和表文件）存储在宿主机的指定目录，而不是在容器内部创建数据文件
 > - `-v /usr/local/docker/mysql_8.0.27/conf.d:/etc/mysql/conf.d`：将宿主机的`/usr/local/docker/mysql_8.0.27/conf.d`目录挂载到容器内的`/etc/mysql/conf.d`目录。这样做是为了将MySQL的配置文件（如`my.cnf`或`my.ini`）放在宿主机的指定目录，而不是在容器内部创建配置文件
 > - `-v /usr/local/docker/mysql_8.0.27/mysql-files:/var/lib/mysql-files`：将宿主机的`/usr/local/docker/mysql_8.0.27/mysql-files`目录挂载到容器内的`/var/lib/mysql-files`目录。这样做是为了将 MySQL 的`--secure-file-priv`选项指定的目录放在宿主机的指定目录，而不是在容器内部创建该目录(当指定了外部配置文件与外部存储路径时（没有指定的话，不需要挂载`mysql-files`），也需要指定`/var/lib/mysql-files`的外部目录)
-> - `-e MYSQL_ROOT_PASSWORD=root`：这个参数设置了 MySQL 的 root 用户的密码为`root`。这是为了在容器启动时自动设置 root 用户的密码
-> - `-d mysql:latest`：这个参数以守护进程模式（detached）运行 MySQL 容器，并且使用`mysql:latest`镜像
+> - `-e MYSQL_ROOT_PASSWORD=root`：这个参数设置了MySQL的root用户的密码为`root`。这是为了在容器启动时自动设置 root 用户的密码
+> - `--restart=unless-stopped`：设置了重启策略，在任何情况下都应自动重启该容器，除非它被手动停止
+> - `-d mysql:8.0.27`：这个参数以守护进程模式（detached）运行 MySQL 容器，并且使用`mysql:8.0.27`镜像
 >
 > 容器创建之后，配置文件目录会自动置空：
 >
@@ -172,6 +174,7 @@ sudo docker run -p 3308:3306 --name mysql_8.0.40 \
   -v /usr/local/docker/mysql_8.0.40/data:/var/lib/mysql \
   -v /usr/local/docker/mysql_8.0.40/conf.d:/etc/mysql/conf.d \
   -e MYSQL_ROOT_PASSWORD=root \
+  --restart=unless-stopped \
   -d mysql:8.0.40
 
 ```
@@ -193,7 +196,8 @@ sudo docker run -p 3308:3306 --name mysql_8.0.27 \
   --cpus="2.0" \
   --device-read-bps=/dev/sda:10GB \
   --device-write-bps=/dev/sda:10GB \
-  -d mysql:latest
+  --restart=unless-stopped \
+  -d mysql:8.0.27
 
 ```
 
