@@ -17,7 +17,7 @@ git config core.ignorecase false
 
 > - `git config`配置不影响远程仓库，其他成员拉取后也需要重新配置
 >
-> - 开启此配置，在仅大小写重命名文件或者目录(windows仅大小写命名不会真正命令，需要带额外字符命名后再删除字符命名到目标名称)之后直接提交会出现远程仓库出现两份文件，分别为重命名前和重命名后，在windows拉取文件会报错：
+> - 开启此配置，在仅大小写重命名文件或者目录(windows仅大小写命名不会真正重命名，需要带额外字符命名，后再删除字符命名到目标名称)之后直接提交会出现远程仓库出现两份文件，分别为重命名前和重命名后，在windows拉取文件会报错：
 >
 > - ```
 >   error: The following untracked working tree files would be overwritten by merge:
@@ -77,7 +77,7 @@ git pull --allow-unrelated-histories
 git push -u origin "master"
 ```
 
-> 强制推送
+> 强制推送：
 >
 > ```
 > git push -f origin master
