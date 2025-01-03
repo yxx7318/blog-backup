@@ -240,6 +240,15 @@ START SLAVE;
 > 启动后自动同步：
 >
 > <img src="img/MySql的主从复制/image-20240325150606850.png" alt="image-20240325150606850" style="zoom:67%;" />
+>
+> 查看同步进度参数：
+>
+> - `Seconds_Behind_Master`：这个值表示从库滞后于主库的时间，以秒为单位。如果这个值是0或NULL，那么从库要么与主库同步，要么没有连接到主库
+> - `Relay_Log_File`和`Relay_Log_Pos`：表示从库正在处理的中继日志文件名和位置
+> - `Master_Log_File`和`Read_Master_Log_Pos`：表示主库上的二进制日志文件名和位置，从库读取到的位置
+> - `Exec_Master_Log_Pos`：表示从库已经执行的最后一个事件在主库上的位置
+>
+> 通过比较`Master_Log_File`和`Relay_Log_File`以及`Read_Master_Log_Pos`和`Exec_Master_Log_Pos`来了解从库还需要处理多少数据。如果`Relay_Log_File`和`Master_Log_File`不同，或者`Exec_Master_Log_Pos`小于`Read_Master_Log_Pos`，那么从库还在追赶主库
 
 ## 异常中断
 
