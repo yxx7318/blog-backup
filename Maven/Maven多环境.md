@@ -2,7 +2,7 @@
 
 ## 配置多环境文件
 
-在父`pom.xml`或汇总的`pom.xml`中进行配置：
+在父`pom.xml`(推荐)或汇总的`pom.xml`中进行配置：
 
 ```xml
     <profiles>
@@ -160,54 +160,3 @@ mvn clean package -Pprod  # 构建生产环境
 选择对应的配置文件，启动项目或者打包项目即可：
 
 ![image-20240606140853322](img/Maven多环境/image-20240606140853322.png)
-
-## 引入子模块
-
-新建模块：
-
-![image-20241101111938202](img/Maven多环境/image-20241101111938202.png)
-
-子`pom.xml`文件：
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>cebc</artifactId>
-        <groupId>com.cebc</groupId>
-        <version>3.8.7</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>cebc-uniapp</artifactId>
-
-    <description>
-        uniapp逻辑代码
-    </description>
-
-    <dependencies>
-
-        <!-- 通用工具-->
-        <dependency>
-            <groupId>com.cebc</groupId>
-            <artifactId>cebc-common</artifactId>
-        </dependency>
-
-    </dependencies>
-
-</project>
-```
-
-> 无需在子模块中定义`<groupId>`，父模块中已定义
-
-父`pom.xml`的`<dependencies>`标签下引入，这里只引入了版本控制，暂时没有引入依赖：
-
-![image-20240606215957178](img/Maven多环境/image-20240606215957178.png)
-
-
-
-在真正的`<dependencies>`标签下引入依赖，若依是`admin`模块下汇总的，刷新maven依赖信息，清理残留的包，重新运行即可：
-
-![image-20240606220421540](img/Maven多环境/image-20240606220421540.png)
