@@ -170,6 +170,8 @@ chmod 660 /var/log/mysqld.log
 ## 更高版本
 
 ```
+sudo mkdir -p /usr/local/docker/mysql_8.0.40/{data,conf.d}
+
 sudo docker run -p 3308:3306 --name mysql_8.0.40 \
   -v /usr/local/docker/mysql_8.0.40/data:/var/lib/mysql \
   -v /usr/local/docker/mysql_8.0.40/conf.d:/etc/mysql/conf.d \

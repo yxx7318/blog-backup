@@ -142,7 +142,7 @@ change master to master_host='192.168.138.100',master_user='xiaoming',master_pas
 >
 > 从0开始复制：
 >
-> ```
+> ```sql
 > CHANGE MASTER TO
 > MASTER_HOST='master_host_ip',
 > MASTER_USER='xiaoming',
