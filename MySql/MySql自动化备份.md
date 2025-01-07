@@ -116,19 +116,19 @@ sh RecoverSql.sh 2024-04-20 19
 
 `mysqlbinlog` 是MySQL数据库的一个命令行工具，用于查看和解析MySQL二进制日志文件。二进制日志是MySQL服务器用来记录所有修改数据库操作的日志文件，这些操作包括DML (Data Manipulation Language) 语句（如`INSERT`、`UPDATE`、`DELETE`）、DDL (Data Definition Language) 语句（如`CREATE`、`ALTER`、`DROP`）以及事务操作
 
-以下是常用的选项：
+常用的选项：
 
-- `--start-position=<position>`：从指定的日志文件位置开始解析。
-- `--stop-position=<position>`：解析到指定的日志文件位置结束。
-- `--start-datetime=<datetime>`：从指定的日期和时间开始解析。
-- `--stop-datetime=<datetime>`：解析到指定的日期和时间结束。
-- `--no-defaults`：不使用默认配置文件。
-- `--defaults-file=<file>`：使用指定的配置文件。
-- `--read-from-remote-server`：从远程服务器读取日志文件。
-- `--host=<hostname>`：连接到指定的服务器主机。
-- `--user=<username>`：使用指定的用户名连接到服务器。
-- `--password=<password>`：使用指定的密码连接到服务器。
-- `--socket=<socket>`：使用指定的套接字文件连接到服务器。
+- `--start-position=<position>`：从指定的日志文件位置开始解析
+- `--stop-position=<position>`：解析到指定的日志文件位置结束
+- `--start-datetime=<datetime>`：从指定的日期和时间开始解析
+- `--stop-datetime=<datetime>`：解析到指定的日期和时间结束
+- `--no-defaults`：不使用默认配置文件
+- `--defaults-file=<file>`：使用指定的配置文件
+- `--read-from-remote-server`：从远程服务器读取日志文件
+- `--host=<hostname>`：连接到指定的服务器主机
+- `--user=<username>`：使用指定的用户名连接到服务器
+- `--password=<password>`：使用指定的密码连接到服务器
+- `--socket=<socket>`：使用指定的套接字文件连接到服务器
 - `--port=<port>`：使用指定的端口连接到服务器
 
 记录备份时的时间戳或二进制日志的位置：
@@ -157,39 +157,66 @@ mysqlbinlog --start-position=12345 mysql-bin.000001 | mysql -u root -pyuxingxuan
 
 ## 二进制日志清理
 
-> MySQL的二进制日志（binary log）默认不会自动删除，因此它们会一直保存直到管理员手动删除或配置了自动过期策略。二进制日志记录了所有对数据库进行的更改操作（如表结构和表数据的变更），用于数据库恢复、主从复制等场景
->
-> 为了管理磁盘空间和维护日志文件的数量，通常建议设置二进制日志的过期时间。可以通过设置`expire_logs_days`系统变量来指定二进制日志文件保留的最大天数
+> MySQL的二进制日志（binary log）默认不会自动删除，因此它们会一直保存直到管理员手动删除或配置了自动过期策略。二进制日志记录了所有对数据库进行的更改操作（如表结构和表数据的变更），用于数据库恢复、主从复制等场景。为了管理磁盘空间和维护日志文件的数量，可以通过设置`expire_logs_days`系统变量来指定二进制日志文件保留的最大天数
+
+二进制文件位置：
+
+```sql
+SHOW VARIABLES LIKE 'log_bin'; -- 是否开启
+SHOW VARIABLES LIKE 'log_bin_basename'; -- 文件位置
+```
 
 ### 过期时间
+
+> 查看配置：
+>
+> ```sql
+> SHOW VARIABLES LIKE 'expire_logs_days';
+> SHOW VARIABLES LIKE 'binlog_expire_logs_seconds';
+> ```
 
 例如，如果希望二进制日志只保留7天，可以在MySQL配置文件（通常是`my.cnf`或`my.ini`）中的`[mysqld]`段落添加或修改如下行：
 
 ```
 expire_logs_days = 7
+
+# binlog_expire_logs_seconds = 604800
 ```
 
 也可以通过执行SQL命令动态地设置这个参数：
 
-```
+```sql
 SET GLOBAL expire_logs_days = 7;
+
+-- SET GLOBAL binlog_expire_logs_seconds = 604800;
 ```
 
-> 一旦设置了`expire_logs_days`，MySQL服务器会定期检查并删除超过指定天数的二进制日志文件
+> 一旦设置了`expire_logs_days`或者`binlog_expire_logs_seconds`，MySQL服务器会定期检查并删除超过指定天数的二进制日志文件
 >
-> 需要注意的是，该设置只影响将来创建的日志文件，并不会立即删除现有的旧日志文件，而会在下次检查时根据日志清理策略被清理
+> 注意：该设置只影响将来创建的日志文件，并不会立即删除现有的旧日志文件，而会在下次检查时根据日志清理策略被清理
+
+**新旧配置**：
+
+- `expire_logs_days`：这是一个旧的配置选项，用于指定二进制日志文件在多少天后自动删除。如果设置`expire_logs_days = 7`，那么超过7天的二进制日志文件将被自动删除
+- `binlog_expire_logs_seconds`：这是较新的配置选项，用于以秒为单位指定二进制日志文件的过期时间。例如，如果设置`binlog_expire_logs_seconds = 604800`，那么超过7天（604800 秒）的二进制日志文件将被自动删除
+
+> 在mysql8.0中两者不能同时设置，必须其中一个为0：
+>
+> ```
+> 3683 - The option expire_logs_days and binlog_expire_logs_seconds cannot be used together. Please use binlog_expire_logs_seconds to set the expire time (expire_logs_days is deprecated)
+> ```
 
 ### 手动清理
 
 如果需要立即清理过期的日志，可以使用`PURGE BINARY LOGS`语句手动清除不再需要的日志文件。例如，要删除所有早于某个特定日期的日志，可以执行：
 
-```
+```sql
 PURGE BINARY LOGS BEFORE '2024-12-01 00:00:00';
 ```
 
 或者，根据日志序列号来清除：
 
-```
+```sql
 PURGE BINARY LOGS TO 'binlog.000005';
 ```
 
@@ -199,7 +226,7 @@ PURGE BINARY LOGS TO 'binlog.000005';
 
 列出当前服务器上所有的二进制日志文件及其大小：
 
-```
+```sql
 SHOW BINARY LOGS;
 -- 或者
 SHOW MASTER LOGS;

@@ -11,7 +11,7 @@
 
 查看所有用户：
 
-```
+```sql
 SELECT user,host FROM mysql.user;
 ```
 
@@ -34,7 +34,7 @@ SELECT user,host FROM mysql.user;
 
 查看单个用户权限：
 
-```
+```sql
 SELECT * FROM mysql.user WHERE user='root'\G
 ```
 

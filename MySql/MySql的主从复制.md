@@ -153,13 +153,13 @@ change master to master_host='192.168.138.100',master_user='xiaoming',master_pas
 >
 > 如果原先配置过从库，会存在线程在运行，需要先关闭线程才能执行关联sql：
 >
-> ```
+> ```sql
 > stop slave;
 > ```
 
 启动服务：
 
-```
+```sql
 start slave;
 ```
 
