@@ -2,6 +2,8 @@
 
 ## 拉取镜像
 
+> yum命令安装docker的最新版本支持到的mysql版本，通用社区版可以支持到更高的mysql版本
+
 ```
 sudo docker pull mysql:latest
 ```
@@ -167,12 +169,14 @@ chmod 660 /var/log/mysqld.log
 >
 > ![image-20241117195021230](img/Docker安装Mysql/image-20241117195021230.png)
 
-## 更高版本
+## 其它版本
+
+**标准的`mysql8.0.40`**：
 
 ```
 sudo mkdir -p /usr/local/docker/mysql_8.0.40/{data,conf.d}
 
-sudo docker run -p 3308:3306 --name mysql_8.0.40 \
+sudo docker run -p 3306:3306 --name mysql_8.0.40 \
   -v /usr/local/docker/mysql_8.0.40/data:/var/lib/mysql \
   -v /usr/local/docker/mysql_8.0.40/conf.d:/etc/mysql/conf.d \
   -e MYSQL_ROOT_PASSWORD=root \
@@ -184,6 +188,22 @@ sudo docker run -p 3308:3306 --name mysql_8.0.40 \
 > 配置文件位置有所不同，但还是对应挂载目录还是不变：
 >
 > ![image-20241223180452142](img/Docker安装Mysql/image-20241223180452142.png)
+
+**标准的`mysql5.7`(5.7.44)**：
+
+```
+sudo mkdir -p /usr/local/docker/mysql_5.7/{data,conf.d}
+
+sudo docker run -p 3306:3306 --name mysql_5.7 \
+  -v /usr/local/docker/mysql_5.7/data:/var/lib/mysql \
+  -v /usr/local/docker/mysql_5.7/conf.d:/etc/mysql/conf.d \
+  -e MYSQL_ROOT_PASSWORD=root \
+  --restart=unless-stopped \
+  -d mysql:5.7
+
+```
+
+> ![image-20250109145823720](img/Docker安装Mysql/image-20250109145823720.png)
 
 ## 资源调控
 

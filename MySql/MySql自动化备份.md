@@ -32,6 +32,7 @@ mysqldump -h 127.0.0.1 \
  --create-options --databases cebc \
  --lock-tables=True \
  --result-file=database_backup.sql 
+
 ```
 
 切割文件，交给git管理：
@@ -183,7 +184,7 @@ expire_logs_days = 7
 # binlog_expire_logs_seconds = 604800
 ```
 
-也可以通过执行SQL命令动态地设置这个参数：
+也可以通过执行SQL命令（此次进程生效，重启后失效）动态地设置这个参数：
 
 ```sql
 SET GLOBAL expire_logs_days = 7;

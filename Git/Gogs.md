@@ -1,10 +1,8 @@
 # Gogs
 
-一款极易搭建的自助 Git 服务
+> 一款极易搭建的自助Git服务，官网：[Gogs: A painless self-hosted Git service](https://gogs.io/)
 
-官网：[Gogs: A painless self-hosted Git service](https://gogs.io/)
-
-下载
+下载：
 
 <img src="img/Gogs/image-20240428150821029.png" alt="image-20240428150821029" style="zoom:80%;" />
 
@@ -22,11 +20,11 @@ cd gogs
 
 ## Windows安装
 
-解压zpi，并添加目录到环境变量
+解压zpi，并添加目录到环境变量：
 
 <img src="img/Gogs/image-20240428151249043.png" alt="image-20240428151249043" style="zoom:67%;" />
 
-在目录下运行启动服务
+在目录下运行启动服务：
 
 ```
 gogs web
@@ -40,17 +38,17 @@ gogs web
 
 ### 配置ip
 
-默认的域名为`localhost`，不方便访问拉取，需要手动修改配置文件为IP地址，修改`custom/conf/app.ini`文件
+默认的域名为`localhost`，不方便访问拉取，需要手动修改配置文件为IP地址，修改`custom/conf/app.ini`文件：
 
 <img src="img/Gogs/image-20240509234814167.png" alt="image-20240509234814167"  />
 
-修改为自身IP即可，重启生效
+修改为自身IP即可，重启生效：
 
 ![image-20240509235150990](img/Gogs/image-20240509235150990.png)
 
 ### 数据库配置
 
-执行sql命令创建用户和数据库
+执行sql命令创建用户和数据库：
 
 ```sql
 -- 'localhost'表示仅允许本机连接，'%'表示允许任何人连接
@@ -91,8 +89,17 @@ FLUSH PRIVILEGES;
 > EXECUTE stmt1;
 > DEALLOCATE PREPARE stmt1;
 > 
-> -- 如果不存在则创建数据库
-> SET @sql2 = CONCAT('CREATE DATABASE IF NOT EXISTS `', @custom_db, '`');
+> -- 查询MySQL版本
+> SELECT VERSION() INTO @mysql_version;
+> 
+> -- 设置字符集变量
+> SET @charset = IF(@mysql_version LIKE '5.7.%', 'utf8', 'utf8mb4');
+> SET @collate = IF(@mysql_version LIKE '5.7.%', 'utf8_general_ci', 'utf8mb4_general_ci');
+> 
+> -- 构建创建数据库命令
+> SET @sql2 = CONCAT('CREATE DATABASE IF NOT EXISTS `', @custom_db, '` CHARACTER SET ', @charset, ' COLLATE ', @collate);
+> 
+> -- 准备并执行SQL语句
 > PREPARE stmt2 FROM @sql2;
 > EXECUTE stmt2;
 > DEALLOCATE PREPARE stmt2;
@@ -114,7 +121,7 @@ FLUSH PRIVILEGES;
 
 ### 应用基本设置
 
-在解压目录下创建`repositories`，修改仓库目录为此
+在解压目录下创建`repositories`，修改仓库目录为此：
 
 ```
 D:\LenovoSoftstore\gogs_0.13.0_windows_amd64\gogs\repositories
@@ -124,7 +131,7 @@ D:\LenovoSoftstore\gogs_0.13.0_windows_amd64\gogs\repositories
 
 ### 可选参数
 
-根据实际需求修改
+根据实际需求修改：
 
 > <img src="img/Gogs/image-20240428154402722.png" alt="image-20240428154402722" style="zoom:80%;" />
 
@@ -140,17 +147,17 @@ D:\LenovoSoftstore\gogs_0.13.0_windows_amd64\gogs\repositories
 
 ### 创建仓库
 
-填写信息
+填写信息：
 
 <img src="img/Gogs/image-20240428155324531.png" alt="image-20240428155324531" style="zoom:67%;" />
 
-创建结果
+创建结果：
 
 <img src="img/Gogs/image-20240428155359198.png" alt="image-20240428155359198" style="zoom:67%;" />
 
 ### 上传代码
 
-新仓库
+新仓库：
 
 ```
 touch README.md
@@ -161,13 +168,13 @@ git remote add origin http://localhost:3000/yxx/test.git
 git push -u origin master
 ```
 
-已有仓库
+已有仓库：
 
 ```
 git remote add origin http://localhost:3000/yxx/test.git
 git push -u origin master
 ```
 
-使用注册的账户名和密码上传代码
+使用注册的账户名和密码上传代码：
 
 > <img src="img/Gogs/image-20240428161228872.png" alt="image-20240428161228872" style="zoom:67%;" />

@@ -18,7 +18,7 @@
     <property name="log.path" value="/var/log/myapp" />
     ```
 
-- `<appender>`：用于定义日志的输出目的地，比如控制台、文件或者远程服务器。每个 `appender` 都有一个唯一的名字，并且可以配置不同的日志格式和策略（例如按大小滚动或按时间滚动）
+- `<appender>`：用于定义日志的输出目的地，比如控制台、文件或者远程服务器。每个`appender`都有一个唯一的名字，并且可以配置不同的日志格式和策略（例如按大小滚动或按时间滚动）
 
   - ```xml
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -78,6 +78,8 @@ logging:
   level:
     org.springframework: warn
 ```
+
+> 配置优先级高于`xml`文件
 
 logback-spring.xml
 
@@ -155,13 +157,13 @@ public class LoggerTest {
 %d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n
 ```
 
-- `%d{HH:mm:ss.SSS}`：这是日期和时间格式化参数。`%d` 表示日期和时间，`HH:mm:ss.SSS` 是具体的格式，表示小时（24小时制）、分钟、秒和毫秒。例如，`14:02:57.123`
-- `[%thread]`：这个参数输出产生日志的线程名称。这对于多线程应用程序来说很有用，可以用来跟踪哪个线程产生了特定的日志消息
-- `%-5level`：这个参数输出日志级别，`-5` 表示左对齐，并且至少占用5个字符的宽度。如果日志级别名称短于5个字符，它将在右侧填充空格。例如，`ERROR`
-- `%logger{20}`：这个参数输出日志记录器的名称，`20` 表示最大宽度。如果日志记录器的名称超过20个字符，它将被截断。如果少于20个字符，它将在右侧填充空格
-- `[%method,%line]`：这个参数输出日志记录发生的方法名和行号。这对于调试来说非常有用，因为它可以让你直接跳转到代码中生成日志的那一行
+- `%d{HH:mm:ss.SSS}`：这是日期和时间格式化参数。`%d`表示日期和时间，`HH:mm:ss.SSS`是具体的格式，表示小时（24小时制）、分钟、秒和毫秒。例如，`14:02:57.123`
+- `[%thread]`：这个参数输出产生日志的线程名称，可以用来跟踪哪个线程产生了特定的日志消息
+- `%-5level`：这个参数输出日志级别，`-5`表示左对齐，并且至少占用5个字符的宽度。如果日志级别名称短于5个字符，它将在右侧填充空格。例如，`ERROR`
+- `%logger{20}`：这个参数输出日志记录器的名称，`20`表示最大宽度。如果日志记录器的名称超过20个字符，它将被截断。如果少于20个字符，它将在右侧填充空格
+- `[%method,%line]`：这个参数输出日志记录发生的方法名和行号。这对于调试来说非常有用，因为它可以直接跳转到代码中生成日志的那一行
 - `%msg`：这个参数输出实际的日志消息
-- `%n`：这个参数输出平台独立的换行符。在 UNIX 系统中，它表示 `\n`，在 Windows 系统中，它表示 `\r\n`
+- `%n`：这个参数输出平台独立的换行符。在UNIX系统中，它表示`\n`，在 Windows 系统中，它表示`\r\n`
 
 示例输出的日志内容：
 
@@ -173,11 +175,21 @@ public class LoggerTest {
 
 调整输出：
 
-```
-%d{HH:mm:ss.SSS} [%thread] %-5level %yellow(at %class.%method) \(%file:%line\) %logger{200} - [%method,%line] - %msg%n
+```xml
+    <!-- 默认日志配置 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %yellow(at %class.%method) \(%file:%line\) %logger{200} - [%method,%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
 ```
 
-> 注意，如果被格式内容字符串包裹，需要使用二次转义`\\(%file:%line\\)`
+> 注意：如果被格式内容字符串包裹，需要使用二次转义`\\(%file:%line\\)`，参考配置：
+>
+> ```xml
+>     <!-- 日志输出格式 -->
+> 	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %yellow(at %class.%method) \\(%file:%line\\) %logger{200} - [%method,%line] - %msg%n" />
+> ```
 
 示例输出的日志内容：
 
