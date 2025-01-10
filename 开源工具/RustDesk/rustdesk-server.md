@@ -99,6 +99,7 @@ Type=simple
 WorkingDirectory=/usr/local/rustdesk-server
 ExecStart=/usr/local/rustdesk-server/hbbs -k _
 ExecStop=/bin/kill -TERM $MAINPID
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
@@ -120,6 +121,7 @@ Type=simple
 WorkingDirectory=/usr/local/rustdesk-server
 ExecStart=/usr/local/rustdesk-server/hbbr -k _
 ExecStop=/bin/kill -TERM $MAINPID
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
