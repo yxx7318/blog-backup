@@ -234,3 +234,65 @@ http://localhost:8080/publish?message=Hello%20World&topic=test1
 ```
 
 > 没有消息展示
+
+## Python代码
+
+```python
+import time
+
+import redis
+import threading
+from abc import abstractmethod
+
+channel = 'test'
+
+
+class HandleMessage:
+
+    @abstractmethod
+    def handle_message(self, message):
+        """处理接收到的消息"""
+        print(f"Received message: {message['data']} on channel {message['channel'].decode()}")
+
+
+def handle_listen(current_channel, handleMessage: HandleMessage):
+    # 创建Redis连接
+    r = redis.Redis(host='localhost', password='', port=6379, db=0, socket_connect_timeout=10)
+
+    # 创建发布订阅对象
+    pubsub = r.pubsub()
+
+    # 订阅一个或多个频道
+    pubsub.subscribe(current_channel)  # 可以添加更多频道如 'test', 'news'
+
+    # 监听消息
+    for message in pubsub.listen():
+        if message['type'] == 'message':
+            handleMessage.handle_message(message)
+
+
+def subscribe_to_channels(target_channel, handleMessage: HandleMessage):
+    threading.Thread(target=handle_listen, args=(target_channel, handleMessage)).start()
+    time.sleep(0.1)
+
+
+def publish_message(target_channel, message):
+    # 创建Redis连接
+    r = redis.Redis(host='localhost', password='', port=6379, db=0, socket_connect_timeout=10)
+
+    # 向指定频道发布消息
+    count = r.publish(target_channel, message)
+
+    # 接受的通道
+    print(count)
+
+
+subscribe_to_channels(channel, HandleMessage())
+publish_message(channel, 'Hello, Redis Pub/Sub!')
+
+```
+
+> ```
+> Received message: b'Hello, Redis Pub/Sub!' on channel test
+> 1
+> ```
