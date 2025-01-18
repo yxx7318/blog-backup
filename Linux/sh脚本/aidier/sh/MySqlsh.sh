@@ -37,6 +37,7 @@ if [ $? -eq 0 ] || [ -d "$MYSQL_PATH" ]; then
   delete_if_exists "/tmp/mysql.sock"
   delete_if_exists "/tmp/mysqlx.sock"
   delete_if_exists "/tmp/mysql.sock.lock"
+  sudo sed -i '/^export PATH=\/usr\/local\/mysql\/bin:/d' /etc/profile
   echo "-----以上为MySql删除提示信息-----"
   echo ""
 fi
@@ -66,7 +67,6 @@ cd support-files/
 # 获取默认配置文件
 source "$ORIGIN_PATH/sh/getMySqlcnf.sh"
 
-
 # 强制覆盖
 yes | cp -f my_default.cnf /etc/my.cnf
 
@@ -75,11 +75,17 @@ cd "$MYSQL_PATH/bin"
 
 last_line=$(more $MYSQL_PATH/data/mysqld.log | tail -n 1)
 result=$(echo "$last_line" | awk -F '@localhost: ' '{print $2}')
+
+
 echo ""
 echo "================================="
 echo  "MySql安装脚本执行完成，请注意查看初始数据库密码"
 echo "================================="
 echo "初始密码：$result"
+
+# 配置环境变量
+echo "export PATH=$MYSQL_PATH/bin:\$PATH" >> /etc/profile
+source /etc/profile
 
 
 # 恢复正常输出

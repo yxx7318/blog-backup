@@ -71,7 +71,7 @@ cd "$ORIGIN_PATH"
 # 所有基本模块其它依赖
 tar -zxf 2.3.tar.gz
 tar -zxf master.tar.gz
-# 0.10.14版本会有兼容性问题
+# 0.10.14版本
 tar -zxf lua-nginx-module-0.10.14.tar.gz
 tar -zxf v0.3.1.tar.gz
 
@@ -83,7 +83,7 @@ tar -zxf v0.3.1.tar.gz
 # export LUAJIT_INC=/usr/local/luajit/include/luajit-2.1
 # export LUAJIT_LIB=/usr/local/luajit/lib
 
-# 安装lua模块
+# rpm安装lua模块，和编译方式二选一
 tar -zxf lua.tar.gz
 rpm -ivh ./lua/*.rpm --force --nodeps > /dev/null 2>&1
 delete_if_exists "$ORIGIN_PATH/lua"

@@ -11,7 +11,7 @@
 alter user 'root'@'localhost' identified by '1qazasdf&' password expire never;
 
 -- 更改root密码并明确指定使用mysql_native_password认证插件
-alter user 'root'@'localhost' identified with mysql_native_password by '1qazasdf&';
+alter user 'root'@'localhost' identified with mysql_native_password by 'yxx@12345678&mysql';
 
 flush privileges;
 
