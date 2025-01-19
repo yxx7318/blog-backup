@@ -42,6 +42,7 @@
 文件解压：
 
 ```
+cd /usr/local
 unzip rustdesk-server-linux-amd64.zip
 mv amd64 rustdesk-server
 cd rustdesk-server
