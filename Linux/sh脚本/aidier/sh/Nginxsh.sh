@@ -92,6 +92,9 @@ delete_if_exists "$ORIGIN_PATH/lua"
 export LUAJIT_INC=/usr/include/luajit-2.0
 export LUAJIT_LIB=/usr/lib64
 
+# geoip2模块
+tar -zxf ngx_http_geoip2_module-master.tar.gz
+
 cd "$ORIGIN_PATH/nginx-1.20.2"
 
 # 所有基本模块安装
@@ -113,6 +116,7 @@ cd "$ORIGIN_PATH/nginx-1.20.2"
   --add-module=../nginx-goodies-nginx-sticky-module-ng-08a395c66e42 \
   --add-module=../ngx_devel_kit-0.3.1 \
   --add-module=../lua-nginx-module-0.10.14 \
+  --add-dynamic-module=../ngx_http_geoip2_module-master \
   --prefix="$NGINX_PATH" >/dev/null
 
 # 0.10.19版本有问题
@@ -149,6 +153,7 @@ delete_if_exists "$ORIGIN_PATH/lua-nginx-module-0.10.14"
 delete_if_exists "$ORIGIN_PATH/nginx-goodies-nginx-sticky-module-ng-08a395c66e42"
 delete_if_exists "$ORIGIN_PATH/ngx_cache_purge-2.3"
 delete_if_exists "$ORIGIN_PATH/ngx_devel_kit-0.3.1"
+delete_if_exists "$ORIGIN_PATH/ngx_http_geoip2_module-master"
 
 
 # 配置服务文件
