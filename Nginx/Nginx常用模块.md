@@ -47,7 +47,7 @@ Nginx的Lua模块（通常指的是`lua-nginx-module`）是一个用于Nginx的L
 - **日志和监控**：Lua脚本可以用于日志记录和监控任务，例如记录请求数据或监控系统状态
 - **与后端系统交互**：Lua脚本可以与后端系统（如数据库、消息队列等）进行交互，实现更复杂的业务逻辑
 
-> 依赖于lua模块
+> 依赖于lua模块：
 >
 > ```
 > lua lua-devel luajit luajit-devel
@@ -55,24 +55,24 @@ Nginx的Lua模块（通常指的是`lua-nginx-module`）是一个用于Nginx的L
 >
 > > 这里使用的是LuaJIT的官方版本而不是OpenResty优化过的版本
 >
-> 依赖的nginx模块
+> 依赖的nginx模块：
 >
 > ```
 > lua-nginx-module-0.10.14.tar.gz
 > ```
 >
-> > 对于最新的模块`0.10.19`版本编译后启动存在兼容性问题
+> > 对于最新的模块`0.10.19`版本编译后启动存在兼容性问题：
 > >
 > > ![image-20240829142048878](img/Nginx常用模块/image-20240829142048878.png)
 
-下载
+下载：
 
 ```
 # 下载lua_nginx_module模块
 wget https://github.com/openresty/lua-nginx-module/archive/v0.10.19.tar.gz
 ```
 
-设置环境变量
+设置环境变量：
 
 ```
 export LUAJIT_INC=/usr/include/luajit-2.0
@@ -81,19 +81,19 @@ export LUAJIT_LIB=/usr/lib64
 
 > 必须先设置，否则会在`make`编译时出错
 
-增加模块
+增加模块：
 
 ```
   --add-module=../lua-nginx-module-0.10.14 \
 ```
 
-启动警告
+启动警告：
 
 ![image-20240829152409757](img/Nginx常用模块/image-20240829152409757.png)
 
 > 这个警告信息提示虽然Nginx可以运行，但是由于LuaJIT版本的问题，可能无法获得最佳的性能表现。如果希望获得更好的性能，建议使用OpenResty提供的LuaJIT版本
 
-测试效果
+测试效果：
 
 ```nginx
         location /hello_lua {
@@ -154,23 +154,23 @@ tar zxvf v0.3.1.tar.gz
 make
 ```
 
-> 清除编译缓存
+> 清除编译缓存：
 >
 > ```
 > make clean
 > ```
 >
-> `./configure`编译过程，检查环境和配置选项
+> `./configure`编译过程，检查环境和配置选项：
 >
 > ![image-20240829144828084](img/Nginx常用模块/image-20240829144828084.png)
 >
 > ![image-20240829145450178](img/Nginx常用模块/image-20240829145450178.png)
 >
-> `make`根据Makefile文件编译源代码
+> `make`根据Makefile文件编译源代码：
 >
 > ![image-20240829145601598](img/Nginx常用模块/image-20240829145601598.png)
 >
-> `make install`将编译好的程序安装到系统中
+> `make install`将编译好的程序安装到系统中：
 >
 > ![image-20240829151818007](img/Nginx常用模块/image-20240829151818007.png)
 >
