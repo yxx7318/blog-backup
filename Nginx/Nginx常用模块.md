@@ -34,6 +34,8 @@
   - `ngx_http_substitutions_filter_module`：用于替换字符串
   - `ngx_http_dav_module`：WebDAV模块
   - `ngx_http_realip_module`：获取真实的客户端IP地址
+  - `ngx_http_geoip_module`：地域管理，支持`.dat`格式
+  - `ngx_http_geoip2_module`：新版地域管理，支持`.mmdb`格式
 
 ## Lua模块
 
@@ -106,6 +108,12 @@ curl http://localhost/hello_lua
 > ![image-20240829143335612](img/Nginx常用模块/image-20240829143335612.png)
 
 ## 第三方模块
+
+> - **静态编译**：使用`--with-<module>`或者直接包含模块源码路径会将模块编译进Nginx核心
+> - **动态编译**：使用`--add-dynamic-module`指定模块路径，这会创建一个可动态加载的模块，引入模块示例代码`load_module modules/ngx_http_geoip2_module.so;`
+>   - `make`编译后会在`objs`目录下，使用`make install`之后会执行命令`cp objs/ngx_http_geoip2_module.so '/usr/local/nginx/modules/ngx_http_geoip2_module.so'`，可以手动进行移动
+>
+> ![image-20250123150311117](img/Nginx常用模块/image-20250123150311117.png)
 
 ```
 # 下载ngx_cache_purge模块
