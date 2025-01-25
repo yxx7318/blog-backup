@@ -8,7 +8,7 @@
 -- SET GLOBAL validate_password.length=1;
 
 -- 更改root用户的密码，并将其设置为永不过期
-alter user 'root'@'localhost' identified by '1qazasdf&' password expire never;
+alter user 'root'@'localhost' identified by 'yxx@12345678&mysql' password expire never;
 
 -- 更改root密码并明确指定使用mysql_native_password认证插件
 alter user 'root'@'localhost' identified with mysql_native_password by 'yxx@12345678&mysql';
