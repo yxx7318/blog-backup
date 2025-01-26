@@ -31,3 +31,4 @@ nbdist/
 *.njsproj
 *.sln
 *.local
+.DS_Store
