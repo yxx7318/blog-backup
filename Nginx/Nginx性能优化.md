@@ -20,6 +20,16 @@ events {
 }
 ```
 
+## 静态文件传输优化
+
+```nginx
+http {
+    sendfile on; # 内核空间中直接处理文件传输
+    tcp_nopush on; # 优化数据包发送，通过延迟发送以填充更大的TCP分段
+    tcp_nodelay on; # 禁用Nagle算法，立即发送小数据包
+}
+```
+
 ## 开启Keep-Alive
 
 > Keep-Alive是一种HTTP持久连接机制，允许客户端和服务器之间的TCP连接在多次请求之间保持打开状态

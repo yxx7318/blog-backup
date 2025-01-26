@@ -16,7 +16,7 @@ pom.xml
     <dependency>
         <groupId>org.redisson</groupId>
         <artifactId>redisson</artifactId>
-        <version>3.13.6</version>
+        <version>3.43.0</version>
     </dependency>
 ```
 

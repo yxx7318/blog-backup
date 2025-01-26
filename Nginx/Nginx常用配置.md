@@ -1,5 +1,27 @@
 # Nginx常用配置
 
+## 请求代理
+
+```nginx
+        location ^~/prod-api/ {
+            proxy_http_version 1.1;
+            proxy_set_header Host $http_host; # 包括端口号，$host仅域名
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header REMOTE-HOST $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_read_timeout 80s;
+            proxy_buffering off; # 禁用代理缓冲
+            proxy_cache off; # 禁用代理缓存
+            proxy_pass http://localhost:8080/;
+            client_max_body_size 4096M;
+
+            # websocket参数
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+        }
+```
+
 ## gzip压缩
 
 gzip压缩使用DEFLATE算法，通过消除文件中的冗余数据和重复内容来减小文件的大小。算法采用了LZ77算法和哈夫曼编码，通过构建字典和替换重复的字符、字符串来实现压缩。gzip压缩可以将文件大小减小到原始大小的20%至80%之间，具体压缩率取决于文件的内容和结构。通常，文本文件、HTML、CSS、JavaScript等可压缩的文本格式具有更高的压缩率，而图片、音频和视频等二进制文件的压缩率较低
@@ -186,7 +208,7 @@ server {
 > >         server {
 > >             listen 80;
 > >             server_name _; # 使用通配符匹配所有请求
-> >         
+> >                     
 > >             location / {
 > >                 if ($scheme = http) {
 > >                     return 301 https://$host$request_uri;
@@ -267,26 +289,25 @@ Connection: Upgrade
 			proxy_http_version 1.1;
 			proxy_set_header Upgrade $http_upgrade;
 			proxy_set_header Connection "upgrade";
-			# 处理基于域名的请求
-			proxy_set_header Host $host;
+			proxy_set_header Host $http_host;
 			proxy_set_header X-Real-IP $remote_addr;
 			proxy_set_header REMOTE-HOST $remote_addr;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-			client_max_body_size 5000M;
+			client_max_body_size 4096M;
 		}
 ```
 
-> Nginx会设置`Connection`头为`upgrade`，并且设置`Upgrade`头为`$http_upgrade`(原始的`Upgrade`头值)，在Nginx转发请求和响应时，确保服务器能够正确地处理WebSocket握手
+> Nginx会设置`Connection`头为`upgrade`，并且设置`Upgrade`头为`$http_upgrade`(原始的`Upgrade`头值)，在Nginx转发请求和响应时，确保服务器能够正确地处理WebSocket握手：
 >
 > ![image-20240531171419564](img/Nginx常用配置/image-20240531171419564.png)
 
 ## 递归代理
 
-> 如果将请求代理转发给自己，会出现递归的情况，无法结束递归，导致超过最大连接数
+> 如果将请求代理转发给自己，会出现递归的情况，无法结束递归，导致超过最大连接数：
 >
 > ```nginx
 > events {
->     worker_connections  1024;
+>        worker_connections  1024;
 > }
 > ```
 
