@@ -2,6 +2,8 @@
 
 ## 安装Php
 
+### 7.4版本
+
 **安装EPEL仓库**（如果尚未安装）： EPEL（Extra Packages for Enterprise Linux）是一个为Enterprise Linux提供高质量附加包的项目：
 
 ```
@@ -40,7 +42,7 @@ sudo yum install epel-release
 **安装PHP 7.4**：
 
 ```
-sudo yum install php php-cli php-fpm php-mysqlnd
+sudo yum install php php-cli php-fpm php-mysqlnd php-xml
 ```
 
 **安装其他PHP扩展**： 如果需要其他PHP扩展，可以使用`yum`来安装。例如，安装GD库：
@@ -61,6 +63,27 @@ php -v
 
 ```
 sudo cat /etc/php-fpm.d/www.conf
+```
+
+### 更高版本
+
+**更新Remi源**：
+
+```
+sudo yum install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+```
+
+**禁用7.4模块，启用8.0模块**：
+
+```
+sudo yum-config-manager --disable remi-php74
+sudo yum-config-manager --enable remi-php80
+```
+
+**执行升级**：
+
+```
+sudo yum upgrade php\*
 ```
 
 ## Nginx配置文件
@@ -119,6 +142,60 @@ server {
 }
 ```
 
-> 值得注意的是，这里nginx的端口和域名应该和建wordpress数据库表`wp_options`保存的`siteurl`和`home`选项的值一致，否则会导致重定向问题和请求静态文件不到的问题
+> 值得注意的是，这里nginx的端口和域名应该和建wordpress数据库表`wp_options`保存的`siteurl`和`home`选项的值一致，否则会导致重定向问题和请求静态文件不到的问题：
 >
 > ![image-20250205143851251](img/Php部署/image-20250205143851251.png)
+
+## 超时优化
+
+> 如果PHP脚本执行时间过长，超过了Nginx或PHP-FPM的设定限制，可能会导致504错误
+
+修改`etc/php.ini`文件：
+
+```
+; 将默认的30秒增加到300秒
+max_execution_time = 300
+
+; 内存限制
+memory_limit = 1536M
+```
+
+修改`/etc/php-fpm.d/www.conf`或`/etc/php/7.x/fpm/pool.d/www.conf`配置文件：
+
+```
+request_terminate_timeout = 300s
+```
+
+修改nginx配置文件：
+
+```nginx
+http {
+    # 等待 FastCGI 进程发送响应数据的最长时间
+    fastcgi_read_timeout 300;
+    # 从代理服务器读取响应的超时时间
+    proxy_read_timeout 300;
+}
+```
+
+重启服务：
+
+```
+sudo systemctl restart nginx
+sudo systemctl restart php-fpm
+```
+
+## 文件上传配置
+
+修改`php.ini`文件：
+
+```
+; 最大POST数据大小
+post_max_size = 1024M
+
+; 单个文件上传的最大大小
+upload_max_filesize = 1024M
+
+; 每个脚本运行期间可分配的最大内存量，设置比 post_max_size 稍微大一些
+memory_limit = 1536M
+```
+
