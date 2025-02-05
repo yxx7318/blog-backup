@@ -25,3 +25,5 @@
 对于6.2版本，php的最低版本应该为7.4：
 
 ![image-20250205102512271](img/WordPress/image-20250205102512271.png)
+
+> php对于数据库密码验证方式只支持`mysql_native_password`，而且wordpress对`mysql8.0`兼容性不好，最好使用`mysql5.7`
