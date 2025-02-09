@@ -73,6 +73,8 @@ export Ali_Key="aaaaaaaaaaaaaaaaaaaaaaa"
 export Ali_Secret="aaaaaaaaaaaaaaaaaaaaaaa"
 ```
 
+> 签发证书命令执行后会自动记录记录在`/root/.acme.sh/account.conf`文件中
+
 签发证书：
 
 ```

@@ -116,7 +116,7 @@ public class MpConfig {
 }
 ```
 
-> 分页
+> 分页：
 >
 > ```java
 >        @Test
@@ -326,7 +326,7 @@ public class PageDTO<T> {
 }
 ```
 
-> 使用了hutool工具包
+> 使用了hutool工具包：
 >
 > ```xml
 >         <!-- 引入hutool工具包 -->
@@ -442,11 +442,20 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 }
 ```
 
-> 设置id后自动进行填充
+> 设置id后自动进行填充：
 >
 > ```java
->         BaseContext.setCurrentId(empId);
->         userService.save(user);
+>      BaseContext.setCurrentId(empId);
+>      userService.save(user);
+> ```
+>
+> 优化写法：
+>
+> ```java
+>     // 检查并设置 updateUser
+>     if (metaObject.hasSetter("updateUser")) {
+>         this.strictInsertFill(metaObject, "updateUser", BaseContext::getCurrentId, Integer.class);
+>     }
 > ```
 
 ## 全局配置
