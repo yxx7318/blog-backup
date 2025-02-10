@@ -156,7 +156,7 @@ server {
 ; 将默认的30秒增加到300秒
 max_execution_time = 300
 
-; 内存限制
+; 内存限制，默认128M
 memory_limit = 1536M
 ```
 
@@ -165,6 +165,28 @@ memory_limit = 1536M
 ```
 request_terminate_timeout = 300s
 ```
+
+> 当模式为`pm = dynamic`时进程设置：
+>
+> - `pm.max_children`：设置可以同时运行的最大子进程数。这是子进程数量的上限
+> - `pm.start_servers`：设置服务启动时创建的初始子进程数
+> - `pm.min_spare_servers`：设置空闲状态下的最小子进程数。如果当前空闲子进程数少于这个值，则会创建新的子进程，直到达到 `pm.max_children` 或者没有更多的系统资源可用为止
+> - `pm.max_spare_servers`：设置空闲状态下的最大子进程数。如果当前空闲子进程数超过这个值，则会终止多余的子进程，直到空闲子进程数等于 `pm.min_spare_servers`
+>
+> 优化为Unix域套接字：
+>
+> ```
+> ; 默认为listen = 127.0.0.1:9000
+> listen = /run/php-fpm/php-fpm.sock
+> 
+> ; 可以指定套接字的所有者、组和权限
+> ;listen.owner = nobody
+> ;listen.group = nobody
+> ;listen.mode = 0660
+> listen.owner = nginx
+> listen.group = nginx
+> listen.mode = 0660
+> ```
 
 修改nginx配置文件：
 
@@ -186,13 +208,13 @@ sudo systemctl restart php-fpm
 
 ## 文件上传配置
 
-修改`php.ini`文件：
+修改`/etc/php.ini`文件：
 
 ```
-; 最大POST数据大小
+; 最大POST数据大小，默认2M
 post_max_size = 1024M
 
-; 单个文件上传的最大大小
+; 单个文件上传的最大大小，默认2M
 upload_max_filesize = 1024M
 
 ; 每个脚本运行期间可分配的最大内存量，设置比 post_max_size 稍微大一些
