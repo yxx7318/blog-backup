@@ -58,8 +58,6 @@ spring:
       server-addr: 192.168.0.101:8848 # nacos地址
 ```
 
-
-
 ## 示例代码
 
 > 通过服务发现工具类`DiscoveryClieny`，服务调用者`cart-service`就可以去订阅`item-service`服务了。不过`item-service`有多个实例，而真正发起调用时只需要知道一个实例的地址

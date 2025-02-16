@@ -64,7 +64,8 @@ k:
 Person.java
 
 ```java
-@ConfigurationProperties(prefix = "Person") //默认读取文件名称为application的properties和yaml文件，可通过"."实现层级
+@ConfigurationProperties(prefix = "Person") //默认读取文件名称为application的properties和yaml文件，可通过"."实现层级，驼峰需要修改为"-"
+@Component
 @Data
 public class Person {
 	private String userName;
