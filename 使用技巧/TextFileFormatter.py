@@ -16,7 +16,7 @@ def is_text_file(file_path):
     # 对于无法通过 mimetypes 判断的文件，尝试读取前 1KB 内容检测编码
     try:
         with open(file_path, 'rb') as f:
-            content = f.read(1024)  # 读取前 1KB 内容
+            content = f.read()  # 读取前 1KB 内容
             # 尝试解码为 UTF-8，如果成功则认为是文本文件
             content.decode('utf-8')
             return True
@@ -160,4 +160,4 @@ if __name__ == "__main__":
     target_directory = r'F:\yxx\yxx-yi'
     crlf_files, lf_files = check_line_endings_in_directory(target_directory)
     # 传入指定的文件列表，将其中的文件列表中的文件转换为指定的换行格式
-    convert_line_endings(lf_files, target_format='crlf', exclude_suffixes=['.sh', 'LICENSE'])
+    convert_line_endings(lf_files, target_format='crlf', exclude_suffixes=['.sh', 'LICENSE', '.conf', '.sql'])
