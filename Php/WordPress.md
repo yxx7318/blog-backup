@@ -103,3 +103,27 @@ define("FS_CHMOD_FILE", 0777);
 ![image-20250205214333454](img/WordPress/image-20250205214333454.png)
 
 > 管理后台：`/wp-login.php`
+
+## 网站迁移
+
+All-in-One插件：
+
+![image-20250215160635879](img/WordPress/image-20250215160635879.png)
+
+导出网站：
+
+![image-20250215160909621](img/WordPress/image-20250215160909621.png)
+
+获取到备份文件：
+
+![image-20250215161034901](img/WordPress/image-20250215161034901.png)
+
+导入目标网站：
+
+![image-20250215163240074](img/WordPress/image-20250215163240074.png)
+
+> 注意：网关Apache、Nginx限制的请求大小，还有PHP配置中对请求大小的限制
+
+导入完成：
+
+![image-20250215163448565](img/WordPress/image-20250215163448565.png)
