@@ -15,7 +15,7 @@ git config --global user.email "1303490776@qq.com"
 git config core.ignorecase false
 ```
 
-> - `git config`配置不影响远程仓库，其他成员拉取后也需要重新配置
+> - `git config`配置不影响远程仓库，**其他成员拉取后也需要重新配置**
 >
 > - 开启此配置，在仅大小写重命名文件或者目录(windows仅大小写命名不会真正重命名，需要带额外字符命名，后再删除字符命名到目标名称)之后直接提交会出现远程仓库出现两份文件，分别为重命名前和重命名后，在windows拉取文件会报错：
 >
@@ -35,6 +35,13 @@ git config core.ignorecase false
 ```
 git config core.autocrlf false
 ```
+
+> 仅影响本地仓库，需要同步其它成员需要新建文件`.gitattributes`：
+>
+> ```
+> # 将所有文件标记为不进行文本处理（即禁用换行符转换）
+> * -text
+> ```
 
 ## 创建git仓库
 
