@@ -16,7 +16,7 @@
 
 -- 合并上述两条命令
 ALTER USER 'root'@'localhost' 
-IDENTIFIED WITH mysql_native_password BY 'yxx@12345678&mysql'
+IDENTIFIED WITH mysql_native_password BY 'yxx@mysql'
 PASSWORD EXPIRE NEVER;
 
 flush privileges;

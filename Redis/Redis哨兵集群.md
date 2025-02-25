@@ -23,7 +23,7 @@
 
 一旦发现`master`故障，`sentinel`需要在`salve`中选择一个作为新的`master`，选择依据是这样的：
 
-- 首先会判断`slave`节点与`master`节点断开时间长短，如果超过指定值(`down-after-milliseconds * 10`)则会排除该slave节点
+- 首先会判断`slave`节点与`master`节点断开时间长短，如果超过指定值(`down-after-milliseconds * 10`)则会排除该`slave`节点
 - 然后判断`slave`节点的`slave-priority`值，越小优先级越高，如果是0则永不参与选举
 - 如果`slave-prority`一样，则判断`slave`节点的`offset`值，越大说明数据越新，优先级越高
 - 最后是判断`slave`节点的运行`id`大小，越小优先级越高
@@ -32,8 +32,8 @@
 
 当选中了其中一个`slave`为新的`master`后(例如`slave1`)，故障的转移的步骤如下：
 
-- `sentinel`给备选的slave1节点发送`slaveof no one`命令，让该节点成为`master`
-- `sentinel`给所有其它slave发送`slaveof 127.0.0.1 7002`命令，让这些`slave`成为新`master`的从节点，开始从新的`master`上同步数据
+- `sentinel`给备选的`slave1`节点发送`slaveof no one`命令，让该节点成为`master`
+- `sentinel`给所有其它`slave`发送`slaveof 127.0.0.1 7002`命令，让这些`slave`成为新`master`的从节点，开始从新的`master`上同步数据
 - 最后，`sentinel`将故障节点标记为`slave`，当故障节点恢复后会自动成为新的`master`的`slave`节点
 
 ## 集群服务搭建
