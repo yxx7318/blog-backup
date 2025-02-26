@@ -65,3 +65,17 @@
 ![image-20250222151726127](img/WordPress电商独立站/image-20250222151726127.png)
 
 > 防止`products`界面无法访问
+
+## GTranslate插件
+
+![image-20250225141038999](img/WordPress电商独立站/image-20250225141038999.png)
+
+配置：
+
+![image-20250225145516737](img/WordPress电商独立站/image-20250225145516737.png)
+
+效果：
+
+![image-20250225145747671](img/WordPress电商独立站/image-20250225145747671.png)
+
+> 参考博客：[多语言 Gtranslate 最新最全教程 | WordPress | 小熊猫出海](https://redpanday.com/wordpress-gtranslate-tutorials/)

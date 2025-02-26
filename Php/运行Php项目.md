@@ -54,11 +54,19 @@ D:\LenovoSoftstore\phpstudy_pro\Extensions\composer1.8.5
 
 > <img src="img/运行Php项目/image-20240328154002967.png" alt="image-20240328154002967" style="zoom:67%;" />
 
-在项目源代码`D:\company\Artificial_Intelligence\code\gm`下运行cmd窗口，设置composer腾讯镜像：
+在项目源代码`D:\company\Artificial_Intelligence\code\gm`下运行cmd窗口，设置`composer`腾讯镜像：
 
 ```
 composer config -g repos.packagist composer https://mirrors.cloud.tencent.com/composer/
 ```
+
+安装依赖，读取项目路径下的`composer.lock`文件：
+
+```
+composer install
+```
+
+> ![image-20250225201249285](img/运行Php项目/image-20250225201249285.png)
 
 更新依赖`ezyang/htmlpurifier`：
 
