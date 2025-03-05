@@ -262,7 +262,7 @@ public class PageDTO<T> {
     private List<T> list;
 
     /**
-     * 将MyBatis-Plus的Page对象转换为PageDTO对象，并使用BeanUtils进行属性拷贝。
+     * 将MyBatis-Plus的Page对象转换为PageDTO对象，并使用BeanUtils进行属性拷贝
      *
      * @param <PO>    原始实体类型
      * @param <VO>    目标视图类型
@@ -286,7 +286,7 @@ public class PageDTO<T> {
     }
 
     /**
-     * 将MyBatis-Plus的Page对象转换为PageDTO对象，并使用自定义转换器进行转换。
+     * 将MyBatis-Plus的Page对象转换为PageDTO对象，并使用自定义转换器进行转换
      *
      * @param <PO>      原始实体类型
      * @param <VO>      目标视图类型
@@ -310,7 +310,7 @@ public class PageDTO<T> {
     }
 
     /**
-     * 处理Page对象的基本信息（总记录数、总页数），并创建一个对应的PageDTO对象。
+     * 处理Page对象的基本信息（总记录数、总页数），并创建一个对应的PageDTO对象
      *
      * @param <PO> 原始实体类型
      * @param <VO> 目标视图类型
@@ -445,8 +445,8 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 > 设置id后自动进行填充：
 >
 > ```java
->      BaseContext.setCurrentId(empId);
->      userService.save(user);
+>     BaseContext.setCurrentId(empId);
+>     userService.save(user);
 > ```
 >
 > 优化写法：
@@ -454,6 +454,7 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 > ```java
 >     // 检查并设置 updateUser
 >     if (metaObject.hasSetter("updateUser")) {
+>         // 方法在插入时填充，需要在更新时填充需要使用strictUpdateFill方法
 >         this.strictInsertFill(metaObject, "updateUser", BaseContext::getCurrentId, Integer.class);
 >     }
 > ```
