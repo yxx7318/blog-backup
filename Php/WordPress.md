@@ -56,6 +56,14 @@ define("FS_CHMOD_FILE", 0777);
 
 > ![image-20250205150506197](img/WordPress/image-20250205150506197.png)
 
+## 开启DEBUG
+
+```
+define('WP_DEBUG', true); // 启用调试模式
+define('WP_DEBUG_LOG', true); // 将错误记录到 wp-content/debug.log
+define('WP_DEBUG_DISPLAY', false); // 不在页面前端显示错误
+```
+
 ## Astra主题
 
 ![image-20250205145111833](img/WordPress/image-20250205145111833.png)

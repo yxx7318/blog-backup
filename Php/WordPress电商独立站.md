@@ -79,3 +79,68 @@
 ![image-20250225145747671](img/WordPress电商独立站/image-20250225145747671.png)
 
 > 参考博客：[多语言 Gtranslate 最新最全教程 | WordPress | 小熊猫出海](https://redpanday.com/wordpress-gtranslate-tutorials/)
+
+## RY Tools for WooCommerce插件
+
+![image-20250308170233883](img/WordPress电商独立站/image-20250308170233883.png)
+
+## 现金流
+
+> 需要登录注册配置之后`Return URL`才能测试通过，https://vendor.ecpay.com.tw/User/LogOn_Step1
+
+启用ECPay，免费版支持`C2C`模式：
+
+![image-20250308171029036](img/WordPress电商独立站/image-20250308171029036.png)
+
+官方文档：
+
+- 测试配送：[測試介接資訊 - ECPay Developers](https://developers.ecpay.com.tw/?p=7398)
+- 测试信用卡：[測試介接資訊 - ECPay Developers](https://developers.ecpay.com.tw/?p=2856)
+
+![image-20250308171907525](img/WordPress电商独立站/image-20250308171907525.png)
+
+![image-20250308175154915](img/WordPress电商独立站/image-20250308175154915.png)
+
+![image-20250308200934767](img/WordPress电商独立站/image-20250308200934767.png)
+
+填写`ECPay gateway options`信息：
+
+![image-20250308202347742](img/WordPress电商独立站/image-20250308202347742.png)
+
+填写`ECPay shipping options`信息：
+
+![image-20250308172849086](img/WordPress电商独立站/image-20250308172849086.png)
+
+![image-20250308172712692](img/WordPress电商独立站/image-20250308172712692.png)
+
+开启支付方式：
+
+![image-20250308173410958](img/WordPress电商独立站/image-20250308173410958.png)
+
+## 物流
+
+添加物流选项：
+
+![image-20250308174008162](img/WordPress电商独立站/image-20250308174008162.png)
+
+添加物流：
+
+![image-20250308174041700](img/WordPress电商独立站/image-20250308174041700.png)
+
+设置物流：
+
+![image-20250308174157503](img/WordPress电商独立站/image-20250308174157503.png)
+
+## 整体流程
+
+填写信息：
+
+![image-20250308180023033](img/WordPress电商独立站/image-20250308180023033.png)
+
+选择商超：
+
+![image-20250308180104628](img/WordPress电商独立站/image-20250308180104628.png)
+
+填写信用卡信息：
+
+![image-20250308180509961](img/WordPress电商独立站/image-20250308180509961.png)
