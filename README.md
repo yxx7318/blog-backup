@@ -43,6 +43,14 @@ git config core.autocrlf false
 > * -text
 > ```
 
+只允许`lf`换行符文件：
+
+```
+git config --global core.safecrlf true
+git config --global core.autocrlf input
+git config --global core.eol lf
+```
+
 ## 创建git仓库
 
 ```
