@@ -9,6 +9,44 @@ git config --global user.name "yxx7318"
 git config --global user.email "1303490776@qq.com"
 ```
 
+## 提交信息
+
+```
+feat: 新功能开发
+	用于引入新的功能或功能改进。
+	示例：feat: add new user authentication system
+fix: 修复漏洞
+	用于修复代码中的错误或漏洞。
+	示例：fix: resolve null pointer exception in user profile
+docs: 文档更新
+	仅用于更新文档，不影响代码逻辑。
+	示例：docs: update API documentation for user endpoints
+style: 格式调整
+	用于代码格式化、分号添加等，不影响代码逻辑。
+	示例：style: fix indentation in user service
+refactor: 重构
+	用于代码重构，但不改变功能。
+	示例：refactor: simplify user authentication flow
+perf: 性能优化
+	用于提升代码性能。
+	示例：perf: optimize database query for user list
+test: 测试相关
+	添加或更新测试用例。
+	示例：test: add unit tests for user service
+build: 构建相关
+	修改构建流程或配置文件。
+	示例：build: update npm dependencies
+ci: 持续集成相关
+	修改 CI 配置文件或脚本。
+	示例：ci: update GitHub Actions workflow
+chore: 其他维护任务
+	用于维护任务，如删除无用文件等。
+	示例：chore: remove deprecated user model
+revert: 回滚提交
+	用于撤销之前的提交。
+	示例：revert: undo changes to user authentication
+```
+
 ## 开启大小写敏感
 
 ```
