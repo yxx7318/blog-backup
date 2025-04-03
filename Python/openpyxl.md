@@ -91,7 +91,8 @@ import openpyxl
 from datetime import datetime
 import os
 
-MAX_LENGTH = 100000
+# 未指定时最大允许读取的行
+MAX_LENGTH = 100_000
 
 
 class ExcelObject:
@@ -235,7 +236,8 @@ class ExcelObject:
     # 获取写入的行列表
     def _get_list(self, result_list: list, current_list: list):
         # 到了递归的尽头
-        if current_list != [] and all(isinstance(item, str) or isinstance(item, int) for item in current_list):
+        if current_list != [] and all(
+                isinstance(item, str) or isinstance(item, int) or item is None for item in current_list):
             result_list.append(current_list)
         # 如果存在一个为列表则继续递归
         if current_list != [] and any(isinstance(item, list) for item in current_list):
@@ -266,7 +268,7 @@ class ExcelObject:
         """
         if is_clean_ws:
             self.clean_all_row()
-        # 构建出以行为开始的List嵌套列表
+        # 构建出以'行'为开始的List嵌套列表
         row_list_list = []
         self._get_list(row_list_list, current_list)
         for row_index, current_row_list in enumerate(row_list_list):
@@ -286,7 +288,7 @@ class ExcelObject:
         """
         if is_clean_ws:
             self.clean_all_row()
-        # 构建出以行为开始的List嵌套列表
+        # 构建出以'行'为开始的List嵌套列表
         col_list_list = []
         self._get_list(col_list_list, current_list)
         for col_index, current_col_list in enumerate(col_list_list):
