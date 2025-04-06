@@ -150,7 +150,7 @@ server {
 
 ### 重定向
 
-> 发送http请求的时候进行重定向，将所有http请求定位到https去
+> 发送http请求到80端口的时候进行重定向，将所有http请求定位到https去：
 
 ```nginx
     server {
@@ -169,13 +169,13 @@ server {
 >
 > 如果请求没有指定`Host`头，或者`Host`头与`server_name`列表中的任何一个都不匹配，Nginx将使用列表中的第一个域名（`example.com`）作为默认值
 >
-> 测试命令
+> 测试命令：
 >
 > ```
 > curl -I http://www.meraki-x.com
 > ```
 >
-> 结果
+> 结果：
 >
 > ```
 > HTTP/1.1 301 Moved Permanently
@@ -194,7 +194,7 @@ server {
 >
 > > 其它写法：
 > >
-> > - SSL检测
+> > - SSL检测：
 > >
 > >   - ```nginx
 > >     if ($ssl_protocol = "") { return 301 https://$host$request_uri; }
@@ -202,13 +202,13 @@ server {
 > >
 > >   - 通过请求的Host头去进行重定向，而非Nginx设置的`server_name`
 > >
-> > - 协议检测
+> > - 协议检测：
 > >
 > >   - ```nginx
 > >         server {
 > >             listen 80;
 > >             server_name _; # 使用通配符匹配所有请求
-> >                     
+> >                         
 > >             location / {
 > >                 if ($scheme = http) {
 > >                     return 301 https://$host$request_uri;
