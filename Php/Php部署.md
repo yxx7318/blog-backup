@@ -65,6 +65,14 @@ php -v
 sudo cat /etc/php-fpm.d/www.conf
 ```
 
+**使用命令查看`php`配置文件位置**：
+
+```
+php --ini
+```
+
+> ![image-20250410172420436](img/Php部署/image-20250410172420436.png)
+
 ### 更高版本
 
 **更新Remi源**：
@@ -84,6 +92,35 @@ sudo yum-config-manager --enable remi-php80
 
 ```
 sudo yum upgrade php\*
+```
+
+## SoapClient扩展
+
+> `SoapClient`是PHP的一个内置扩展，用于支持SOAP（Simple Object Access Protocol）协议，许多支付网关（如PayPal、Authorize.Net等）依赖于SOAP协议进行通信
+
+运行以下命令检查是否有输出：
+
+```
+php -m | grep soap
+```
+
+安装扩展：
+
+```
+sudo apt-get install php-soap   # 对于 Ubuntu/Debian
+sudo yum install php-soap       # 对于 CentOS/RHEL
+```
+
+> 如果安装扩展后检查命令为空，则需要手动启用扩展，在`php.ini`文件中添加：
+>
+> ```
+> extension=soap
+> ```
+
+重启服务生效：
+
+```
+sudo systemctl restart php-fpm
 ```
 
 ## Nginx配置文件
