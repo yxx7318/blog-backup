@@ -201,6 +201,55 @@ public class LoggerTest {
 >
 > ![image-20241209221109684](img/日志logback/image-20241209221109684.png)
 
+### Logback染色
+
+> - 使用`%yellow()`的方式染色是通过Ascii码染色，会导致日志中有特殊字符
+>
+> - 使用`%clr(){color}`染色则不会
+>
+> 引入配置：
+>
+> ```xml
+>     <!-- 关键：引入 Spring Boot 的默认 Logback 配置 -->
+>     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+> ```
+
+配置`logback-spring`：
+
+```xml
+        <!-- 日志输出格式(颜色) -->
+        <property name="log.pattern.color"
+                  value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){yellow} [%clr(${PID}){magenta} %thread %clr([%X{traceId}]){yellow}] %clr(${LOG_LEVEL_PATTERN:-%5p}) at %class.%method \\(%file:%line\\) %logger{200} - [%method,%line] - %msg%n"/>
+```
+
+> ![image-20250414125900525](img/日志logback/image-20250414125900525.png)
+
+### traceId
+
+> 分布式系统中用于追踪一个请求从客户端发起直到服务器端处理完成整个流程的唯一标识符
+
+```java
+import org.slf4j.MDC;
+
+public class TraceIdUtil {
+    private static final String TRACE_ID_KEY = "traceId";
+
+    // 设置 traceId 到 MDC
+    public static void setTraceId(String traceId) {
+        MDC.put(TRACE_ID_KEY, traceId);
+    }
+
+    // 清除 MDC 中的 traceId
+    public static void clearTraceId() {
+        MDC.remove(TRACE_ID_KEY);
+    }
+}
+```
+
+> 在进行异步任务配置时可以使用到：
+>
+> ![image-20250414134244673](img/日志logback/image-20250414134244673.png)
+
 ## 参考配置
 
 logback.xml
