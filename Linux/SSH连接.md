@@ -24,7 +24,7 @@ ssh-keygen
 
 ![image-20241123141631090](img/SSH连接/image-20241123141631090.png)
 
-配置服务器`.ssh/authorized_keys`文件，将公钥`id_ed25519.pub`的值追加到内容后面：
+修改服务器的`.ssh/authorized_keys`文件，将公钥`id_ed25519.pub`的值追加到服务器内容后面：
 
 ![image-20241123141826304](img/SSH连接/image-20241123141826304.png)
 
@@ -69,6 +69,16 @@ ssh root@xxx.xxx.xxx.xxx
 更换认证方式：
 
 ![image-20241123153228117](img/SSH连接/image-20241123153228117.png)
+
+> 手动生成的密钥可能finalshell不支持，转换密钥或者生成符合要求的密钥：
+>
+> ```
+> 1.转换成PEM格式私钥
+> ssh-keygen -p -m PEM -f 私钥路径
+> 2.生成PEM格式的私钥
+> 生成时增加 -m PEM参数
+> ssh-keygen -m PEM -t rsa -C "注释"
+> ```
 
 ## 命令行连接
 

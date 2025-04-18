@@ -107,8 +107,9 @@ php -m | grep soap
 安装扩展：
 
 ```
-sudo apt-get install php-soap   # 对于 Ubuntu/Debian
 sudo yum install php-soap       # 对于 CentOS/RHEL
+
+sudo apt-get install php-soap   # 对于 Ubuntu/Debian
 ```
 
 > 如果安装扩展后检查命令为空，则需要手动启用扩展，在`php.ini`文件中添加：
