@@ -4,11 +4,11 @@ Conda是一种通用包管理系统，旨在构建和管理任何语言和任何
 
 ## Anaconda
 
-Anaconda是一个打包的集合，里面预装好了Conda、Python以及一大堆安装好的工具包，比如：numpy、pandas等，拥有众多packages、科学计算工具等，就是把很多常用的不常用的库都给你装好了。
+Anaconda是一个打包的集合，里面预装好了Conda、Python以及一大堆安装好的工具包，比如：numpy、pandas等，拥有众多packages、科学计算工具等，就是把很多常用的、不常用的库都安装好了
 
 ## Miniconda
 
-Miniconda是一款小巧的python环境管理工具，安装包大约只有50M多点，其安装程序中包含conda软件包管理器和Python，以及相关的必须依赖项，对于空间要求严格的用户，Miniconda是一种选择。就只包含最基本的东西，其他的库得自己装。
+Miniconda是一款小巧的python环境管理工具，安装包大约只有50M多点，其安装程序中包含conda软件包管理器和Python，以及相关的必须依赖项，对于空间要求严格的用户，Miniconda是一种选择。就只包含最基本的东西，其他的库得自己装
 
 Miniconda与Anaconda的区别：
 

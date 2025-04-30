@@ -142,6 +142,12 @@ pip freeze > requirements.txt
 > pip list --format=freeze > requirements.txt
 > ```
 
+强制重新安装指定包：
+
+```
+pip install --force-reinstall [package]
+```
+
 依据`requirements.txt`安装包：
 
 ```

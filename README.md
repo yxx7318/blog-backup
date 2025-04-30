@@ -68,6 +68,24 @@ git config core.ignorecase false
 >   - 先使用`git rm -r --cached <file>`从暂存区中移除指定的文件或目录，修改之前的文件
 >   - 再使用`git add .`去添加所有未被追踪的文件和目录，修改之后的文件
 
+## 统一换行符
+
+只允许`lf`换行符文件，无法再追踪`crlf`文件：
+
+```
+git config --global core.safecrlf true
+git config --global core.autocrlf input
+git config --global core.eol lf
+```
+
+> ```
+> fatal: CRLF would be replaced by LF in aaaa.txt
+> ```
+>
+> IDEA设置，`Settings`->`Code Style`->`Line spearator`
+>
+> 注意：有时候项目目录下的`.editorconfig`文件会覆盖IDEA的一些配置，需要配合修改
+
 ## 不允许换行符处理
 
 ```
@@ -80,14 +98,6 @@ git config core.autocrlf false
 > # 将所有文件标记为不进行文本处理（即禁用换行符转换）
 > * -text
 > ```
-
-只允许`lf`换行符文件：
-
-```
-git config --global core.safecrlf true
-git config --global core.autocrlf input
-git config --global core.eol lf
-```
 
 ## 创建git仓库
 

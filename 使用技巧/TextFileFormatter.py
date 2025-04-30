@@ -157,7 +157,9 @@ def convert_line_endings(file_list, target_format, exclude_suffixes):
 
 if __name__ == "__main__":
     # 指定要检查的目录
-    target_directory = r'F:\yxx\yxx-yi'
+    target_directory = r'D:\yxx\project\yxx-yi'
     crlf_files, lf_files = check_line_endings_in_directory(target_directory)
-    # 传入指定的文件列表，将其中的文件列表中的文件转换为指定的换行格式
-    convert_line_endings(lf_files, target_format='crlf', exclude_suffixes=['.sh', 'LICENSE', '.conf', '.sql'])
+    # 传入指定的文件列表，将其中的文件列表中的文件转换为指定的换行格式-crlf
+    # convert_line_endings(lf_files, target_format='crlf', exclude_suffixes=['.sh', 'LICENSE', '.conf', '.sql'])
+    # 传入指定的文件列表，将其中的文件列表中的文件转换为指定的换行格式-lf
+    convert_line_endings(crlf_files, target_format='lf', exclude_suffixes=['.bat', 'LICENSE'])
