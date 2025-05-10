@@ -78,6 +78,13 @@ git config --global core.autocrlf input
 git config --global core.eol lf
 ```
 
+> - `core.safecrlf true`：控制Git在处理换行符转换时的安全性级别
+> - `core.autocrlf input`：
+>   - 设置为`true`：Git会在检出文本文件时将LF转换为CRLF，并在提交时将其转换回LF
+>   - 设置为`input`时，Git在提交时会将CRLF转换为LF，但在检出时不进行转换
+>   - 若设置为`false`，则不进行任何转换，保留原始的换行符
+> - `core.eol lf`：设置为`lf`时，Git在所有平台上都使用LF作为行结束标记
+>
 > ```
 > fatal: CRLF would be replaced by LF in aaaa.txt
 > ```
