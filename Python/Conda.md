@@ -30,7 +30,7 @@ Miniconda文档：[Miniconda — Anaconda documentation](https://docs.anaconda.c
 
 <img src="img/Conda/image-20240211160630798.png" alt="image-20240211160630798" style="zoom:67%;" />
 
-> 如果安装时没有配置环境变量的选择，需要自己配置环境变量，为如下几个
+> 如果安装时没有配置环境变量的选择，需要自己配置环境变量，为如下几个：
 >
 > ```
 > D:\miniconda
@@ -48,27 +48,62 @@ Miniconda文档：[Miniconda — Anaconda documentation](https://docs.anaconda.c
 bash Miniconda3-py310_23.11.0-2-Linux-x86_64.sh
 ```
 
-> <img src="img/Conda/image-20240322095041804.png" alt="image-20240322095041804" style="zoom:67%;" />
+<img src="img/Conda/image-20240322095041804.png" alt="image-20240322095041804" style="zoom:67%;" />
 
 回车确认进入下一步：
 
-> <img src="img/Conda/image-20240322095200185.png" alt="image-20240322095200185" style="zoom: 67%;" />
+<img src="img/Conda/image-20240322095200185.png" alt="image-20240322095200185" style="zoom: 67%;" />
 
 一直按住回车阅读内容，直至需要同意许可条款：
 
-> <img src="img/Conda/image-20240322095438519.png" alt="image-20240322095438519" style="zoom:80%;" />
+<img src="img/Conda/image-20240322095438519.png" alt="image-20240322095438519" style="zoom:80%;" />
 
 输入"yes"确认后输入安装目录，默认为`/root/miniconda3`：
 
-> <img src="img/Conda/image-20240322095623399.png" alt="image-20240322095623399" style="zoom:67%;" />
+<img src="img/Conda/image-20240322095623399.png" alt="image-20240322095623399" style="zoom:67%;" />
 
 等待安装完成，提示是否需要初始化：
 
-> <img src="img/Conda/image-20240322095907451.png" alt="image-20240322095907451" style="zoom:67%;" />
+<img src="img/Conda/image-20240322095907451.png" alt="image-20240322095907451" style="zoom:67%;" />
+
+> 这里会在`~/.bashrc`添加一段初始化环境变量的脚本，可能导致连接Linux服务造成cpu资源的飙升：
+>
+> ```
+> # >>> conda initialize >>>
+> # !! Contents within this block are managed by 'conda init' !!
+> __conda_setup="$('/usr/local/miniconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+> if [ $? -eq 0 ]; then
+>     eval "$__conda_setup"
+> else
+>     if [ -f "/usr/local/miniconda/etc/profile.d/conda.sh" ]; then
+>         . "/usr/local/miniconda/etc/profile.d/conda.sh"
+>     else
+>         export PATH="/usr/local/miniconda/bin:$PATH"
+>     fi
+> fi
+> unset __conda_setup
+> # <<< conda initialize <<<
+> ```
+>
+> 选择"no"，可以在每次使用的时候，才使用命令激活conda：
+>
+> ```
+> source /usr/local/miniconda/etc/profile.d/conda.sh
+> ```
+>
+> 或者配置为简化的激活命令：
+>
+> ```
+> if [ -f "/usr/local/miniconda/etc/profile.d/conda.sh" ]; then
+>    . "/usr/local/miniconda/etc/profile.d/conda.sh"
+> else
+>    export PATH="/usr/local/miniconda/bin:$PATH"
+> fi
+> ```
 
 输入"yes"进行初始化，安装完成：
 
-> <img src="img/Conda/image-20240322100043091.png" alt="image-20240322100043091" style="zoom:67%;" />
+<img src="img/Conda/image-20240322100043091.png" alt="image-20240322100043091" style="zoom:67%;" />
 
 激活conda：
 
@@ -84,7 +119,7 @@ source ~/.bashrc
 
 通过查看conda的启动脚本可知，conda会在shell启动时自动激动base环境：
 
-> <img src="img/Conda/image-20240322101048711.png" alt="image-20240322101048711" style="zoom:67%;" />
+<img src="img/Conda/image-20240322101048711.png" alt="image-20240322101048711" style="zoom:67%;" />
 
 可通过如下命令禁用conda自动激活base环境：
 
@@ -123,6 +158,14 @@ rm -rf ~/.condarc
 ```
 
 > 如果是重新安装，可以不用删除，因为该文件只存储的镜像信息
+
+删除环境配置：
+
+```
+vim ~/.bashrc
+```
+
+> ![image-20250516105109952](img/Conda/image-20250516105109952.png)
 
 ## 配置镜像
 

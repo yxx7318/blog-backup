@@ -4,6 +4,8 @@
 >
 > 官网链接：[斯特林 PDF：免费的 Adobe Acrobat 替代品（10M+ 下载）](https://www.stirlingpdf.com/)
 >
+> 在线体验：[Stirling PDF](https://stirlingpdf.io/?lang=zh_CN)
+>
 > 官网安装指南：[Docker Guide | Stirling-PDF](https://docs.stirlingpdf.com/Installation/Docker Install)
 
 ## 基本安装
