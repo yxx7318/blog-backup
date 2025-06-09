@@ -1,5 +1,7 @@
 # pip
 
+> 搜索包：[Search results · PyPI](https://pypi.org/search/)
+
 ## 使用镜像
 
 > pip使用的是国外的镜像，在下载的时候速度非常慢，使用国内清华大学的源，地址为：

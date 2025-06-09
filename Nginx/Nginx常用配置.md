@@ -7,7 +7,6 @@
             proxy_http_version 1.1;
             proxy_set_header Host $http_host; # 包括端口号，$host仅域名
             proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header REMOTE-HOST $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_read_timeout 80s;
@@ -208,7 +207,7 @@ server {
 > >         server {
 > >             listen 80;
 > >             server_name _; # 使用通配符匹配所有请求
-> >                         
+> >                             
 > >             location / {
 > >                 if ($scheme = http) {
 > >                     return 301 https://$host$request_uri;
@@ -291,7 +290,6 @@ Connection: Upgrade
 			proxy_set_header Connection "upgrade";
 			proxy_set_header Host $http_host;
 			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header REMOTE-HOST $remote_addr;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			client_max_body_size 4096M;
 		}

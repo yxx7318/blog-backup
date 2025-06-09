@@ -41,7 +41,7 @@ pom.xml
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
-            <version>4.3.0</version>
+            <version>4.5.0</version>
         </dependency>
 ```
 
