@@ -46,6 +46,8 @@
 sudo logrotate -d /etc/logrotate.conf
 ```
 
+> `-d`参数模拟整个流程，但不会实际修改文件
+
 强制轮询命令：
 
 ```
