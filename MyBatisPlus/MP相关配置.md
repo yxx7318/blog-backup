@@ -193,6 +193,19 @@ public class PageQuery {
     }
 
     /**
+     * 获取排序对象
+     * @param column 排序列
+     * @param asc 是否asc
+     * @return 排序对象
+     */
+    private static OrderItem initOrderItem(String column, boolean asc) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setColumn(column);
+        orderItem.setAsc(asc);
+        return orderItem;
+    }
+
+    /**
      * 将当前分页查询条件转换为MyBatis-Plus的Page对象，并使用默认的排序字段和顺序。
      *
      * @param <T>           实际的数据类型
@@ -201,7 +214,7 @@ public class PageQuery {
      * @return 转换后的Page对象
      */
     public <T> Page<T> toMapPage(String defaultSortBy, Boolean defaultIsAsc) {
-        return toMpPage(new OrderItem(defaultSortBy, defaultIsAsc));
+        return toMpPage(initOrderItem(defaultSortBy, defaultIsAsc));
     }
 
     /**
@@ -211,7 +224,7 @@ public class PageQuery {
      * @return 转换后的Page对象
      */
     public <T> Page<T> toMpPageDefaultSortByCreateTime() {
-        return toMpPage(new OrderItem("create_time", false));
+        return toMpPage(initOrderItem("create_time", false));
     }
 
     /**
@@ -221,7 +234,7 @@ public class PageQuery {
      * @return 转换后的Page对象
      */
     public <T> Page<T> toMpPageDefaultSortByUpdateTime() {
-        return toMpPage(new OrderItem("update_time", false));
+        return toMpPage(initOrderItem("update_time", false));
     }
 }
 ```

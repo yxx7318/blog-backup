@@ -95,6 +95,9 @@ export LUAJIT_LIB=/usr/lib64
 # geoip2模块
 tar -zxf ngx_http_geoip2_module-master.tar.gz
 
+# fancyindex模块
+tar -zxf ngx-fancyindex-0.5.2.tar.gz
+
 cd "$ORIGIN_PATH/nginx-1.20.2"
 
 # 所有基本模块安装
@@ -115,6 +118,7 @@ cd "$ORIGIN_PATH/nginx-1.20.2"
   --add-module=../ngx_cache_purge-2.3 \
   --add-module=../nginx-goodies-nginx-sticky-module-ng-08a395c66e42 \
   --add-module=../ngx_devel_kit-0.3.1 \
+  --add-module=../ngx-fancyindex-0.5.2 \
   --add-module=../lua-nginx-module-0.10.14 \
   --add-dynamic-module=../ngx_http_geoip2_module-master \
   --prefix="$NGINX_PATH" >/dev/null
@@ -154,6 +158,7 @@ delete_if_exists "$ORIGIN_PATH/nginx-goodies-nginx-sticky-module-ng-08a395c66e42
 delete_if_exists "$ORIGIN_PATH/ngx_cache_purge-2.3"
 delete_if_exists "$ORIGIN_PATH/ngx_devel_kit-0.3.1"
 delete_if_exists "$ORIGIN_PATH/ngx_http_geoip2_module-master"
+delete_if_exists "$ORIGIN_PATH/ngx-fancyindex-0.5.2"
 
 
 # 配置服务文件

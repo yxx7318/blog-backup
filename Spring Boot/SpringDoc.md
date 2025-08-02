@@ -7,7 +7,7 @@
 > Swagger是一个用于设计、构建、记录以及使用RESTful风格Web服务的开源软件框架。它提供了开发、生产及版本控制等阶段所需的一系列工具。Swagger主要指的是Swagger工具链，包括但不限于Swagger Editor、Swagger UI等
 >
 > - `Swagger 2`：指的是使用Swagger 2规范来描述API的版本
-> - `OpenAPI 3`：是Swagger规范的演进版本，由OpenAPI Initiative维护。它提供了一个与语言无关的接口来描述现代 API，包括 RESTful 接口
+> - `OpenAPI 3`：是Swagger规范的演进版本，由OpenAPI Initiative维护。它提供了一个与语言无关的接口来描述现代API，包括RESTful接口
 
 **OpenAPI**
 
@@ -48,6 +48,13 @@ pom.xml
 > 兼容关系：
 >
 > ![image-20250513114108068](img/SpringDoc/image-20250513114108068.png)
+>
+> 对于`knife4j`
+>
+> - springboot2.x坐标为：`knife4j-openapi3-spring-boot-starter`
+> - springboot3.x坐标为：`knife4j-openapi3-jakarta-spring-boot-starter`
+>
+> ![image-20250702133546274](img/SpringDoc/image-20250702133546274.png)
 
 添加放行`/swagger-ui/**`、`/swagger-resources/**`、 `/v3/api-docs**`、 `/v3/api-docs/**`、`/*/api-docs`、`/webjars/**`
 
