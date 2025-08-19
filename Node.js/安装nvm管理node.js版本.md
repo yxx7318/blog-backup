@@ -22,15 +22,15 @@ nvm的Linux版本下载地址：[Release v0.40.0 · nvm-sh/nvm · GitHub](https:
 
 通过在cmd命令窗口通过`where node`查找安装的目录，删除此目录
 
-删除系统变量
+删除系统变量：
 
 <img src="img/安装nvm管理node.js版本/image-20230321192934253.png" alt="image-20230321192934253" style="zoom:50%;" />
 
-删除环境变量
+删除环境变量：
 
 <img src="img/安装nvm管理node.js版本/image-20230321192959390.png" alt="image-20230321192959390" style="zoom:50%;" />
 
-删除目录
+删除目录：
 
 <img src="img/安装nvm管理node.js版本/image-20230321193341731.png" alt="image-20230321193341731" style="zoom:50%;" />
 
@@ -42,15 +42,15 @@ nvm的Linux版本下载地址：[Release v0.40.0 · nvm-sh/nvm · GitHub](https:
 
 ### 安装nvm
 
-选择nvm安装目录
+选择nvm安装目录：
 
 <img src="img/安装nvm管理node.js版本/image-20230321192529902.png" alt="image-20230321192529902" style="zoom:50%;" />
 
-选择node.js安装目录
+选择node.js安装目录：
 
 <img src="img/安装nvm管理node.js版本/image-20230321192653313.png" alt="image-20230321192653313" style="zoom:50%;" />
 
-安装成功`nvm -v`会出现版本号，且会自动添加环境变量
+安装成功`nvm -v`会出现版本号，且会自动添加环境变量：
 
 <img src="img/安装nvm管理node.js版本/image-20230321194335554.png" alt="image-20230321194335554" style="zoom:50%;" />
 
@@ -58,7 +58,7 @@ nvm的Linux版本下载地址：[Release v0.40.0 · nvm-sh/nvm · GitHub](https:
 
 ### 修改setting.txt
 
-安装目录下有`setting.txt`文件，添加代理
+安装目录下有`setting.txt`文件，添加代理：
 
 ```
 node_mirror https://npm.taobao.org/mirrors/node/
@@ -67,19 +67,19 @@ npm_mirror https://npm.taobao.org/mirrors/npm/
 
 <img src="img/安装nvm管理node.js版本/image-20230321194702548.png" alt="image-20230321194702548" style="zoom:50%;" />
 
-> 如果使用pnpm，可以通过命令设置镜像地址
+> 如果使用pnpm，可以通过命令设置镜像地址：
 >
 > ```
 > pnpm config set registry https://registry.npmmirror.com
 > ```
 
-如果安装失败，尝试换一个镜像地址
+如果安装失败，尝试换一个镜像地址：
 
 ```
 npm_mirror https://registry.npmmirror.com/
 ```
 
-如果请求的 HTTPS 证书已经过期，可以使用如下命令后再安装依赖
+如果请求的 HTTPS 证书已经过期，可以使用如下命令后再安装依赖：
 
 ```
 npm config set registry https://registry.npmjs.org/
@@ -88,7 +88,7 @@ npm cache clean --force
 
 ### 使用管理员打开cmd窗口安装nodejs
 
-指令`nvm ls available`查看可安装版本
+指令`nvm ls available`查看可安装版本：
 
 <img src="img/安装nvm管理node.js版本/image-20230321195331213.png" alt="image-20230321195331213" style="zoom:33%;" />
 
@@ -114,6 +114,12 @@ npm cache clean --force
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 ```
 
+或者：
+
+```
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+```
+
 > 脚本主要是下载nvm并克隆仓库，并添加nvm源到`.bashrc`，添加bash补全到`.bashrc`
 >
 > 安装后nvm命令需要执行命令`source ~/.bashrc`或者开启新窗口才会生效
@@ -122,7 +128,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 
 ### 手动安装
 
-解压源代码
+解压源代码：
 
 ```
 cd /usr/local
@@ -130,13 +136,13 @@ cd /usr/local
 tar -zxvf nvm-0.40.0.tar.gz
 ```
 
-编辑配置
+编辑配置：
 
 ```
 vim ~/.bashrc
 ```
 
-添加配置
+添加配置：
 
 ```
 # 可以用$HOME变量指代'/root'目录
@@ -145,7 +151,7 @@ export NVM_DIR="/usr/local/nvm-0.40.0"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
 
-启用配置
+启用配置：
 
 ```
 source ~/.bashrc
@@ -155,13 +161,13 @@ source ~/.bashrc
 
 ## 项目版本统一
 
-在项目根目录创建`.nvmrc`文件，里面填写node版本号
+在项目根目录创建`.nvmrc`文件，里面填写node版本号：
 
 ```
 v14.17.0
 ```
 
-使用命令也可直接生成文件
+使用命令也可直接生成文件：
 
 ```
 node -v > .nvmrc
