@@ -193,7 +193,8 @@ class ExcelObject:
         return result_list
 
     # 获取一个范围的数据
-    def get_range_by_row(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0) -> list[
+    def get_range_by_row(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0,
+                         filter_empty: bool = False) -> list[
         list[str]]:
         result_list = []
         if start_col > end_col:
@@ -202,10 +203,14 @@ class ExcelObject:
             for_end = end_row
         for i in range(start_row, for_end):
             result_list.append(self.get_row(i, start_col, end_col))
+        if filter_empty:
+            # 过滤掉所有元素都为‘’的列表
+            result_list = [i for i in result_list if not all(j == "" for j in i)]
         return result_list
 
     # 获取一个范围的数据
-    def get_range_by_col(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0) -> list[
+    def get_range_by_col(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0,
+                         filter_empty: bool = False) -> list[
         list[str]]:
         result_list = []
         if start_row > end_row:
@@ -214,6 +219,9 @@ class ExcelObject:
             for_end = end_col
         for i in range(start_col, for_end):
             result_list.append(self.get_column(i, start_row, end_row))
+        if filter_empty:
+            # 过滤掉所有元素都为‘’的列表
+            result_list = [i for i in result_list if not all(j == "" for j in i)]
         return result_list
 
     # 删除此行的数据
