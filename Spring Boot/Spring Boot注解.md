@@ -26,7 +26,8 @@
 
 - 请求参数：
 
-  - 不使用注解：Spring MVC 可以自动将简单的请求参数（如 `String`, `int` 等）绑定到方法参数上，无需任何注解，对于复杂的对象，只要对象有默认的无参构造函数和`getter/setter`方法，Spring MVC也可以自动将请求参数绑定到对象的字段上，同样无需注解
+  - 不使用注解：Spring MVC可以自动将简单的请求参数（如`String`, `int`等）绑定到方法参数上，无需任何注解，对于复杂的对象，只要对象有默认的无参构造函数和`getter/setter`方法，Spring MVC也可以自动将请求参数绑定到对象的字段上，同样无需注解
+  - `@RequestParam`：用于将指定的请求路径中的参数赋值给方法中的形参，`@RequestParam MultiValueMap<String, String> paramMap`，如果不使用注解，Spring MVC的默认行为是无注解的`Map`参数默认为模型数据容器
   - `@ModelAttribute`：用于将多个请求参数或表单数据绑定到一个复杂对象上，并可将该对象添加到模型中，适用于处理表单提交和分页等场景
   - `@PathVariable`：用于从URL路径中提取变量并绑定到方法参数上，常用于RESTful风格的API设计，例如获取特定资源的详细信息
   - `@RequestBody`：用于将HTTP请求体的内容解析并绑定到一个复杂对象上，通常用于处理POST、PUT等请求中的JSON或XML格式的数据
