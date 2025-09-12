@@ -19,7 +19,7 @@ http {
 add_header X-Frame-Options "SAMEORIGIN";
 
 # 启用浏览器XSS防护功能，并在检测到攻击时，停止渲染页面a
-dd_header X-XSS-Protection "1; mode=block";
+add_header X-XSS-Protection "1; mode=block";
 
 # 禁止浏览器猜测（嗅探）资源的MIME类型，防止资源类型混淆攻击
 add_header X-Content-Type-Options "nosniff";

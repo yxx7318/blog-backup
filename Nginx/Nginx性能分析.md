@@ -34,7 +34,7 @@ map "$log_slow_upstream$log_slow_request" $log_slow_response {
     ".*1" 1;   # 请求慢（如 "01"）
 }
 
-access_log /usr/local/nginx/logs/slow_response.log main  if=$log_slow_response;
+access_log /usr/local/nginx/logs/slow_response.log main if=$log_slow_response;
 ```
 
 > - 上游慢（`$log_slow_upstream=1`）：数据库查询慢、应用服务器性能瓶颈、上游网络延迟
