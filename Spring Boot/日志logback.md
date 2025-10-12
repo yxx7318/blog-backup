@@ -205,7 +205,7 @@ public class LoggerTest {
 
 > - 使用`%yellow()`的方式染色是通过Ascii码染色，会导致日志中有特殊字符
 >
-> - 使用`%clr(){color}`染色则不会
+> - 使用`%clr(){color}`是通过SpringBoot进行染色，也会导致日志中有特殊字符
 >
 > 引入配置：
 >

@@ -87,6 +87,8 @@ import openpyxl
 ## 对象类
 
 ```python
+from typing import Dict, List
+
 import openpyxl
 from datetime import datetime
 import os
@@ -192,10 +194,9 @@ class ExcelObject:
                     result_list.append('')
         return result_list
 
-    # 获取一个范围的数据
+    # 按行读取，获取一个范围的数据
     def get_range_by_row(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0,
-                         filter_empty: bool = False) -> list[
-        list[str]]:
+                         filter_empty: bool = False) -> list[list[str]]:
         result_list = []
         if start_col > end_col:
             for_end = self.max_row
@@ -204,14 +205,13 @@ class ExcelObject:
         for i in range(start_row, for_end):
             result_list.append(self.get_row(i, start_col, end_col))
         if filter_empty:
-            # 过滤掉所有元素都为‘’的列表
+            # 过滤掉所有元素都为''的列表
             result_list = [i for i in result_list if not all(j == "" for j in i)]
         return result_list
 
-    # 获取一个范围的数据
+    # 按列读取，获取一个范围的数据
     def get_range_by_col(self, start_row: int = 1, end_row: int = 0, start_col: int = 1, end_col: int = 0,
-                         filter_empty: bool = False) -> list[
-        list[str]]:
+                         filter_empty: bool = False) -> list[list[str]]:
         result_list = []
         if start_row > end_row:
             for_end = self.max_row
@@ -220,9 +220,31 @@ class ExcelObject:
         for i in range(start_col, for_end):
             result_list.append(self.get_column(i, start_row, end_row))
         if filter_empty:
-            # 过滤掉所有元素都为‘’的列表
+            # 过滤掉所有元素都为''的列表
             result_list = [i for i in result_list if not all(j == "" for j in i)]
         return result_list
+
+    # 按行读取，获取一个范围的数据 以dict_col为key
+    def get_range_by_row_dict(self, dict_col: int, start_row: int = 1, end_row: int = 0, start_col: int = 1,
+                              end_col: int = 0,
+                              filter_empty: bool = False) -> dict[str, list[str]]:
+        result_dict = {}
+        result_list = self.get_range_by_row(start_row, end_row, start_col, end_col, filter_empty)
+        dict_col_list = self.get_range_by_col(start_row, end_row, dict_col, dict_col, filter_empty)[0]
+        for key, value in zip(dict_col_list, result_list):
+            result_dict[key] = value
+        return result_dict
+
+    # 按列读取，获取一个范围的数据 以dict_row为key
+    def get_range_by_col_dict(self, dict_row: int, start_row: int = 1, end_row: int = 0, start_col: int = 1,
+                              end_col: int = 0,
+                              filter_empty: bool = False) -> dict[str, list[str]]:
+        result_dict = {}
+        result_list = self.get_range_by_col(start_row, end_row, start_col, end_col, filter_empty)
+        dict_row_list = self.get_range_by_row(dict_row, dict_row, start_col, end_col, filter_empty)[0]
+        for key, value in zip(dict_row_list, result_list):
+            result_dict[key] = value
+        return result_dict
 
     # 删除此行的数据
     def clean_row(self, row):
