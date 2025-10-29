@@ -118,9 +118,9 @@ acme.sh --install-cert -d example.com \
 >
 > ```
 > acme.sh --install-cert -d meraki-e.fun \
->   --key-file       /usr/local/nginx/conf/vhost/cert/meraki-e.fun.key  \
->   --fullchain-file /usr/local/nginx/conf/vhost/cert/meraki-e.fun.pem \
->   --reloadcmd     "service nginx reload"
+>     --key-file       /usr/local/nginx/conf/vhost/cert/meraki-e.fun.key  \
+>     --fullchain-file /usr/local/nginx/conf/vhost/cert/meraki-e.fun.pem \
+>     --reloadcmd     "service nginx reload"
 > ```
 >
 > ![image-20250206125502042](img/acme.sh/image-20250206125502042.png)

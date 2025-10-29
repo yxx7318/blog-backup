@@ -164,7 +164,7 @@ class ExcelObject:
     def get_column(self, col: int, start_row: int = 1, end_row: int = 0) -> list[str]:
         result_list = []
         # 如果没有指定结尾，或者指定出错了，直接返回所有的
-        if end_row > start_row:
+        if start_row > end_row:
             ws_range = self.ws.iter_rows(min_row=start_row, max_row=self.max_row, min_col=col, max_col=col)
         else:
             ws_range = self.ws.iter_rows(min_row=start_row, max_row=end_row, min_col=col, max_col=col)
@@ -199,10 +199,11 @@ class ExcelObject:
                          filter_empty: bool = False) -> list[list[str]]:
         result_list = []
         if start_col > end_col:
+            end_col = self.max_col
+        for_end = end_row
+        if start_row > end_row:
             for_end = self.max_row
-        else:
-            for_end = end_row
-        for i in range(start_row, for_end):
+        for i in range(start_row, for_end + 1):
             result_list.append(self.get_row(i, start_col, end_col))
         if filter_empty:
             # 过滤掉所有元素都为''的列表
@@ -214,10 +215,11 @@ class ExcelObject:
                          filter_empty: bool = False) -> list[list[str]]:
         result_list = []
         if start_row > end_row:
-            for_end = self.max_row
-        else:
-            for_end = end_col
-        for i in range(start_col, for_end):
+            end_row = self.max_row
+        for_end = end_col
+        if start_col > end_col:
+            for_end = self.max_col
+        for i in range(start_col, for_end + 1):
             result_list.append(self.get_column(i, start_row, end_row))
         if filter_empty:
             # 过滤掉所有元素都为''的列表

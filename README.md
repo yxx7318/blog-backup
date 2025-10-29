@@ -9,6 +9,18 @@ git config --global user.name "yxx7318"
 git config --global user.email "1303490776@qq.com"
 ```
 
+> 开启凭证持久化：
+>
+> ```
+> git config --global credential.helper store
+> ```
+>
+> 文件生成在` ~/.git-credentials`：
+>
+> ```
+> https://1303490776%40qq.com:xxxxx@gitee.com
+> ```
+
 ## 提交信息
 
 ```
