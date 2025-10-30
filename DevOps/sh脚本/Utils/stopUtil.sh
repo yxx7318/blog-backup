@@ -1,24 +1,11 @@
-#!/bin/sh
-
-
-PROJECT_PATH=/usr/local/java/jkqcyl
-JAR_PATH=ruoyi-admin/target
-APP_NAME=ruoyi-admin
-LOG_PATH=$PROJECT_PATH/$JAR_PATH
-JAR_NAME=$APP_NAME.jar
-
-
-echo =================================
-echo  后端自动化部署脚本$0启动：$JAR_NAME
-echo =================================
-
+#!/bin/bash
 
 
 # 根据名称关闭进程
 stop_by_name() {
     local APP_NAME=$1
     if [ -z "$APP_NAME" ]; then
-        echo "Error: Application name is required."
+        echo "错误：必须提供应用名称。"
         return 1
     fi
 
@@ -26,21 +13,21 @@ stop_by_name() {
     tpid=$(ps -ef | grep "$APP_NAME" | grep -v grep | grep -v kill | awk '{print $2}')
     # 如果没有找到对应的进程，直接退出函数
     if [ -z "$tpid" ]; then
-        echo "No running process found for application: ${APP_NAME}"
+        echo "未找到运行中的应用进程: ${APP_NAME}"
         return 0
     fi
 
     # 如果找到进程，尝试优雅地终止
-    echo 'Stop Process...'
+    echo '停止进程中...'
     kill -15 "$tpid"
 
     sleep 2
     tpid=$(ps -ef | grep "$APP_NAME" | grep -v grep | grep -v kill | awk '{print $2}')
     if [ -n "$tpid" ]; then
-        echo 'Kill Process!'
+        echo '强制终止进程!'
         kill -9 "$tpid"
     else
-        echo 'Stop Success!'
+        echo '停止成功!'
     fi
 }
 
@@ -48,7 +35,7 @@ stop_by_name() {
 stop_by_port() {
     local APP_PORT=$1
     if [ -z "$APP_PORT" ]; then
-        echo "Error: Port number is required."
+        echo "错误：必须提供端口号。"
         return 1
     fi
 
@@ -56,40 +43,20 @@ stop_by_port() {
     tpid=$(netstat -nlp | grep ":${APP_PORT}" | awk '{print $7}' | awk -F"/" '{print $1}')
     # 如果没有找到对应的进程，直接退出函数
     if [ -z "$tpid" ]; then
-        echo "No running process found for application: ${APP_NAME}"
+        echo "未找到运行中的端口进程: ${APP_PORT}"
         return 0
     fi
 
     # 如果找到进程，尝试优雅地终止
-    echo 'Stop Process...'
+    echo '停止进程中...'
     kill -15 "$tpid"
 
     sleep 2
     tpid=$(netstat -nlp | grep ":${APP_PORT}" | awk '{print $7}' | awk -F"/" '{print $1}')
     if [ -n "$tpid" ]; then
-        echo 'Kill Process!'
+        echo '强制终止进程!'
         kill -9 "$tpid"
     else
-        echo 'Stop Success!'
+        echo '停止成功!'
     fi
 }
-
-stop_by_name $APP_NAME
-
-echo 准备从Git仓库拉取最新代码
-cd $PROJECT_PATH
-
-echo 开始从Git仓库拉取最新代码
-git pull
-echo 代码拉取完成
-
-echo 开始打包
-output=`mvn clean package -Dmaven.test.skip=true`
-
-cd $JAR_PATH
-
-echo 启动项目
-nohup java -jar $JAR_NAME &> $LOG_PATH/$APP_NAME.log &
-echo 项目启动完成
-
-timeout 20s tail -f -n200 $LOG_PATH/$APP_NAME.log

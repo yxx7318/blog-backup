@@ -1,11 +1,28 @@
-#!/bin/sh
+#!/bin/bash
+
+
+
+APP_PATH="/usr/local/yxx/yxx-yi"
+LOG_PATH="/usr/local/yxx/yxx-yi"
+APP_NAME="yxx-yxx"
+JAR_NAME="$APP_NAME.jar"
+PORT="7318"
+JVM_OPTS="-Xms512m -Xmx512m -XX:MaxMetaspaceSize=256m"
+SPRING_OPTS="-Dspring.profiles.active=test"
+
+
+
+echo =================================
+echo  jar包运行脚本$0启动：$JAR_NAME
+echo =================================
+
 
 
 # 根据名称关闭进程
 stop_by_name() {
     local APP_NAME=$1
     if [ -z "$APP_NAME" ]; then
-        echo "Error: Application name is required."
+        echo "错误：必须提供应用名称。"
         return 1
     fi
 
@@ -13,21 +30,21 @@ stop_by_name() {
     tpid=$(ps -ef | grep "$APP_NAME" | grep -v grep | grep -v kill | awk '{print $2}')
     # 如果没有找到对应的进程，直接退出函数
     if [ -z "$tpid" ]; then
-        echo "No running process found for application: ${APP_NAME}"
+        echo "未找到运行中的应用进程: ${APP_NAME}"
         return 0
     fi
 
     # 如果找到进程，尝试优雅地终止
-    echo 'Stop Process...'
+    echo '停止进程中...'
     kill -15 "$tpid"
 
     sleep 2
     tpid=$(ps -ef | grep "$APP_NAME" | grep -v grep | grep -v kill | awk '{print $2}')
     if [ -n "$tpid" ]; then
-        echo 'Kill Process!'
+        echo '强制终止进程!'
         kill -9 "$tpid"
     else
-        echo 'Stop Success!'
+        echo '停止成功!'
     fi
 }
 
@@ -35,7 +52,7 @@ stop_by_name() {
 stop_by_port() {
     local APP_PORT=$1
     if [ -z "$APP_PORT" ]; then
-        echo "Error: Port number is required."
+        echo "错误：必须提供端口号。"
         return 1
     fi
 
@@ -43,20 +60,35 @@ stop_by_port() {
     tpid=$(netstat -nlp | grep ":${APP_PORT}" | awk '{print $7}' | awk -F"/" '{print $1}')
     # 如果没有找到对应的进程，直接退出函数
     if [ -z "$tpid" ]; then
-        echo "No running process found for port: ${APP_PORT}"
+        echo "未找到运行中的端口进程: ${APP_PORT}"
         return 0
     fi
 
     # 如果找到进程，尝试优雅地终止
-    echo 'Stop Process...'
+    echo '停止进程中...'
     kill -15 "$tpid"
 
     sleep 2
     tpid=$(netstat -nlp | grep ":${APP_PORT}" | awk '{print $7}' | awk -F"/" '{print $1}')
     if [ -n "$tpid" ]; then
-        echo 'Kill Process!'
+        echo '强制终止进程!'
         kill -9 "$tpid"
     else
-        echo 'Stop Success!'
+        echo '停止成功!'
     fi
 }
+
+# 检查目录
+cd ${APP_PATH}
+if [[ $? -ne 0 ]]; then
+    exit 1
+fi
+
+# 关闭进程
+stop_by_port $PORT
+
+# 运行jar包
+cd $APP_PATH && nohup java $JVM_OPTS $SPRING_OPTS -jar $JAR_NAME > $LOG_PATH/$APP_NAME.log 2>&1 &
+
+# 查看日志
+timeout 20s tail -f -n200 $LOG_PATH/$APP_NAME.log
