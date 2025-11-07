@@ -4,16 +4,20 @@
 echo "********************************************** 变量定义 **********************************************"
 codePath="/usr/local/yxx/code/yxx-yi"
 javaPath="$codePath/yxx-yxx-8"
+jarPath="$codePath/yxx-yxx-8/yxx-yxx/target/yxx-yxx.jar"
 vuePath="$codePath/yxx-ui-vue2"
+distPath="$codePath/yxx-ui-vue2/dist"
 runPath="/usr/local/yxx/yxx-yi"
 springSh="$runPath/springBootStart.sh"
 vueSh="$runPath/vueStart.sh"
-echo "codePath $codePath"
-echo "javaPath $javaPath"
-echo "vuePath $vuePath"
-echo "runPath $runPath"
-echo "springSh $springSh"
-echo "vueSh $vueSh"
+echo "codePath =======> $codePath"
+echo "javaPath =======> $javaPath"
+echo "jarPath  =======> $jarPath"
+echo "vuePath  =======> $vuePath"
+echo "distPath =======> $distPath"
+echo "runPath  =======> $runPath"
+echo "springSh =======> $springSh"
+echo "vueSh    =======> $vueSh"
 
 
 # 定义锁文件路径
@@ -111,8 +115,7 @@ fi
 
 
 
-
-# 部署后端
+# 部署前端
 if [ "$deploy_frontend" = true ]; then
   echo "********************************************** 部署前端 **********************************************"
 
@@ -137,7 +140,7 @@ if [ "$deploy_frontend" = true ]; then
   cd $vuePath && npm run build:prod
 
   # 启动脚本
-  sh $vueSh "$vuePath/dist"
+  sh $vueSh "$distPath"
 
   echo "前端已部署完成"
 fi
@@ -159,6 +162,8 @@ echo "********************************************** 部署后端 **************
   if [[ $? -ne 0 ]]; then
     exit 1
   fi
+
+  mv -f $jarPath $runPath
 
   # 启动脚本
   sh $springSh
