@@ -82,10 +82,23 @@ acme.sh --issue --dns dns_ali -d example.com -d www.example.com --debug
 ```
 
 - `dns_ali`代表是请求阿里的DNS
+
 - 启用`--debug`参数，可以看到详细的执行过程，否则会很容易误以为命令假死
+
 - 期间acme会请求`80`端口，如果需要指定端口可使用`--httpport`
+
 - 如果需要`pfx`证书可以使用`--to-pkcs12 --password 密码`
+
 - 如果申请通配符证书则在在域名前面加上`*`，如`*.example.com`
+
+- 如果还没有到期不会签发证书，需要加上`--force`，否则会提示
+
+  - ```
+    [2025年 11月 10日 星期一 14:06:11 CST] Domains not changed.
+    [2025年 11月 10日 星期一 14:06:11 CST] Skipping. Next renewal time is: 2025-12-01T06:13:00Z
+    [2025年 11月 10日 星期一 14:06:11 CST] Add '--force' to force renewal.
+    ```
+
 
 执行日志：
 
